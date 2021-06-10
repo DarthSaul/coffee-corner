@@ -4,7 +4,7 @@ export default class CoffeeDAO {
     static async getCoffees({
         filters = null,
         page = 0,
-        coffeesPerPage = 20
+        itemsPerPage = 20
     } = {}) {
         let query;
         if (filters) {
@@ -19,8 +19,8 @@ export default class CoffeeDAO {
 
         try {
             const coffeesList = await Coffee.find(query)
-                .limit(coffeesPerPage)
-                .skip(coffeesPerPage * page);
+                .limit(itemsPerPage)
+                .skip(itemsPerPage * page);
             const totalNumCoffees = await Coffee.countDocuments(query);
             return { coffeesList, totalNumCoffees };
         } catch (e) {

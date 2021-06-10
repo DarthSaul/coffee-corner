@@ -2,24 +2,24 @@ import CoffeeDAO from '../dao/coffeeDAO.js';
 
 export default class CoffeeController {
     static async apiGetCoffees(req, res, next) {
-        const coffeesPerPage = req.query.coffeesPerPage
-            ? parseInt(req.query.coffeesPerPage, 10)
-            : 20;
-        const page = req.query.page ? parseInt(req.query.page, 10) : 0;
+        const { coffeesPerPage, pageCount, name, origin, distributor } =
+            req.query;
+        const itemsPerPage = coffeesPerPage ? parseInt(coffeesPerPage, 10) : 20;
+        const page = pageCount ? parseInt(pageCount, 10) : 0;
 
         let filters = {};
-        if (req.query.name) {
-            filters.name = req.query.name;
-        } else if (req.query.origin) {
-            filters.origin = req.query.origin;
-        } else if (req.query.distributor) {
-            filters.distributor = req.query.distributor;
+        if (name) {
+            filters.name = name;
+        } else if (origin) {
+            filters.origin = origin;
+        } else if (distributor) {
+            filters.distributor = distributor;
         }
 
         const { coffeesList, totalNumCoffees } = await CoffeeDAO.getCoffees({
             filters,
             page,
-            coffeesPerPage
+            itemsPerPage
         });
 
         let response = {
