@@ -26,6 +26,7 @@ export default class CoffeeDAO {
 
         try {
             const coffeesList = await Coffee.find(query)
+                .populate('reviews') // Use ('reviews', ['name', 'text']) to pop only name & text
                 .limit(itemsPerPage)
                 .skip(itemsPerPage * page);
             const totalNumCoffees = await Coffee.countDocuments(query);
@@ -35,6 +36,33 @@ export default class CoffeeDAO {
                 `Unable to convert cursor to array or problem counting documents, ${e}`
             );
             return { coffeesList: [], totalNumCoffees: 0 };
+        }
+    }
+
+    static async getCoffeeById(id) {
+        try {
+            const coffee = await Coffee.findById(id).populate('reviews');
+            return coffee;
+        } catch (err) {
+            console.error(`Unable to find coffee, ${err}`);
+            return { error: err };
+        }
+    }
+
+    static async getCoffeeDist() {
+        let distributors = [];
+        try {
+            // distributors = await Coffee.find({
+            //     distributor: {
+            //         $regex: dist,
+            //         $options: 'i'
+            //     }
+            // });
+            distributors = await Coffee.distinct('distributor');
+            return distributors;
+        } catch (err) {
+            console.error(`Unable to get distributors, ${err}`);
+            return distributors;
         }
     }
 }
