@@ -38,4 +38,30 @@ export default class CoffeeDAO {
             return { coffeesList: [], totalNumCoffees: 0 };
         }
     }
+
+    static async getCoffeeById(id) {
+        try {
+            const coffee = await Coffee.findById(id).populate('reviews');
+            return coffee;
+        } catch (err) {
+            console.error(`Unable to find coffee, ${err}`);
+            return { error: err };
+        }
+    }
+
+    static async getCoffeeDist(dist) {
+        let distributors = [];
+        try {
+            distributors = await Coffee.find({
+                distributor: {
+                    $regex: dist,
+                    $options: 'i'
+                }
+            });
+            return distributors;
+        } catch (err) {
+            console.error(`Unable to get distributors, ${err}`);
+            return distributors;
+        }
+    }
 }

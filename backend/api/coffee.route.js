@@ -5,6 +5,8 @@ import ReviewsCtrl from './reviews.controller.js';
 const router = express.Router();
 
 router.route('/').get(CoffeeCtrl.apiGetCoffees);
+router.route('/id/:id').get(CoffeeCtrl.apiGetCoffeeById);
+router.route('/distributors').get(CoffeeCtrl.apiGetCoffeeDist);
 
 router
     .route('/review')

@@ -28,7 +28,7 @@ export default class ReviewDAO {
             if (review) {
                 return { review };
             } else {
-                return { error: 'Unable to find review to update.' };
+                throw new Error('Unable to find review to update.');
             }
         } catch (err) {
             console.error(`Unable to update review, ${err}`);
@@ -41,7 +41,7 @@ export default class ReviewDAO {
             if (deletedReview) {
                 return { deletedReview };
             } else {
-                return { error: 'Unable to find review to delete.' };
+                throw new Error('Unable to find review to delete.');
             }
         } catch (err) {
             console.error(`Unable to delete review, ${err}`);
