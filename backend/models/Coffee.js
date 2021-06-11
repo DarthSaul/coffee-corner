@@ -6,7 +6,13 @@ const coffeeSchema = new Schema({
     name: String,
     origin: String,
     roastType: String,
-    tags: [String]
+    tags: [String],
+    reviews: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Review'
+        }
+    ]
 });
 
 const Coffee = mongoose.model('Coffee', coffeeSchema);

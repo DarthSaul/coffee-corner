@@ -26,6 +26,7 @@ export default class CoffeeDAO {
 
         try {
             const coffeesList = await Coffee.find(query)
+                .populate('reviews') // Use ('reviews', ['name', 'text']) to pop only name & text
                 .limit(itemsPerPage)
                 .skip(itemsPerPage * page);
             const totalNumCoffees = await Coffee.countDocuments(query);
