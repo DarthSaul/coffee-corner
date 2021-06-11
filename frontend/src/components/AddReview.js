@@ -4,7 +4,7 @@ const AddReview = () => {
     return (
         <div>
             <h1>Hi there this is the form.</h1>
-            {/* <form>
+            <form>
                 <div class='mb-3'>
                     <label for='exampleInputEmail1' class='form-label'>
                         Email address
@@ -42,7 +42,7 @@ const AddReview = () => {
                 <button type='submit' class='btn btn-primary'>
                     Submit
                 </button>
-            </form> */}
+            </form>
         </div>
     );
 };

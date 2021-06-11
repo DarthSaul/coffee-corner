@@ -1,8 +1,5 @@
 {
-  "dependencies": {
-    "bootstrap": "^5.0.1",
-    "mongoose": "^5.12.13",
-    "react-bootstrap": "^1.6.1",
-    "react-router-dom": "^5.2.0"
-  }
+    "dependencies": {
+        "mongoose": "^5.12.13"
+    }
 }

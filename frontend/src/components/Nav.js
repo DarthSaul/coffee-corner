@@ -1,25 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import coffeeCup from '../coffee-cup.svg';
-// import Navbar from 'react-bootstrap/Navbar';
-// import NavDropdown from 'react-bootstrap/NavDropdown';
 
-const Nav = () => {
+const Nav = ({ active }) => {
     return (
-        <nav class='navbar navbar-expand-lg navbar-light bg-light'>
-            <div class='container-fluid'>
-                <Link class='navbar-brand' to='/'>
+        <nav className='navbar navbar-expand-lg navbar-light bg-light'>
+            <div className='container-fluid'>
+                <Link className='navbar-brand' to='/'>
                     <img
                         src={coffeeCup}
                         alt=''
                         width='30'
                         height='24'
-                        class='d-inline-block align-text-top me-1'
+                        className='d-inline-block align-text-top me-1'
                     />
                     CC
                 </Link>
                 <button
-                    class='navbar-toggler'
+                    className='navbar-toggler'
                     type='button'
                     data-bs-toggle='collapse'
                     data-bs-target='#navbarSupportedContent'
@@ -27,23 +25,63 @@ const Nav = () => {
                     aria-expanded='false'
                     aria-label='Toggle navigation'
                 >
-                    <span class='navbar-toggler-icon'></span>
+                    <span className='navbar-toggler-icon'></span>
                 </button>
-                <div class='collapse navbar-collapse'>
-                    <div class='navbar-nav me-auto mb-2 mb-lg-0'>
+                <div className='collapse navbar-collapse'>
+                    <div className='navbar-nav me-auto mb-2 mb-lg-0'>
                         <Link
-                            class='nav-link active'
+                            className={
+                                active === 'Home'
+                                    ? 'nav-link active'
+                                    : 'nav-link'
+                            }
                             aria-current='page'
                             to='/'
                         >
                             Home
                         </Link>
-                        <Link class='nav-link' to='/reviews'>
+                        <Link
+                            className={
+                                active === 'Coffee'
+                                    ? 'nav-link active'
+                                    : 'nav-link'
+                            }
+                            to='/coffee'
+                        >
+                            Coffee
+                        </Link>
+                        <Link
+                            className={
+                                active === 'Reviews'
+                                    ? 'nav-link active'
+                                    : 'nav-link'
+                            }
+                            to='/reviews'
+                        >
                             Add a Review
                         </Link>
-                        <Link class='nav-link' to='/distributors' tabindex='-1'>
-                            Distributors
-                        </Link>
+                        <li className='nav-item dropdown'>
+                            <Link
+                                className='nav-link dropdown-toggle'
+                                to='/distributors'
+                                id='navbarDropdownMenuLink'
+                                role='button'
+                                data-bs-toggle='dropdown'
+                                aria-expanded='false'
+                            >
+                                Distributors
+                            </Link>
+                            <ul
+                                className='dropdown-menu'
+                                aria-labelledby='navbarDropdownMenuLink'
+                            >
+                                <li>
+                                    <Link className='dropdown-item' to='#'>
+                                        Action
+                                    </Link>
+                                </li>
+                            </ul>
+                        </li>
                     </div>
                 </div>
             </div>
