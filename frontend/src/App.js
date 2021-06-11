@@ -1,12 +1,17 @@
 import React from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+import Nav from './components/Nav.js';
 
 function App() {
     return (
-        <div className='App container py-5'>
-            <h1 className='display-1'>Hello, world</h1>
-        </div>
+        <Router>
+            <Nav />
+            <div className='App container py-5'>
+                <h1 className='display-1'>Hello, world</h1>
+            </div>
+        </Router>
     );
 }
 
