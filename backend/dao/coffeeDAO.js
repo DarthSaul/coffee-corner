@@ -49,15 +49,16 @@ export default class CoffeeDAO {
         }
     }
 
-    static async getCoffeeDist(dist) {
+    static async getCoffeeDist() {
         let distributors = [];
         try {
-            distributors = await Coffee.find({
-                distributor: {
-                    $regex: dist,
-                    $options: 'i'
-                }
-            });
+            // distributors = await Coffee.find({
+            //     distributor: {
+            //         $regex: dist,
+            //         $options: 'i'
+            //     }
+            // });
+            distributors = await Coffee.distinct('distributor');
             return distributors;
         } catch (err) {
             console.error(`Unable to get distributors, ${err}`);

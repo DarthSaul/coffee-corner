@@ -48,11 +48,11 @@ export default class CoffeeController {
 
     static async apiGetCoffeeDist(req, res, next) {
         try {
-            const { dist } = req.query;
-            const distributors = await CoffeeDAO.getCoffeeDist(dist);
+            // const { dist } = req.query;
+            const distributors = await CoffeeDAO.getCoffeeDist();
             if (distributors.length === 0) {
                 return res.json({
-                    error: 'No distributors found for that query.'
+                    error: 'No distributors found.'
                 });
             }
             res.json(distributors);
