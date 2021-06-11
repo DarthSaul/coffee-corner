@@ -9,11 +9,18 @@ export default class CoffeeDAO {
         let query;
         if (filters) {
             if ('name' in filters) {
-                query = { name: filters['name'] };
+                query = { name: { $regex: filters['name'], $options: 'i' } };
             } else if ('origin' in filters) {
-                query = { origin: filters['origin'] };
+                query = {
+                    origin: { $regex: filters['origin'], $options: 'i' }
+                };
             } else if ('distributor' in filters) {
-                query = { distributor: filters['distributor'] };
+                query = {
+                    distributor: {
+                        $regex: filters['distributor'],
+                        $options: 'i'
+                    }
+                };
             }
         }
 
