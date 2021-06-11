@@ -49,6 +49,7 @@ export default class CoffeeController {
     static async apiGetCoffeeDist(req, res, next) {
         try {
             // const { dist } = req.query;
+            // const distributors = await CoffeeDAO.getCoffeeDist(dist);
             const distributors = await CoffeeDAO.getCoffeeDist();
             if (distributors.length === 0) {
                 return res.json({
