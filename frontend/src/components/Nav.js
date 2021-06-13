@@ -28,60 +28,64 @@ const Nav = ({ active }) => {
                     <span className='navbar-toggler-icon'></span>
                 </button>
                 <div className='collapse navbar-collapse'>
-                    <div className='navbar-nav me-auto mb-2 mb-lg-0'>
-                        <Link
-                            className={
-                                active === 'Home'
-                                    ? 'nav-link active'
-                                    : 'nav-link'
-                            }
-                            aria-current='page'
-                            to='/'
-                        >
-                            Home
-                        </Link>
-                        <Link
-                            className={
-                                active === 'Coffee'
-                                    ? 'nav-link active'
-                                    : 'nav-link'
-                            }
-                            to='/coffee'
-                        >
-                            Coffee
-                        </Link>
-                        <Link
-                            className={
-                                active === 'Reviews'
-                                    ? 'nav-link active'
-                                    : 'nav-link'
-                            }
-                            to='/reviews'
-                        >
-                            Add a Review
-                        </Link>
-                        <li className='nav-item dropdown'>
+                    <div className='navbar-nav mb-2 mb-lg-0 w-100 d-flex justify-content-between'>
+                        <div className='d-flex'>
                             <Link
-                                className='nav-link dropdown-toggle'
-                                to='/distributors'
-                                id='navbarDropdownMenuLink'
-                                role='button'
-                                data-bs-toggle='dropdown'
-                                aria-expanded='false'
+                                className={
+                                    active === 'Home'
+                                        ? 'nav-link active'
+                                        : 'nav-link'
+                                }
+                                aria-current='page'
+                                to='/'
                             >
-                                Distributors
+                                Home
                             </Link>
-                            <ul
-                                className='dropdown-menu'
-                                aria-labelledby='navbarDropdownMenuLink'
+                            <Link
+                                className={
+                                    active === 'Coffee'
+                                        ? 'nav-link active'
+                                        : 'nav-link'
+                                }
+                                to='/coffee'
                             >
-                                <li>
-                                    <Link className='dropdown-item' to='#'>
-                                        Action
-                                    </Link>
-                                </li>
-                            </ul>
-                        </li>
+                                Coffee
+                            </Link>
+                            <li className='nav-item dropdown'>
+                                <Link
+                                    className='nav-link dropdown-toggle'
+                                    to='/distributors'
+                                    id='navbarDropdownMenuLink'
+                                    role='button'
+                                    data-bs-toggle='dropdown'
+                                    aria-expanded='false'
+                                >
+                                    Distributors
+                                </Link>
+                                <ul
+                                    className='dropdown-menu'
+                                    aria-labelledby='navbarDropdownMenuLink'
+                                >
+                                    <li>
+                                        <Link className='dropdown-item' to='#'>
+                                            Action
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </li>
+                        </div>
+                        <div className='ms-auto'>
+                            <Link
+                                className={
+                                    active === 'Login'
+                                        ? 'nav-link active'
+                                        : 'nav-link'
+                                }
+                                to='/login'
+                            >
+                                Login
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>
