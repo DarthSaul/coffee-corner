@@ -20,25 +20,25 @@ mongoose
 export default function seedCoffees() {
     Coffee.insertMany([
         {
-            distributor: 'de fer',
-            name: 'chami',
-            origin: 'colombia',
-            roastType: 'light',
-            tags: ['sweet', 'floral', 'honey']
+            distributor: 'allegheny coffee & tea exchange',
+            name: 'el salvador - santa maria',
+            origin: 'el salvador',
+            roastType: 'medium',
+            tags: ['milk chocolate', 'caramel', 'orange']
         },
         {
-            distributor: 'de fer',
-            name: 'gesha kambera',
-            origin: 'panama',
-            roastType: 'light',
-            tags: ['honey', 'luxardo cherry', 'spiced rum']
+            distributor: 'allegheny coffee & tea exchange',
+            name: 'bali blue moon',
+            origin: 'bali',
+            roastType: 'medium',
+            tags: ['chocolate', 'cedar', 'cherry']
         },
         {
-            distributor: 'de fer',
-            name: 'limu',
-            origin: 'ethiopia',
-            roastType: 'dark',
-            tags: ['dark cocoa', 'citrus', 'vanilla']
+            distributor: 'allegheny coffee & tea exchange',
+            name: 'brazil natural cerrado',
+            origin: 'brazil',
+            roastType: 'light',
+            tags: ['cocoa', 'dark chocolate', 'almond']
         }
     ])
         .then(res => console.log(res))

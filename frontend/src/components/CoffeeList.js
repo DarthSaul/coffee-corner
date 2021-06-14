@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
+// import { Link } from 'react-router-dom';
+
 import CoffeeDataService from '../services/coffees';
+import capitalize from 'capitalize';
 
 const CoffeeList = () => {
     const [coffees, setCoffees] = useState([]);
@@ -44,7 +47,7 @@ const CoffeeList = () => {
     const getDistributors = async () => {
         try {
             const distributors = await CoffeeDataService.getDist();
-            console.log(distributors);
+            // console.log(distributors);
             setDistributors(['All Distributors'].concat(distributors.data));
         } catch (err) {
             console.log(err);
@@ -94,7 +97,7 @@ const CoffeeList = () => {
                     />
                     <div className='input-group-append'>
                         <button
-                            className='btn btn-outline-secondary'
+                            className='btn btn-theme ms-3'
                             type='button'
                             onClick={findByName}
                         >
@@ -112,7 +115,7 @@ const CoffeeList = () => {
                     />
                     <div className='input-group-append'>
                         <button
-                            className='btn btn-outline-secondary'
+                            className='btn btn-theme ms-3'
                             type='button'
                             onClick={findByOrigin}
                         >
@@ -121,19 +124,22 @@ const CoffeeList = () => {
                     </div>
                 </div>
                 <div className='input-group col-lg-4 mb-4'>
-                    <select onChange={onChangeSearchDist}>
+                    <select
+                        className='form-select'
+                        onChange={onChangeSearchDist}
+                    >
                         {distributors.map((dist, ind) => {
                             return (
                                 <option value={dist} key={ind}>
                                     {' '}
-                                    {dist.substr(0, 20)}{' '}
+                                    {capitalize.words(dist.substr(0, 40))}{' '}
                                 </option>
                             );
                         })}
                     </select>
                     <div className='input-group-append'>
                         <button
-                            className='btn btn-outline-secondary'
+                            className='btn btn-theme ms-3'
                             type='button'
                             onClick={findByDist}
                         >
@@ -147,19 +153,26 @@ const CoffeeList = () => {
                     coffees.map((coffee, ind) => {
                         return (
                             <div className='col-lg-4 pb-1' key={ind}>
-                                <div className='card'>
+                                <div className='card my-2'>
+                                    <div className='card-header fs-3 p-3'>
+                                        {capitalize.words(coffee.name)}
+                                    </div>
                                     <div className='card-body'>
-                                        <h5 className='card-title'>
-                                            {coffee.name}
-                                        </h5>
                                         <p className='card-text'>
                                             <strong>Origin: </strong>
-                                            {coffee.origin}
+                                            {capitalize.words(coffee.origin)}
                                             <br />
                                             <strong>Distributor: </strong>
-                                            {coffee.distributor}
+                                            {capitalize.words(
+                                                coffee.distributor
+                                            )}
                                         </p>
-                                        <div className='row'></div>
+                                        <a
+                                            href={`http://localhost:3000/coffee/${coffee._id}`}
+                                            className='btn btn-theme'
+                                        >
+                                            See Reviews
+                                        </a>
                                     </div>
                                 </div>
                             </div>
