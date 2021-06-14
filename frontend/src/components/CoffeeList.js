@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import CoffeeDataService from '../services/coffees';
 import capitalize from 'capitalize';
@@ -167,6 +167,12 @@ const CoffeeList = () => {
                                                 coffee.distributor
                                             )}
                                         </p>
+                                        {/* <Link
+                                            to={`/coffee/${coffee._id}`}
+                                            className='btn btn-theme'
+                                        >
+                                            See Reviews
+                                        </Link> */}
                                         <a
                                             href={`http://localhost:3000/coffee/${coffee._id}`}
                                             className='btn btn-theme'

@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+// import { useParams } from 'react-router-dom';
+
+import CoffeeDataService from '../services/coffees';
 import coffee from '../img/coffee_beans_ground.jpg';
 
 const CoffeeItem = () => {
