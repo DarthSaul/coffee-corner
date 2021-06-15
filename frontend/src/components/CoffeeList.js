@@ -167,18 +167,12 @@ const CoffeeList = () => {
                                                 coffee.distributor
                                             )}
                                         </p>
-                                        {/* <Link
+                                        <Link
                                             to={`/coffee/${coffee._id}`}
                                             className='btn btn-theme'
                                         >
                                             See Reviews
-                                        </Link> */}
-                                        <a
-                                            href={`http://localhost:3000/coffee/${coffee._id}`}
-                                            className='btn btn-theme'
-                                        >
-                                            See Reviews
-                                        </a>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
