@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import './App.css';
@@ -12,25 +12,23 @@ import Login from './components/Login';
 
 const App = () => (
     <Router>
-        <>
-            <Nav active='Home' />
-            <div className='container p-4 mt-4'>
-                <Switch>
-                    <Route exact path={['/', '/coffee']}>
-                        <CoffeeList />
-                    </Route>
-                    <Route exact path='/coffee/:id/review'>
-                        <AddReview />
-                    </Route>
-                    <Route exact path='/coffee/:id'>
-                        <CoffeeItem />
-                    </Route>
-                    <Route exact path='/login'>
-                        <Login />
-                    </Route>
-                </Switch>
-            </div>
-        </>
+        <Nav active='Home' />
+        <div className='container p-4 mt-4'>
+            <Switch>
+                <Route exact path={['/', '/coffee']}>
+                    <CoffeeList />
+                </Route>
+                <Route exact path='/coffee/:id/review'>
+                    <AddReview />
+                </Route>
+                <Route exact path='/coffee/:id'>
+                    <CoffeeItem />
+                </Route>
+                <Route exact path='/login'>
+                    <Login />
+                </Route>
+            </Switch>
+        </div>
     </Router>
 );
 
