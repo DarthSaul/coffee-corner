@@ -10,4 +10,11 @@ export default class AuthController {
         );
         res.json(registerUser);
     }
+    static async apiLoginUser(req, res, next) {
+        res.json('Successfully logged in.');
+    }
+    static async apiLogoutUser(req, res, next) {
+        req.logout();
+        console.log('User logged out.');
+    }
 }
