@@ -1,6 +1,9 @@
 import UserDAO from '../dao/userDAO.js';
 
 export default class AuthController {
+    static async apiGetUser(req, res, next) {
+        console.log(req.session);
+    }
     static async apiRegisterUser(req, res, next) {
         const { email, username, password } = req.body;
         const { registerUser } = await UserDAO.registerUser(

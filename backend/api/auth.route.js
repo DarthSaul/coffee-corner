@@ -4,6 +4,8 @@ import AuthCtrl from './auth.controller.js';
 
 const router = express.Router();
 
+router.route('/').get(AuthCtrl.apiGetUser);
+
 router.route('/register').post(AuthCtrl.apiRegisterUser);
 
 router
