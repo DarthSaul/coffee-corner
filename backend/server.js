@@ -11,11 +11,12 @@ import LocalStrategy from 'passport-local';
 
 import User from './models/User.js';
 
-app.use(cors());
+app.use(cors({ credentials: true }));
 app.use(express.json());
 
 app.use(
     session({
+        name: 'session',
         secret: 'aBadSecret',
         resave: false,
         saveUninitialized: true,

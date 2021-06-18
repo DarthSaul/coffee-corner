@@ -9,6 +9,7 @@ import CoffeeList from './components/CoffeeList';
 import CoffeeItem from './components/CoffeeItem';
 import AddReview from './components/AddReview';
 import Login from './components/Login';
+import Register from './components/Register';
 
 const App = () => (
     <Router>
@@ -26,6 +27,9 @@ const App = () => (
                 </Route>
                 <Route exact path='/login'>
                     <Login />
+                </Route>
+                <Route exact path='/register'>
+                    <Register />
                 </Route>
             </Switch>
         </div>

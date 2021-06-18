@@ -11,7 +11,10 @@ export default class AuthController {
             username,
             password
         );
-        res.json(registerUser);
+        req.login(registerUser, err => {
+            if (err) return next(err);
+            res.json(registerUser);
+        });
     }
     static async apiLoginUser(req, res, next) {
         res.json('Successfully logged in.');

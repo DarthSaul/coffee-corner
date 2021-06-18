@@ -30,7 +30,15 @@ function UserProvider({ children }) {
                 body,
                 config
             );
-            console.log(res);
+            const { data } = res;
+            setUser({
+                isAuthenticated: true,
+                loading: false,
+                user: {
+                    username: data.username,
+                    user_id: data._id
+                }
+            });
         } catch (err) {
             console.error(err);
         }
