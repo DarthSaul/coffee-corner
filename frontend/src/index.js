@@ -2,4 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import { UserProvider } from './contexts/UserContext';
+
+ReactDOM.render(
+    <UserProvider>
+        <App />
+    </UserProvider>,
+    document.getElementById('root')
+);

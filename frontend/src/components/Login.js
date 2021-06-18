@@ -1,35 +1,55 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
+
+import { UserContext } from '../contexts/UserContext';
 
 const Login = () => {
+    const [formData, setFormData] = useState({
+        username: '',
+        password: ''
+    });
+    const { login } = useContext(UserContext);
+
+    const handleChange = event => {
+        const { name, value } = event.target;
+        setFormData(state => ({
+            ...state,
+            [name]: value
+        }));
+    };
+    const handleSubmit = async event => {
+        event.preventDefault();
+        await login(username, password);
+    };
+
+    const { username, password } = formData;
+
     return (
         <div className='card col-md-8 col-lg-6 m-auto p-4'>
             <div className='card-body'>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className='mb-3'>
-                        <label for='exampleInputEmail1' className='form-label'>
-                            Email address
-                        </label>
+                        <label className='form-label'>Username</label>
                         <input
-                            type='email'
+                            type='text'
+                            placeholder='Username'
+                            name='username'
+                            value={username}
+                            onChange={handleChange}
                             className='form-control'
-                            id='exampleInputEmail1'
-                            aria-describedby='emailHelp'
                         />
                     </div>
                     <div className='mb-3'>
-                        <label
-                            for='exampleInputPassword1'
-                            className='form-label'
-                        >
-                            Password
-                        </label>
+                        <label className='form-label'>Password</label>
                         <input
                             type='password'
+                            placeholder='Password'
+                            name='password'
+                            value={password}
+                            onChange={handleChange}
                             className='form-control'
-                            id='exampleInputPassword1'
                         />
                     </div>
-                    <button type='submit' className='btn btn-primary'>
+                    <button type='submit' className='btn btn-success'>
                         Submit
                     </button>
                 </form>
