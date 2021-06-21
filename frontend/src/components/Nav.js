@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import coffeeCup from '../coffee-cup.svg';
 
+import { UserContext } from '../contexts/UserContext';
+
 const Nav = ({ active }) => {
+    const { logout } = useContext(UserContext);
     return (
         <nav className='navbar navbar-expand-lg navbar-light bg-light'>
             <div className='container-fluid'>
@@ -85,6 +88,7 @@ const Nav = ({ active }) => {
                             >
                                 Login
                             </Link>
+                            <button onClick={e => logout()}>logout</button>
                         </div>
                     </div>
                 </div>

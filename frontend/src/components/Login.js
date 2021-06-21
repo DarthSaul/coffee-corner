@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { Redirect } from 'react-router-dom';
 
 import { UserContext } from '../contexts/UserContext';
 
@@ -7,7 +8,7 @@ const Login = () => {
         username: '',
         password: ''
     });
-    const { login } = useContext(UserContext);
+    const { userObj, login } = useContext(UserContext);
 
     const handleChange = event => {
         const { name, value } = event.target;
@@ -20,6 +21,13 @@ const Login = () => {
         event.preventDefault();
         await login(username, password);
     };
+
+    if (userObj.isAuthenticated) {
+        console.log(
+            `Successfully logged in, ${userObj.user.username}! ID: ${userObj.user.user_id}`
+        );
+        return <Redirect to='/coffee' />;
+    }
 
     const { username, password } = formData;
 

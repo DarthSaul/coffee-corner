@@ -6,7 +6,7 @@ export default class UserDAO {
             const user = await User.findById(id).select('-password');
             return { user };
         } catch (err) {
-            console.error(err);
+            console.error(err.message);
         }
     }
     static async registerUser(email, username, password) {
@@ -15,7 +15,7 @@ export default class UserDAO {
             const registerUser = await User.register(newUser, password);
             return { registerUser };
         } catch (err) {
-            console.error(err);
+            console.error(err.message);
         }
     }
 }
