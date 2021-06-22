@@ -1,49 +1,76 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 
-const AddReview = () => {
+import { UserContext } from '../contexts/UserContext';
+
+import CoffeeDataService from '../services/coffees';
+
+const AddReview = ({ coffeeId }) => {
+    const [formData, setFormData] = useState({
+        name: '',
+        text: ''
+    });
+
+    const {
+        userObj: { id }
+    } = useContext(UserContext);
+
+    const history = useHistory();
+
+    const handleChange = event => {
+        const { name, value } = event.target;
+        setFormData(state => ({
+            ...state,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async event => {
+        event.preventDefault();
+        try {
+            await CoffeeDataService.createReview({
+                coffee_id: coffeeId,
+                text,
+                name
+            });
+            history.go(0);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const { name, text } = formData;
+
     return (
-        <div>
-            <h1>Hi there this is the coffee.</h1>
-            <h2>And this is the form:</h2>
-            <form>
-                <div className='mb-3'>
-                    <label for='exampleInputEmail1' className='form-label'>
-                        Email address
-                    </label>
-                    <input
-                        type='email'
-                        className='form-control'
-                        id='exampleInputEmail1'
-                        aria-describedby='emailHelp'
-                    />
-                    <div id='emailHelp' className='form-text'>
-                        We'll never share your email with anyone else.
+        <div className='card col-md-10 col-lg-8 col-xl-6 m-auto mt-5'>
+            <div className='card-body'>
+                <h1>Leave a review:</h1>
+                <form onSubmit={handleSubmit}>
+                    <div className='mb-3'>
+                        <label className='form-label'>Name</label>
+                        <input
+                            type='text'
+                            name='name'
+                            value={name}
+                            onChange={handleChange}
+                            className='form-control'
+                        />
                     </div>
-                </div>
-                <div className='mb-3'>
-                    <label for='exampleInputPassword1' className='form-label'>
-                        Password
-                    </label>
-                    <input
-                        type='password'
-                        className='form-control'
-                        id='exampleInputPassword1'
-                    />
-                </div>
-                <div className='mb-3 form-check'>
-                    <input
-                        type='checkbox'
-                        className='form-check-input'
-                        id='exampleCheck1'
-                    />
-                    <label className='form-check-label' htmlFor='exampleCheck1'>
-                        Check me out
-                    </label>
-                </div>
-                <button type='submit' className='btn btn-primary'>
-                    Submit
-                </button>
-            </form>
+                    <div className='mb-3'>
+                        <label className='form-label'>Review</label>
+                        <textarea
+                            type='text'
+                            name='text'
+                            value={text}
+                            onChange={handleChange}
+                            className='form-control'
+                        />
+                    </div>
+                    <button type='submit' className='btn btn-primary'>
+                        Submit
+                    </button>
+                </form>
+            </div>
         </div>
     );
 };
