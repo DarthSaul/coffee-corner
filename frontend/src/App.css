@@ -25,3 +25,6 @@ body {
 .card-header {
     color: var(--dark-color);
 }
+nav span:hover {
+    cursor: pointer;
+}

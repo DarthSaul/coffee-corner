@@ -6,7 +6,7 @@ const UserContext = React.createContext();
 
 function UserProvider({ children }) {
     const [userObj, setUser] = useState({
-        cookie: Cookies.get('user'),
+        cookie: null,
         isAuthenticated: null,
         loading: true,
         user: null
@@ -36,6 +36,11 @@ function UserProvider({ children }) {
             } catch (err) {
                 console.error(err);
             }
+        } else {
+            setUser(prevState => ({
+                ...prevState,
+                loading: false
+            }));
         }
     }
     async function register(email, username, password) {
@@ -96,11 +101,14 @@ function UserProvider({ children }) {
 
     async function logout() {
         try {
-            const res = await axios.get(
-                'http://localhost:5000/api/v1/auth/logout'
-            );
-            console.log(res);
+            await axios.get('http://localhost:5000/api/v1/auth/logout');
             Cookies.remove('user');
+            setUser({
+                cookie: null,
+                isAuthenticated: false,
+                loading: false,
+                user: {}
+            });
         } catch (err) {
             console.error(err);
         }

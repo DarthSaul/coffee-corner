@@ -1,13 +1,27 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import coffeeCup from '../coffee-cup.svg';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import Nav from 'react-bootstrap/Nav';
 
 import { UserContext } from '../contexts/UserContext';
 
-const Nav = ({ active }) => {
-    const { logout } = useContext(UserContext);
+const Navigation = () => {
+    const {
+        userObj: { loading, isAuthenticated, user },
+        logout
+    } = useContext(UserContext);
+
+    const history = useHistory();
+    const handleLogout = event => {
+        event.preventDefault();
+        logout();
+        history.push('/');
+    };
+
     return (
-        <nav className='navbar navbar-expand-lg navbar-light bg-light'>
+        <Navbar bg='light' expand='md'>
             <div className='container-fluid'>
                 <Link className='navbar-brand' to='/'>
                     <img
@@ -19,82 +33,54 @@ const Nav = ({ active }) => {
                     />
                     CC
                 </Link>
-                <button
-                    className='navbar-toggler'
-                    type='button'
-                    data-bs-toggle='collapse'
-                    data-bs-target='#navbarSupportedContent'
-                    aria-controls='navbarSupportedContent'
-                    aria-expanded='false'
-                    aria-label='Toggle navigation'
-                >
-                    <span className='navbar-toggler-icon'></span>
-                </button>
-                <div className='collapse navbar-collapse'>
-                    <div className='navbar-nav mb-2 mb-lg-0 w-100 d-flex justify-content-between'>
-                        <div className='d-flex'>
-                            <Link
-                                className={
-                                    active === 'Home'
-                                        ? 'nav-link active'
-                                        : 'nav-link'
-                                }
-                                aria-current='page'
-                                to='/'
-                            >
-                                Home
+                <Navbar.Toggle aria-controls='basic-navbar-nav' />
+                <Navbar.Collapse id='basic-navbar-nav'>
+                    <Nav className='mr-auto w-100'>
+                        <Link className='nav-link' to='/'>
+                            Home
+                        </Link>
+                        <Link className='nav-link' to='/coffee'>
+                            Coffee
+                        </Link>
+                        <NavDropdown
+                            title='Distributors'
+                            id='basic-nav-dropdown'
+                        >
+                            <Link className='dropdown-item' to='#/3.1'>
+                                Action
                             </Link>
-                            <Link
-                                className={
-                                    active === 'Coffee'
-                                        ? 'nav-link active'
-                                        : 'nav-link'
-                                }
-                                to='/coffee'
-                            >
-                                Coffee
-                            </Link>
-                            <li className='nav-item dropdown'>
-                                <Link
-                                    className='nav-link dropdown-toggle'
-                                    to='/distributors'
-                                    id='navbarDropdownMenuLink'
-                                    role='button'
-                                    data-bs-toggle='dropdown'
-                                    aria-expanded='false'
-                                >
-                                    Distributors
-                                </Link>
-                                <ul
-                                    className='dropdown-menu'
-                                    aria-labelledby='navbarDropdownMenuLink'
-                                >
-                                    <li>
-                                        <Link className='dropdown-item' to='#'>
-                                            Action
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </li>
+                        </NavDropdown>
+                        <div className='d-md-flex ms-md-auto'>
+                            {!loading && !isAuthenticated ? (
+                                <>
+                                    <Link className='nav-link' to='/login'>
+                                        Login
+                                    </Link>
+                                    <Link className='nav-link' to='/register'>
+                                        Register
+                                    </Link>
+                                </>
+                            ) : (
+                                !loading && (
+                                    <>
+                                        <span className='nav-link'>
+                                            Hello, {user.username}!
+                                        </span>
+                                        <span
+                                            className='nav-link'
+                                            onClick={handleLogout}
+                                        >
+                                            Logout
+                                        </span>
+                                    </>
+                                )
+                            )}
                         </div>
-                        <div className='ms-auto'>
-                            <Link
-                                className={
-                                    active === 'Login'
-                                        ? 'nav-link active'
-                                        : 'nav-link'
-                                }
-                                to='/login'
-                            >
-                                Login
-                            </Link>
-                            <button onClick={e => logout()}>logout</button>
-                        </div>
-                    </div>
-                </div>
+                    </Nav>
+                </Navbar.Collapse>
             </div>
-        </nav>
+        </Navbar>
     );
 };
 
-export default Nav;
+export default Navigation;
