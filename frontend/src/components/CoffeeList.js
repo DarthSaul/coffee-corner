@@ -170,6 +170,9 @@ const CoffeeList = () => {
                                         <Link
                                             to={`/coffee/${coffee._id}`}
                                             className='btn btn-theme'
+                                            onClick={e => {
+                                                window.scrollTo(0, 0);
+                                            }}
                                         >
                                             See Reviews
                                         </Link>

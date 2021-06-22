@@ -69,8 +69,6 @@ const CoffeeItem = () => {
                 </div>
             </div>
 
-            <AddReview coffeeId={id} />
-
             <div className='card col-md-10 col-lg-8 col-xl-6 m-auto mt-5'>
                 <h5 className='card-title fs-2 p-3'>Reviews</h5>
                 <ul className='list-group list-group-flush p-3'>
@@ -101,6 +99,8 @@ const CoffeeItem = () => {
                     )}
                 </ul>
             </div>
+
+            <AddReview coffeeId={id} />
         </>
     );
 };
