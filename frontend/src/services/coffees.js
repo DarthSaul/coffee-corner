@@ -25,7 +25,7 @@ class CoffeeDataService {
         return http.delete(`/review?id=${id}`);
     }
 
-    getDist(id) {
+    getDist() {
         return http.get(`/distributors`);
     }
 }

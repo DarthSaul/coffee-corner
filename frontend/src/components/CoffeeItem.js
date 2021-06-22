@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-
 import capitalize from 'capitalize';
+
+import AddReview from './AddReview';
 
 import CoffeeDataService from '../services/coffees';
 import coffeePic from '../img/coffee_beans_ground.jpg';
@@ -65,12 +66,9 @@ const CoffeeItem = () => {
                         <strong>Tags: </strong>
                         {capitalize.words(tags.join(', '))}
                     </p>
-
-                    {/* <a href='/coffee/1234/review' className='btn btn-primary'>
-                        Button
-                    </a> */}
                 </div>
             </div>
+
             <div className='card col-md-10 col-lg-8 col-xl-6 m-auto mt-5'>
                 <h5 className='card-title fs-2 p-3'>Reviews</h5>
                 <ul className='list-group list-group-flush p-3'>
@@ -101,6 +99,8 @@ const CoffeeItem = () => {
                     )}
                 </ul>
             </div>
+
+            <AddReview coffeeId={id} />
         </>
     );
 };
