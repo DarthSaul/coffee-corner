@@ -3,12 +3,13 @@ import { Redirect } from 'react-router-dom';
 
 import { UserContext } from '../contexts/UserContext';
 
-const Login = () => {
+const Register = () => {
     const [formData, setFormData] = useState({
+        email: '',
         username: '',
         password: ''
     });
-    const { userObj, login } = useContext(UserContext);
+    const { register, userObj } = useContext(UserContext);
 
     const handleChange = event => {
         const { name, value } = event.target;
@@ -19,7 +20,7 @@ const Login = () => {
     };
     const handleSubmit = async event => {
         event.preventDefault();
-        await login(username, password);
+        await register(email, username, password);
     };
 
     if (userObj.isAuthenticated) {
@@ -29,12 +30,23 @@ const Login = () => {
         return <Redirect to='/coffee' />;
     }
 
-    const { username, password } = formData;
+    const { email, username, password } = formData;
 
     return (
         <div className='card col-md-8 col-lg-6 m-auto p-4'>
             <div className='card-body'>
                 <form onSubmit={handleSubmit}>
+                    <div className='mb-3'>
+                        <label className='form-label'>Email</label>
+                        <input
+                            type='email'
+                            placeholder='Email'
+                            name='email'
+                            value={email}
+                            onChange={handleChange}
+                            className='form-control'
+                        />
+                    </div>
                     <div className='mb-3'>
                         <label className='form-label'>Username</label>
                         <input
@@ -66,4 +78,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Register;

@@ -1,6 +1,12 @@
+// import bcrypt from 'bcrypt';
 import UserDAO from '../dao/userDAO.js';
 
 export default class AuthController {
+    static async apiGetUser(req, res, next) {
+        const { id } = req.params;
+        const { user } = await UserDAO.getUser(id);
+        res.json(user);
+    }
     static async apiRegisterUser(req, res, next) {
         const { email, username, password } = req.body;
         const { registerUser } = await UserDAO.registerUser(
@@ -8,13 +14,22 @@ export default class AuthController {
             username,
             password
         );
-        res.json(registerUser);
+        req.login(registerUser, err => {
+            if (err) {
+                return next(err);
+            }
+            res.json(registerUser);
+        });
     }
     static async apiLoginUser(req, res, next) {
-        res.json('Successfully logged in.');
+        res.json({
+            success: true,
+            message: 'Successfully logged in',
+            user: req.user
+        });
     }
     static async apiLogoutUser(req, res, next) {
         req.logout();
-        console.log('User logged out.');
+        res.json('User logged out.');
     }
 }

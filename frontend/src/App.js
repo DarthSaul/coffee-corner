@@ -4,15 +4,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import './App.css';
 
-import Nav from './components/Nav';
+import Navigation from './components/Nav';
 import CoffeeList from './components/CoffeeList';
 import CoffeeItem from './components/CoffeeItem';
 import AddReview from './components/AddReview';
 import Login from './components/Login';
+import Register from './components/Register';
 
 const App = () => (
     <Router>
-        <Nav active='Home' />
+        <Navigation />
         <div className='container p-4 mt-4'>
             <Switch>
                 <Route exact path={['/', '/coffee']}>
@@ -26,6 +27,9 @@ const App = () => (
                 </Route>
                 <Route exact path='/login'>
                     <Login />
+                </Route>
+                <Route exact path='/register'>
+                    <Register />
                 </Route>
             </Switch>
         </div>
