@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import './App.css';
 
+import Alert from './components/Alert';
 import Navigation from './components/Nav';
 import CoffeeList from './components/CoffeeList';
 import CoffeeItem from './components/CoffeeItem';
@@ -15,6 +16,7 @@ const App = () => (
     <Router>
         <Navigation />
         <div className='container p-4 mt-4'>
+            <Alert />
             <Switch>
                 <Route exact path={['/', '/coffee']}>
                     <CoffeeList />

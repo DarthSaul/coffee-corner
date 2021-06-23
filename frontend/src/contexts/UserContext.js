@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+
+import { AlertContext } from './AlertContext';
 
 const UserContext = React.createContext();
 
@@ -11,6 +13,8 @@ function UserProvider({ children }) {
         loading: true,
         user: null
     });
+
+    const { setAlert } = useContext(AlertContext);
 
     useEffect(() => {
         loadUser();
@@ -43,6 +47,7 @@ function UserProvider({ children }) {
             }));
         }
     }
+
     async function register(email, username, password) {
         const config = {
             headers: {
@@ -66,10 +71,12 @@ function UserProvider({ children }) {
                     user_id: data._id
                 }
             });
+            setAlert(`Welcome, ${data.username}!`, 'success');
         } catch (err) {
             console.error(err);
         }
     }
+
     async function login(username, password) {
         const config = {
             headers: {
@@ -93,8 +100,9 @@ function UserProvider({ children }) {
                     user_id: data.user._id
                 }
             });
+            setAlert(`Welcome back, ${data.user.username}!`, 'success');
         } catch (err) {
-            console.error('Authorization failed');
+            setAlert('Incorrect username or password.', 'danger');
             console.error(err);
         }
     }
@@ -109,6 +117,7 @@ function UserProvider({ children }) {
                 loading: false,
                 user: {}
             });
+            setAlert(`Successfully logged out.`, 'secondary');
         } catch (err) {
             console.error(err);
         }
