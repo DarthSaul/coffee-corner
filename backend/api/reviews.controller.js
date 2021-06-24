@@ -3,11 +3,11 @@ import ReviewsDAO from '../dao/reviewsDAO.js';
 export default class ReviewsController {
     static async apiPostReview(req, res, next) {
         try {
-            const { coffee_id, text, name } = req.body;
+            const { coffee_id, text, user_id } = req.body;
             const reviewResponse = await ReviewsDAO.addReview(
                 coffee_id,
                 text,
-                name
+                user_id
             );
             const { review } = reviewResponse;
             res.json({ status: 'success', review });

@@ -21,7 +21,6 @@ function UserProvider({ children }) {
 
     async function loadUser() {
         const id = Cookies.get('user');
-        console.log(id);
         if (id) {
             try {
                 const res = await axios.get(

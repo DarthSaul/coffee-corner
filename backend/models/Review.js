@@ -2,7 +2,10 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const reviewSchema = new Schema({
-    name: String,
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     text: String,
     date: {
         type: Date,
