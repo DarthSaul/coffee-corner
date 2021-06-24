@@ -153,23 +153,27 @@ const CoffeeList = () => {
                     coffees.map((coffee, ind) => {
                         return (
                             <div className='col-lg-4 pb-1' key={ind}>
-                                <div className='card my-2'>
+                                <div className='card my-2 coffee-list-card'>
                                     <div className='card-header fs-3 p-3'>
                                         {capitalize.words(coffee.name)}
                                     </div>
-                                    <div className='card-body'>
-                                        <p className='card-text'>
-                                            <strong>Origin: </strong>
-                                            {capitalize.words(coffee.origin)}
-                                            <br />
-                                            <strong>Distributor: </strong>
-                                            {capitalize.words(
-                                                coffee.distributor
-                                            )}
+                                    <div className='card-body d-flex flex-column justify-content-around'>
+                                        <p className='card-text '>
+                                            <div>
+                                                <strong>Origin: </strong>
+                                                {capitalize.words(
+                                                    coffee.origin
+                                                )}
+                                                <br />
+                                                <strong>Distributor: </strong>
+                                                {capitalize.words(
+                                                    coffee.distributor
+                                                )}
+                                            </div>
                                         </p>
                                         <Link
                                             to={`/coffee/${coffee._id}`}
-                                            className='btn btn-theme'
+                                            className='btn btn-theme w-50'
                                             onClick={e => {
                                                 window.scrollTo(0, 0);
                                             }}

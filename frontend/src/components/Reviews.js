@@ -1,32 +1,31 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 
 import { UserContext } from '../contexts/UserContext';
 import { AlertContext } from '../contexts/AlertContext';
 
 import CoffeeDataService from '../services/coffees';
 
+import EditReview from './EditReview';
+
 const Reviews = ({ coffeeId, coffeeReviews }) => {
     const [text, setText] = useState('');
-    const [reviews, setReviews] = useState(coffeeReviews);
+    const [reviews, setReviews] = useState([]);
+    const [edit, setEdit] = useState({
+        reviewId: null,
+        reviewText: '',
+        show: false
+    });
 
     useEffect(() => {
-        getReviews(coffeeId);
-    }, [coffeeId]);
+        setReviews(coffeeReviews);
+    }, [coffeeReviews]);
 
     const {
         userObj: { user, loading }
     } = useContext(UserContext);
 
     const { setAlert } = useContext(AlertContext);
-
-    const getReviews = async id => {
-        try {
-            const coffee = await CoffeeDataService.get(id);
-            setReviews(coffee.data.reviews);
-        } catch (err) {
-            console.log(err);
-        }
-    };
 
     const deleteReview = async (reviewId, index) => {
         try {
@@ -86,24 +85,40 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
                                     className='list-group-item mt-3'
                                     key={review._id}
                                 >
-                                    <p>{review.text}</p>
+                                    <h5 className='mb-4'>{review.text}</h5>
                                     <p>
                                         - <i>By @{review.owner.username}</i>
                                     </p>
                                     {!loading &&
                                         user &&
                                         user.user_id === review.owner._id && (
-                                            <button
-                                                className='btn btn-sm btn-danger mb-3'
-                                                onClick={() =>
-                                                    deleteReview(
-                                                        review._id,
-                                                        ind
-                                                    )
-                                                }
-                                            >
-                                                Delete
-                                            </button>
+                                            <>
+                                                <button
+                                                    className='btn btn-sm btn-warning mb-3'
+                                                    onClick={() =>
+                                                        setEdit({
+                                                            reviewId:
+                                                                review._id,
+                                                            reviewText:
+                                                                review.text,
+                                                            show: true
+                                                        })
+                                                    }
+                                                >
+                                                    Edit
+                                                </button>
+                                                <button
+                                                    className='btn btn-sm btn-danger mb-3'
+                                                    onClick={() =>
+                                                        deleteReview(
+                                                            review._id,
+                                                            ind
+                                                        )
+                                                    }
+                                                >
+                                                    Delete
+                                                </button>
+                                            </>
                                         )}
                                 </li>
                             );
@@ -114,24 +129,41 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
                 </ul>
             </div>
 
+            {edit.show && (
+                <EditReview
+                    reviewId={edit.reviewId}
+                    reviewText={edit.reviewText}
+                    coffeeId={coffeeId}
+                />
+            )}
+
             <div className='card col-md-10 col-lg-8 col-xl-6 m-auto mt-5'>
                 <div className='card-body'>
-                    <h1>Leave a review:</h1>
-                    <form onSubmit={handleSubmit}>
-                        <div className='mb-3'>
-                            <label className='form-label'>Review</label>
-                            <textarea
-                                type='text'
-                                name='text'
-                                value={text}
-                                onChange={handleChange}
-                                className='form-control'
-                            />
-                        </div>
-                        <button type='submit' className='btn btn-success'>
-                            Submit
-                        </button>
-                    </form>
+                    <h5 className='card-title fs-2 mb-3'>Leave a Review:</h5>
+                    {!loading && user ? (
+                        <form onSubmit={handleSubmit}>
+                            <div className='mb-3'>
+                                <textarea
+                                    type='text'
+                                    name='text'
+                                    value={text}
+                                    onChange={handleChange}
+                                    className='form-control'
+                                    rows='6'
+                                />
+                            </div>
+                            <button type='submit' className='btn btn-success'>
+                                Submit
+                            </button>
+                        </form>
+                    ) : (
+                        <p>
+                            <i>
+                                You must be <Link to='/login'>logged in</Link>{' '}
+                                to leave a review.
+                            </i>
+                        </p>
+                    )}
                 </div>
             </div>
         </>

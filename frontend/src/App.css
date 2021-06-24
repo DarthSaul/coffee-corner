@@ -28,3 +28,7 @@ body {
 nav span:hover {
     cursor: pointer;
 }
+
+.coffee-list-card {
+    min-height: 300px;
+}
