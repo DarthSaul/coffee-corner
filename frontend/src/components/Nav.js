@@ -62,17 +62,12 @@ const Navigation = () => {
                                 </>
                             ) : (
                                 !loading && (
-                                    <>
-                                        <span className='nav-link'>
-                                            Hello, {user.username}!
-                                        </span>
-                                        <span
-                                            className='nav-link'
-                                            onClick={handleLogout}
-                                        >
-                                            Logout
-                                        </span>
-                                    </>
+                                    <span
+                                        className='nav-link'
+                                        onClick={handleLogout}
+                                    >
+                                        Logout
+                                    </span>
                                 )
                             )}
                         </div>

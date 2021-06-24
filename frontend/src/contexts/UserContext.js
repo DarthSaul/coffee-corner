@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+
+import { AlertContext } from './AlertContext';
 
 const UserContext = React.createContext();
 
 function UserProvider({ children }) {
     const [userObj, setUser] = useState({
-        cookie: null,
         isAuthenticated: null,
         loading: true,
         user: null
     });
+
+    const { setAlert } = useContext(AlertContext);
 
     useEffect(() => {
         loadUser();
@@ -18,6 +21,7 @@ function UserProvider({ children }) {
 
     async function loadUser() {
         const id = Cookies.get('user');
+        console.log(id);
         if (id) {
             try {
                 const res = await axios.get(
@@ -25,7 +29,6 @@ function UserProvider({ children }) {
                 );
                 const { data } = res;
                 setUser({
-                    cookie: Cookies.get('user'),
                     isAuthenticated: true,
                     loading: false,
                     user: {
@@ -43,6 +46,7 @@ function UserProvider({ children }) {
             }));
         }
     }
+
     async function register(email, username, password) {
         const config = {
             headers: {
@@ -58,7 +62,6 @@ function UserProvider({ children }) {
             );
             const { data } = res;
             setUser({
-                cookie: Cookies.set('user', data._id, { expires: 7 }),
                 isAuthenticated: true,
                 loading: false,
                 user: {
@@ -66,10 +69,13 @@ function UserProvider({ children }) {
                     user_id: data._id
                 }
             });
+            Cookies.set('user', data.user._id, { expires: 7 });
+            setAlert(`Welcome, ${data.username}!`, 'success');
         } catch (err) {
             console.error(err);
         }
     }
+
     async function login(username, password) {
         const config = {
             headers: {
@@ -85,7 +91,6 @@ function UserProvider({ children }) {
             );
             const { data } = res;
             setUser({
-                cookie: Cookies.set('user', data.user._id, { expires: 7 }),
                 isAuthenticated: true,
                 loading: false,
                 user: {
@@ -93,8 +98,10 @@ function UserProvider({ children }) {
                     user_id: data.user._id
                 }
             });
+            Cookies.set('user', data.user._id, { expires: 7 });
+            setAlert(`Welcome back, ${data.user.username}!`, 'success');
         } catch (err) {
-            console.error('Authorization failed');
+            setAlert('Incorrect username or password.', 'danger');
             console.error(err);
         }
     }
@@ -104,11 +111,11 @@ function UserProvider({ children }) {
             await axios.get('http://localhost:5000/api/v1/auth/logout');
             Cookies.remove('user');
             setUser({
-                cookie: null,
                 isAuthenticated: false,
                 loading: false,
                 user: {}
             });
+            setAlert(`Successfully logged out.`, 'secondary');
         } catch (err) {
             console.error(err);
         }
