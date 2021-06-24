@@ -9,7 +9,7 @@ import { UserContext } from '../contexts/UserContext';
 
 const Navigation = () => {
     const {
-        userObj: { loading, isAuthenticated, user },
+        userObj: { loading, isAuthenticated },
         logout
     } = useContext(UserContext);
 

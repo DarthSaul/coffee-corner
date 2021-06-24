@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import capitalize from 'capitalize';
 
@@ -6,6 +6,8 @@ import AddReview from './AddReview';
 
 import CoffeeDataService from '../services/coffees';
 import coffeePic from '../img/coffee_beans_ground.jpg';
+
+import { AlertContext } from '../contexts/AlertContext';
 
 const CoffeeItem = () => {
     const [coffeeState, setCoffeeState] = useState({
@@ -19,6 +21,8 @@ const CoffeeItem = () => {
     });
 
     const { id } = useParams();
+
+    const { setAlert } = useContext(AlertContext);
 
     useEffect(() => {
         getCoffee(id);
@@ -40,6 +44,8 @@ const CoffeeItem = () => {
                 prevState.reviews.splice(index, 1);
                 return { ...prevState };
             });
+            setAlert(`Review removed.`, 'secondary');
+            window.scrollTo(0, 0);
         } catch (err) {
             console.log(err);
         }
@@ -81,7 +87,7 @@ const CoffeeItem = () => {
                                 >
                                     <p>{review.text}</p>
                                     <p>
-                                        - <i>{review.name}</i>
+                                        - <i>By @{review.owner.username}</i>
                                     </p>
                                     <button
                                         className='btn btn-sm btn-danger mb-3'

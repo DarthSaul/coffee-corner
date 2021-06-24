@@ -2,13 +2,11 @@ import Review from '../models/Review.js';
 import Coffee from '../models/Coffee.js';
 
 export default class ReviewDAO {
-    static async addReview(coffee_id, text, name) {
+    static async addReview(coffee_id, text, user_id) {
         try {
             const coffee = await Coffee.findById(coffee_id);
-            const review = new Review({
-                name,
-                text
-            });
+            const review = new Review({ text });
+            review.owner = user_id;
             coffee.reviews.push(review);
             await coffee.save();
             await review.save();
