@@ -8,7 +8,6 @@ import Alert from './components/Alert';
 import Navigation from './components/Nav';
 import CoffeeList from './components/CoffeeList';
 import CoffeeItem from './components/CoffeeItem';
-import AddReview from './components/AddReview';
 import Login from './components/Login';
 import Register from './components/Register';
 
@@ -20,9 +19,6 @@ const App = () => (
             <Switch>
                 <Route exact path={['/', '/coffee']}>
                     <CoffeeList />
-                </Route>
-                <Route exact path='/coffee/:id/review'>
-                    <AddReview />
                 </Route>
                 <Route exact path='/coffee/:id'>
                     <CoffeeItem />

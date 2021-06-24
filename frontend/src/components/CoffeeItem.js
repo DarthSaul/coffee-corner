@@ -1,13 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import capitalize from 'capitalize';
 
-import AddReview from './AddReview';
+import Reviews from './Reviews';
 
 import CoffeeDataService from '../services/coffees';
 import coffeePic from '../img/coffee_beans_ground.jpg';
-
-import { AlertContext } from '../contexts/AlertContext';
 
 const CoffeeItem = () => {
     const [coffeeState, setCoffeeState] = useState({
@@ -22,8 +20,6 @@ const CoffeeItem = () => {
 
     const { id } = useParams();
 
-    const { setAlert } = useContext(AlertContext);
-
     useEffect(() => {
         getCoffee(id);
     }, [id]);
@@ -32,20 +28,6 @@ const CoffeeItem = () => {
         try {
             const coffee = await CoffeeDataService.get(id);
             setCoffeeState(coffee.data);
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
-    const deleteReview = async (reviewId, index) => {
-        try {
-            await CoffeeDataService.deleteReview(reviewId);
-            setCoffeeState(prevState => {
-                prevState.reviews.splice(index, 1);
-                return { ...prevState };
-            });
-            setAlert(`Review removed.`, 'secondary');
-            window.scrollTo(0, 0);
         } catch (err) {
             console.log(err);
         }
@@ -75,38 +57,7 @@ const CoffeeItem = () => {
                 </div>
             </div>
 
-            <div className='card col-md-10 col-lg-8 col-xl-6 m-auto mt-5'>
-                <h5 className='card-title fs-2 p-3'>Reviews</h5>
-                <ul className='list-group list-group-flush p-3'>
-                    {reviews.length > 0 ? (
-                        reviews.map((review, ind) => {
-                            return (
-                                <li
-                                    className='list-group-item mt-3'
-                                    key={review._id}
-                                >
-                                    <p>{review.text}</p>
-                                    <p>
-                                        - <i>By @{review.owner.username}</i>
-                                    </p>
-                                    <button
-                                        className='btn btn-sm btn-danger mb-3'
-                                        onClick={() =>
-                                            deleteReview(review._id, ind)
-                                        }
-                                    >
-                                        Delete
-                                    </button>
-                                </li>
-                            );
-                        })
-                    ) : (
-                        <h6>No reviews yet.</h6>
-                    )}
-                </ul>
-            </div>
-
-            <AddReview coffeeId={id} />
+            <Reviews coffeeId={id} coffeeReviews={reviews} />
         </>
     );
 };
