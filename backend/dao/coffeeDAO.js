@@ -44,6 +44,7 @@ export default class CoffeeDAO {
             const coffee = await Coffee.findById(id).populate('reviews');
             return coffee;
         } catch (err) {
+            // console.error(`Unable to find coffee, ${err}`);
             console.error(`Unable to find coffee, ${err}`);
             return { error: err };
         }

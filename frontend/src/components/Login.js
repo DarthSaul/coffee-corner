@@ -23,9 +23,6 @@ const Login = () => {
     };
 
     if (userObj.isAuthenticated) {
-        console.log(
-            `Successfully logged in, ${userObj.user.username}! ID: ${userObj.user.user_id}`
-        );
         return <Redirect to='/coffee' />;
     }
 

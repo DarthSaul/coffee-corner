@@ -8,7 +8,6 @@ const UserContext = React.createContext();
 
 function UserProvider({ children }) {
     const [userObj, setUser] = useState({
-        cookie: null,
         isAuthenticated: null,
         loading: true,
         user: null
@@ -22,6 +21,7 @@ function UserProvider({ children }) {
 
     async function loadUser() {
         const id = Cookies.get('user');
+        console.log(id);
         if (id) {
             try {
                 const res = await axios.get(
@@ -29,7 +29,6 @@ function UserProvider({ children }) {
                 );
                 const { data } = res;
                 setUser({
-                    cookie: Cookies.get('user'),
                     isAuthenticated: true,
                     loading: false,
                     user: {
@@ -63,7 +62,6 @@ function UserProvider({ children }) {
             );
             const { data } = res;
             setUser({
-                cookie: Cookies.set('user', data._id, { expires: 7 }),
                 isAuthenticated: true,
                 loading: false,
                 user: {
@@ -71,6 +69,7 @@ function UserProvider({ children }) {
                     user_id: data._id
                 }
             });
+            Cookies.set('user', data.user._id, { expires: 7 });
             setAlert(`Welcome, ${data.username}!`, 'success');
         } catch (err) {
             console.error(err);
@@ -92,7 +91,6 @@ function UserProvider({ children }) {
             );
             const { data } = res;
             setUser({
-                cookie: Cookies.set('user', data.user._id, { expires: 7 }),
                 isAuthenticated: true,
                 loading: false,
                 user: {
@@ -100,6 +98,7 @@ function UserProvider({ children }) {
                     user_id: data.user._id
                 }
             });
+            Cookies.set('user', data.user._id, { expires: 7 });
             setAlert(`Welcome back, ${data.user.username}!`, 'success');
         } catch (err) {
             setAlert('Incorrect username or password.', 'danger');
@@ -112,7 +111,6 @@ function UserProvider({ children }) {
             await axios.get('http://localhost:5000/api/v1/auth/logout');
             Cookies.remove('user');
             setUser({
-                cookie: null,
                 isAuthenticated: false,
                 loading: false,
                 user: {}

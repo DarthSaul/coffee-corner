@@ -1,4 +1,3 @@
-// import bcrypt from 'bcrypt';
 import UserDAO from '../dao/userDAO.js';
 
 export default class AuthController {

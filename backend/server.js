@@ -10,32 +10,51 @@ import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
 import flash from 'connect-flash';
+import MongoStore from 'connect-mongo';
+
+import dotenv from 'dotenv';
+dotenv.config();
 
 import User from './models/User.js';
 
 app.use(cors({ credentials: true }));
 app.use(express.json());
 
-app.use(
-    session({
-        name: 'session',
-        secret: 'aBadSecret', // change to env var
-        resave: false,
-        saveUninitialized: true,
-        cookie: {
-            httpOnly: true,
-            maxAge: 1000 * 60 * 60
-        }
-    })
-);
-app.use(cookieParser('aBadSecret')); // change to env var
+// const dbUrl = process.env.MONGO_DB_URI;
+const secret = process.env.SECRET || 'devBackupSecret';
+const sessionConfig = {
+    name: 'session',
+    secret,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        // secure: true,
+        expires: Date.now() + 1000 * 60 * 60,
+        maxAge: 1000 * 60 * 60
+    }
+    // ,
+    // store: MongoStore.create({
+    //     mongoUrl: dbUrl,
+    //     touchAfter: 24 * 60 * 60,
+    //     secret
+    // })
+};
+app.use(session(sessionConfig));
 app.use(flash());
+
+// app.use(cookieParser('aBadSecret')); // change to env var
 
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+// app.use((req, res, next) => {
+//     console.log(req.user);
+//     next();
+// });
 
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/coffee', coffee);
