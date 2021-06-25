@@ -28,3 +28,21 @@ body {
 nav span:hover {
     cursor: pointer;
 }
+
+.coffee-list-card {
+    min-height: 300px;
+}
+.coffee-list-card .card-header {
+    min-height: 6.5rem;
+}
+
+.reviews-btn {
+    border-radius: 18px;
+    transition: 500ms;
+}
+
+.reviews-btn:hover {
+    background-color: var(--neutral-color);
+    color: var(--dark-color);
+    font-weight: 600;
+}

@@ -152,24 +152,29 @@ const CoffeeList = () => {
                 {!loading &&
                     coffees.map((coffee, ind) => {
                         return (
-                            <div className='col-lg-4 pb-1' key={ind}>
-                                <div className='card my-2'>
-                                    <div className='card-header fs-3 p-3'>
+                            <div className='col-lg-4 col-md-6 pb-1' key={ind}>
+                                <div className='card my-2 coffee-list-card'>
+                                    <div className='card-header d-flex align-items-center fs-3 ps-4 py-2'>
                                         {capitalize.words(coffee.name)}
                                     </div>
-                                    <div className='card-body'>
-                                        <p className='card-text'>
-                                            <strong>Origin: </strong>
-                                            {capitalize.words(coffee.origin)}
-                                            <br />
-                                            <strong>Distributor: </strong>
-                                            {capitalize.words(
-                                                coffee.distributor
-                                            )}
-                                        </p>
+                                    <div className='card-body d-flex flex-column justify-content-around p-4'>
+                                        <div>
+                                            <p className='card-text'>
+                                                <strong>Origin: </strong>
+                                                {capitalize.words(
+                                                    coffee.origin
+                                                )}
+                                                <br />
+                                                <strong>Distributor: </strong>
+                                                {capitalize.words(
+                                                    coffee.distributor
+                                                )}
+                                            </p>
+                                        </div>
+
                                         <Link
                                             to={`/coffee/${coffee._id}`}
-                                            className='btn btn-theme'
+                                            className='btn btn-theme reviews-btn'
                                             onClick={e => {
                                                 window.scrollTo(0, 0);
                                             }}

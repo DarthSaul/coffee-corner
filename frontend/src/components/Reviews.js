@@ -1,17 +1,26 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 
 import { UserContext } from '../contexts/UserContext';
 import { AlertContext } from '../contexts/AlertContext';
 
 import CoffeeDataService from '../services/coffees';
 
+import AddReview from './AddReview';
+import EditReview from './EditReview';
+
 const Reviews = ({ coffeeId, coffeeReviews }) => {
-    const [text, setText] = useState('');
-    const [reviews, setReviews] = useState(coffeeReviews);
+    const [reviews, setReviews] = useState([]);
+    const [edit, setEdit] = useState({
+        reviewId: null,
+        reviewText: '',
+        show: false,
+        ind: null
+    });
 
     useEffect(() => {
-        getReviews(coffeeId);
-    }, [coffeeId]);
+        setReviews(coffeeReviews);
+    }, [coffeeReviews]);
 
     const {
         userObj: { user, loading }
@@ -19,10 +28,68 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
 
     const { setAlert } = useContext(AlertContext);
 
-    const getReviews = async id => {
+    const handleReviewSubmit = async text => {
         try {
-            const coffee = await CoffeeDataService.get(id);
-            setReviews(coffee.data.reviews);
+            const res = await CoffeeDataService.createReview({
+                coffee_id: coffeeId,
+                text,
+                user_id: user.user_id
+            });
+            setAlert(`Review posted!`, 'success');
+            const { review } = res.data;
+            setReviews(prevState => [
+                ...prevState,
+                {
+                    ...review,
+                    owner: {
+                        _id: user.user_id,
+                        username: user.username
+                    }
+                }
+            ]);
+            window.scrollTo(0, 0);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const handleEditClick = (id, text, ind) => {
+        setEdit({
+            reviewId: id,
+            reviewText: text,
+            show: true
+        });
+        setReviews(prevState => {
+            prevState.splice(ind, 1);
+            return [...prevState];
+        });
+    };
+
+    const handleEditSubmit = async (reviewId, text) => {
+        try {
+            const res = await CoffeeDataService.updateReview({
+                review_id: reviewId,
+                text: text
+            });
+            const { review } = res.data;
+            setReviews(prevState => [
+                ...prevState,
+                {
+                    ...review,
+                    owner: {
+                        _id: user.user_id,
+                        username: user.username
+                    }
+                }
+            ]);
+            setEdit({
+                reviewId: null,
+                reviewText: '',
+                show: false,
+                ind: null
+            });
+            window.scrollTo(0, 0);
+            setAlert(`Review updated!`, 'success');
         } catch (err) {
             console.log(err);
         }
@@ -42,38 +109,6 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
         }
     };
 
-    const handleChange = event => {
-        const { value } = event.target;
-        setText(value);
-    };
-
-    const handleSubmit = async event => {
-        event.preventDefault();
-        try {
-            const res = await CoffeeDataService.createReview({
-                coffee_id: coffeeId,
-                text,
-                user_id: user.user_id
-            });
-            setAlert(`Review posted!`, 'success');
-            setText('');
-            const { review } = res.data;
-            setReviews(prevState => [
-                ...prevState,
-                {
-                    ...review,
-                    owner: {
-                        _id: user.user_id,
-                        username: user.username
-                    }
-                }
-            ]);
-            window.scrollTo(0, 0);
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
     return (
         <>
             <div className='card col-md-10 col-lg-8 col-xl-6 m-auto mt-5'>
@@ -86,24 +121,38 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
                                     className='list-group-item mt-3'
                                     key={review._id}
                                 >
-                                    <p>{review.text}</p>
-                                    <p>
+                                    <h5 className='mb-4'>{review.text}</h5>
+                                    <p className='mb-4 text-muted'>
                                         - <i>By @{review.owner.username}</i>
                                     </p>
                                     {!loading &&
                                         user &&
                                         user.user_id === review.owner._id && (
-                                            <button
-                                                className='btn btn-sm btn-danger mb-3'
-                                                onClick={() =>
-                                                    deleteReview(
-                                                        review._id,
-                                                        ind
-                                                    )
-                                                }
-                                            >
-                                                Delete
-                                            </button>
+                                            <>
+                                                <button
+                                                    className='btn btn-sm btn-warning mb-3 me-2'
+                                                    onClick={() =>
+                                                        handleEditClick(
+                                                            review._id,
+                                                            review.text,
+                                                            ind
+                                                        )
+                                                    }
+                                                >
+                                                    Edit
+                                                </button>
+                                                <button
+                                                    className='btn btn-sm btn-danger mb-3'
+                                                    onClick={() =>
+                                                        deleteReview(
+                                                            review._id,
+                                                            ind
+                                                        )
+                                                    }
+                                                >
+                                                    Delete
+                                                </button>
+                                            </>
                                         )}
                                 </li>
                             );
@@ -114,26 +163,32 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
                 </ul>
             </div>
 
-            <div className='card col-md-10 col-lg-8 col-xl-6 m-auto mt-5'>
-                <div className='card-body'>
-                    <h1>Leave a review:</h1>
-                    <form onSubmit={handleSubmit}>
-                        <div className='mb-3'>
-                            <label className='form-label'>Review</label>
-                            <textarea
-                                type='text'
-                                name='text'
-                                value={text}
-                                onChange={handleChange}
-                                className='form-control'
-                            />
-                        </div>
-                        <button type='submit' className='btn btn-success'>
-                            Submit
-                        </button>
-                    </form>
+            {edit.show && (
+                <EditReview
+                    reviewId={edit.reviewId}
+                    reviewText={edit.reviewText}
+                    handleEditSubmit={handleEditSubmit}
+                />
+            )}
+
+            {!loading && user ? (
+                <AddReview handleReviewSubmit={handleReviewSubmit} />
+            ) : (
+                <div className='card col-md-10 col-lg-8 col-xl-6 m-auto mt-5'>
+                    <div className='card-body'>
+                        <h5 className='card-title fs-2 mb-3'>
+                            Leave a Review:
+                        </h5>
+
+                        <p>
+                            <i>
+                                You must be <Link to='/login'>logged in</Link>{' '}
+                                to leave a review.
+                            </i>
+                        </p>
+                    </div>
                 </div>
-            </div>
+            )}
         </>
     );
 };
