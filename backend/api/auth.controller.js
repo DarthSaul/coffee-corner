@@ -7,18 +7,25 @@ export default class AuthController {
         res.json(user);
     }
     static async apiRegisterUser(req, res, next) {
-        const { email, username, password } = req.body;
-        const { registerUser } = await UserDAO.registerUser(
-            email,
-            username,
-            password
-        );
-        req.login(registerUser, err => {
-            if (err) {
-                return next(err);
+        try {
+            const { email, username, password } = req.body;
+            const { registerUser, error } = await UserDAO.registerUser(
+                email,
+                username,
+                password
+            );
+            if (error) {
+                throw new Error(error);
             }
-            res.json(registerUser);
-        });
+            req.login(registerUser, err => {
+                if (err) {
+                    return next(err);
+                }
+                res.json(registerUser);
+            });
+        } catch (error) {
+            return res.status(401).send(error.message);
+        }
     }
     static async apiLoginUser(req, res, next) {
         res.json({
