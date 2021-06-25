@@ -59,6 +59,7 @@ function UserProvider({ children }) {
                 body,
                 config
             );
+            // console.log(res);
             const { data } = res;
             setUser({
                 isAuthenticated: true,
@@ -68,7 +69,7 @@ function UserProvider({ children }) {
                     user_id: data._id
                 }
             });
-            Cookies.set('user', data.user._id, { expires: 7 });
+            Cookies.set('user', data._id, { expires: 7 });
             setAlert(`Welcome, ${data.username}!`, 'success');
         } catch (err) {
             console.error(err);

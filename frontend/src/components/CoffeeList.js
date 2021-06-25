@@ -154,12 +154,12 @@ const CoffeeList = () => {
                         return (
                             <div className='col-lg-4 col-md-6 pb-1' key={ind}>
                                 <div className='card my-2 coffee-list-card'>
-                                    <div className='card-header fs-3 ps-4 py-3'>
+                                    <div className='card-header d-flex align-items-center fs-3 ps-4 py-2'>
                                         {capitalize.words(coffee.name)}
                                     </div>
                                     <div className='card-body d-flex flex-column justify-content-around p-4'>
-                                        <p className='card-text'>
-                                            <div>
+                                        <div>
+                                            <p className='card-text'>
                                                 <strong>Origin: </strong>
                                                 {capitalize.words(
                                                     coffee.origin
@@ -169,11 +169,12 @@ const CoffeeList = () => {
                                                 {capitalize.words(
                                                     coffee.distributor
                                                 )}
-                                            </div>
-                                        </p>
+                                            </p>
+                                        </div>
+
                                         <Link
                                             to={`/coffee/${coffee._id}`}
-                                            className='btn btn-theme'
+                                            className='btn btn-theme reviews-btn'
                                             onClick={e => {
                                                 window.scrollTo(0, 0);
                                             }}
