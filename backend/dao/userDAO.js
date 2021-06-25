@@ -15,7 +15,7 @@ export default class UserDAO {
             const registerUser = await User.register(newUser, password);
             return { registerUser };
         } catch (err) {
-            console.error(err.message);
+            return { error: err.message };
         }
     }
 }
