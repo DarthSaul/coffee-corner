@@ -152,13 +152,13 @@ const CoffeeList = () => {
                 {!loading &&
                     coffees.map((coffee, ind) => {
                         return (
-                            <div className='col-lg-4 pb-1' key={ind}>
+                            <div className='col-lg-4 col-md-6 pb-1' key={ind}>
                                 <div className='card my-2 coffee-list-card'>
-                                    <div className='card-header fs-3 p-3'>
+                                    <div className='card-header fs-3 ps-4 py-3'>
                                         {capitalize.words(coffee.name)}
                                     </div>
-                                    <div className='card-body d-flex flex-column justify-content-around'>
-                                        <p className='card-text '>
+                                    <div className='card-body d-flex flex-column justify-content-around p-4'>
+                                        <p className='card-text'>
                                             <div>
                                                 <strong>Origin: </strong>
                                                 {capitalize.words(
@@ -173,7 +173,7 @@ const CoffeeList = () => {
                                         </p>
                                         <Link
                                             to={`/coffee/${coffee._id}`}
-                                            className='btn btn-theme w-50'
+                                            className='btn btn-theme'
                                             onClick={e => {
                                                 window.scrollTo(0, 0);
                                             }}

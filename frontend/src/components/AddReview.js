@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 const AddReview = ({ handleReviewSubmit }) => {
     const [text, setText] = useState('');
@@ -25,7 +25,7 @@ const AddReview = ({ handleReviewSubmit }) => {
                             value={text}
                             onChange={handleChange}
                             className='form-control'
-                            rows='6'
+                            rows='4'
                         />
                     </div>
                     <button type='submit' className='btn btn-success'>
