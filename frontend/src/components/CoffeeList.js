@@ -1,5 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+    faChevronRight,
+    faChevronLeft
+} from '@fortawesome/free-solid-svg-icons';
 
 import CoffeeDataService from '../services/coffees';
 import capitalize from 'capitalize';
@@ -12,14 +17,33 @@ const CoffeeList = () => {
     const [distributors, setDistributors] = useState(['All Distributors']);
     const [loading, setLoading] = useState('true');
 
+    const [pageNum, setPageNum] = useState(0);
+    const [perPage] = useState(6);
+    const [totalCount, setTotalCount] = useState(0);
+    const [showPagination, setShowPagination] = useState(true);
+
+    const getCoffees = useCallback(
+        async page => {
+            try {
+                const coffees = await CoffeeDataService.getAll(page, perPage);
+                setCoffees(coffees.data.coffees);
+                setTotalCount(coffees.data.total_results);
+                setShowPagination(true);
+            } catch (err) {
+                console.log(err);
+            }
+        },
+        [perPage]
+    );
+
     useEffect(() => {
         async function initialize() {
-            await getCoffees();
+            await getCoffees(0);
             await getDistributors();
             setLoading(false);
         }
         initialize();
-    }, []);
+    }, [getCoffees]);
 
     const onChangeSearchName = e => {
         const searchName = e.target.value;
@@ -34,16 +58,6 @@ const CoffeeList = () => {
         setSearchDist(searchDist);
     };
 
-    const getCoffees = async () => {
-        try {
-            const coffees = await CoffeeDataService.getAll();
-            // console.log(coffees);
-            setCoffees(coffees.data.coffees);
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
     const getDistributors = async () => {
         try {
             const distributors = await CoffeeDataService.getDist();
@@ -54,13 +68,14 @@ const CoffeeList = () => {
         }
     };
 
-    const refreshList = () => {
-        getCoffees();
-    };
-
-    const find = async (query, by) => {
+    const find = async (query, by, itemsPerPage, page) => {
         try {
-            const searchResults = await CoffeeDataService.find(query, by);
+            const searchResults = await CoffeeDataService.find(
+                query,
+                by,
+                itemsPerPage,
+                page
+            );
             // console.log(searchResults.data);
             setCoffees(searchResults.data.coffees);
         } catch (err) {
@@ -70,18 +85,33 @@ const CoffeeList = () => {
 
     const findByName = () => {
         find(searchName, 'name');
+        setShowPagination(false);
     };
 
     const findByOrigin = () => {
         find(searchOrigin, 'origin');
+        setShowPagination(false);
     };
 
     const findByDist = () => {
         if (searchDist === 'All Distributors') {
-            refreshList();
+            getCoffees(0);
+            setPageNum(0);
+            setShowPagination(true);
         } else {
             find(searchDist, 'distributor');
+            setShowPagination(false);
         }
+    };
+
+    const handlePrevClick = async e => {
+        await getCoffees(pageNum - 1);
+        setPageNum(pageNum - 1);
+    };
+
+    const handleNextClick = async e => {
+        await getCoffees(pageNum + 1);
+        setPageNum(pageNum + 1);
     };
 
     return (
@@ -187,6 +217,28 @@ const CoffeeList = () => {
                         );
                     })}
             </div>
+            {showPagination && (
+                <div className='text-center'>
+                    <button
+                        className={`btn btn-secondary mx-1 ${
+                            pageNum === 0 ? 'disabled' : ''
+                        }`}
+                        onClick={handlePrevClick}
+                    >
+                        <FontAwesomeIcon icon={faChevronLeft} />
+                    </button>
+                    <button
+                        className={`btn btn-secondary mx-1 ${
+                            (pageNum + 1) * perPage >= totalCount
+                                ? 'disabled'
+                                : ''
+                        }`}
+                        onClick={handleNextClick}
+                    >
+                        <FontAwesomeIcon icon={faChevronRight} />
+                    </button>
+                </div>
+            )}
         </div>
     );
 };
