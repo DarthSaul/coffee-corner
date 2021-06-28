@@ -4,7 +4,7 @@ export default class CoffeeController {
     static async apiGetCoffees(req, res, next) {
         const { coffeesPerPage, pageCount, name, origin, distributor } =
             req.query;
-        const itemsPerPage = coffeesPerPage ? parseInt(coffeesPerPage, 10) : 20;
+        const perPage = coffeesPerPage ? parseInt(coffeesPerPage, 10) : 50;
         const page = pageCount ? parseInt(pageCount, 10) : 0;
 
         let filters = {};
@@ -19,7 +19,7 @@ export default class CoffeeController {
         const { coffeesList, totalNumCoffees } = await CoffeeDAO.getCoffees({
             filters,
             page,
-            itemsPerPage
+            perPage
         });
 
         let response = {
@@ -48,8 +48,6 @@ export default class CoffeeController {
 
     static async apiGetCoffeeDist(req, res, next) {
         try {
-            // const { dist } = req.query;
-            // const distributors = await CoffeeDAO.getCoffeeDist(dist);
             const distributors = await CoffeeDAO.getCoffeeDist();
             if (distributors.length === 0) {
                 return res.json({
