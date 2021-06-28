@@ -68,12 +68,12 @@ const CoffeeList = () => {
         }
     };
 
-    const find = async (query, by, itemsPerPage, page) => {
+    const find = async (query, by, perPage, page) => {
         try {
             const searchResults = await CoffeeDataService.find(
                 query,
                 by,
-                itemsPerPage,
+                perPage,
                 page
             );
             // console.log(searchResults.data);
@@ -218,7 +218,7 @@ const CoffeeList = () => {
                     })}
             </div>
             {showPagination && (
-                <div className='text-center'>
+                <div className='text-center page-btns'>
                     <button
                         className={`btn btn-secondary mx-1 ${
                             pageNum === 0 ? 'disabled' : ''
