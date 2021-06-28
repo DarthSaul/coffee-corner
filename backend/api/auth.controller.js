@@ -28,6 +28,7 @@ export default class AuthController {
         }
     }
     static async apiLoginUser(req, res, next) {
+        console.log('Login route handler: ' + req.user);
         res.json({
             success: true,
             message: 'Successfully logged in',

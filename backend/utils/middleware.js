@@ -5,3 +5,9 @@ export const verifyLogin = (req, res, next) => {
     }
     next();
 };
+
+export const checkUser = (req, res, next) => {
+    console.log('Middleware: ' + req.user);
+    console.log(req.session);
+    next();
+};

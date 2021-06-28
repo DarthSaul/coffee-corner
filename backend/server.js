@@ -51,10 +51,11 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// app.use((req, res, next) => {
-//     console.log(req.user);
-//     next();
-// });
+// ** Not working 6-28
+app.use((req, res, next) => {
+    console.log('server: ' + req.user);
+    next();
+});
 
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/coffee', coffee);
