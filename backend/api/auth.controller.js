@@ -1,11 +1,20 @@
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
+
 import UserDAO from '../dao/userDAO.js';
 
 export default class AuthController {
     static async apiGetUser(req, res, next) {
-        const { id } = req.params;
-        const { user } = await UserDAO.getUser(id);
-        res.json(user);
+        try {
+            const user = await UserDAO.getUser(req.user.id);
+            return res.json(user);
+        } catch (err) {
+            console.error(err.message);
+            return res.status(500).send('Server error');
+        }
     }
+
     static async apiRegisterUser(req, res, next) {
         try {
             const { email, username, password } = req.body;
@@ -21,19 +30,45 @@ export default class AuthController {
                 if (err) {
                     return next(err);
                 }
-                res.json(registerUser);
+                const payload = {
+                    user: {
+                        id: registerUser.id
+                    }
+                };
+                jwt.sign(
+                    payload,
+                    process.env.JWT_SECRET,
+                    { expiresIn: 360000 },
+                    (err, token) => {
+                        if (err) throw err;
+                        res.json({ token });
+                    }
+                );
             });
-        } catch (error) {
-            return res.status(401).send(error.message);
+        } catch (err) {
+            console.error(err.messsage);
+            return res.status(401).send(err.message);
         }
     }
+
     static async apiLoginUser(req, res, next) {
-        res.json({
-            success: true,
-            message: 'Successfully logged in',
-            user: req.user
-        });
+        const payload = {
+            user: {
+                id: req.user.id
+            }
+        };
+        jwt.sign(
+            payload,
+            process.env.JWT_SECRET,
+            { expiresIn: 360000 },
+            (err, token) => {
+                if (err) throw err;
+                res.json({ token });
+            }
+        );
     }
+
+    // Don't need this...
     static async apiLogoutUser(req, res, next) {
         req.logout();
         res.json('User logged out.');

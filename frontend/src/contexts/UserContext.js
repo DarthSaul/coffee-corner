@@ -1,13 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import Cookies from 'js-cookie';
 
 import { AlertContext } from './AlertContext';
+import setAuthToken from '../services/setAuthToken';
 
 const UserContext = React.createContext();
 
+if (localStorage.token) {
+    setAuthToken(localStorage.token);
+}
+
 function UserProvider({ children }) {
     const [userObj, setUser] = useState({
+        token: localStorage.getItem('token'),
         isAuthenticated: null,
         loading: true,
         user: null
@@ -20,29 +25,27 @@ function UserProvider({ children }) {
     }, []);
 
     async function loadUser() {
-        const id = Cookies.get('user');
-        if (id) {
-            try {
-                const res = await axios.get(
-                    `http://localhost:5000/api/v1/auth/get/${id}`
-                );
-                const { data } = res;
-                setUser({
-                    isAuthenticated: true,
-                    loading: false,
-                    user: {
-                        username: data.username,
-                        user_id: data._id
-                    }
-                });
-            } catch (err) {
-                console.error(err);
-            }
-        } else {
-            setUser(prevState => ({
-                ...prevState,
-                loading: false
-            }));
+        if (localStorage.token) {
+            setAuthToken(localStorage.token);
+        }
+        try {
+            const res = await axios.get(`http://localhost:5000/api/v1/auth`);
+            console.log(res);
+            setUser({
+                token: localStorage.getItem('token'),
+                isAuthenticated: true,
+                loading: false,
+                user: res
+            });
+        } catch (err) {
+            localStorage.removeItem('token');
+            setUser({
+                token: null,
+                isAuthenticated: false,
+                loading: false,
+                user: null
+            });
+            console.error(err);
         }
     }
 
@@ -59,18 +62,18 @@ function UserProvider({ children }) {
                 body,
                 config
             );
-            const { data } = res;
-            setUser({
-                isAuthenticated: true,
-                loading: false,
-                user: {
-                    username: data.username,
-                    user_id: data._id
-                }
-            });
-            Cookies.set('user', data._id, { expires: 7 });
-            setAlert(`Welcome, ${data.username}!`, 'success');
+            console.log(res);
+            localStorage.setItem('token', res.data.token);
+            loadUser();
+            setAlert(`Thanks for registering, ${username}!`, 'success');
         } catch (err) {
+            localStorage.removeItem('token');
+            setUser({
+                token: null,
+                isAuthenticated: false,
+                loading: false,
+                user: null
+            });
             setAlert(err.response.data, 'danger');
             console.error(err);
         }
@@ -89,18 +92,18 @@ function UserProvider({ children }) {
                 body,
                 config
             );
-            const { data } = res;
-            setUser({
-                isAuthenticated: true,
-                loading: false,
-                user: {
-                    username: data.user.username,
-                    user_id: data.user._id
-                }
-            });
-            Cookies.set('user', data.user._id, { expires: 7 });
-            setAlert(`Welcome back, ${data.user.username}!`, 'success');
+            console.log(res);
+            localStorage.setItem('token', res.data.token);
+            loadUser();
+            setAlert(`Welcome back, ${username}!`, 'success');
         } catch (err) {
+            localStorage.removeItem('token');
+            setUser({
+                token: null,
+                isAuthenticated: false,
+                loading: false,
+                user: null
+            });
             setAlert('Incorrect username or password.', 'danger');
             console.error(err);
         }
@@ -108,9 +111,10 @@ function UserProvider({ children }) {
 
     async function logout() {
         try {
-            await axios.get('http://localhost:5000/api/v1/auth/logout');
-            Cookies.remove('user');
+            await axios.get('http://localhost:5000/api/v1/auth/logout'); // Don't need this...
+            localStorage.removeItem('token');
             setUser({
+                token: null,
                 isAuthenticated: false,
                 loading: false,
                 user: {}
