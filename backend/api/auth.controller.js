@@ -67,10 +67,4 @@ export default class AuthController {
             }
         );
     }
-
-    // Don't need this...
-    static async apiLogoutUser(req, res, next) {
-        req.logout();
-        res.json('User logged out.');
-    }
 }

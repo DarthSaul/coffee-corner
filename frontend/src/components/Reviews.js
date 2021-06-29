@@ -33,7 +33,7 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
             const res = await CoffeeDataService.createReview({
                 coffee_id: coffeeId,
                 text,
-                user_id: user.user_id
+                user_id: user._id
             });
             setAlert(`Review posted!`, 'success');
             const { review } = res.data;
@@ -42,7 +42,7 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
                 {
                     ...review,
                     owner: {
-                        _id: user.user_id,
+                        _id: user._id,
                         username: user.username
                     }
                 }
@@ -77,7 +77,7 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
                 {
                     ...review,
                     owner: {
-                        _id: user.user_id,
+                        _id: user._id,
                         username: user.username
                     }
                 }
@@ -127,7 +127,7 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
                                     </p>
                                     {!loading &&
                                         user &&
-                                        user.user_id === review.owner._id && (
+                                        user._id === review.owner._id && (
                                             <>
                                                 <button
                                                     className='btn btn-sm btn-warning mb-3 me-2'

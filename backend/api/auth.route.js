@@ -7,15 +7,13 @@ const router = express.Router();
 
 router.route('/').get(auth, AuthCtrl.apiGetUser);
 
+router.route('/register').post(AuthCtrl.apiRegisterUser);
+
 router.route('/login').post(
     passport.authenticate('local', {
         failureFlash: true
     }),
     AuthCtrl.apiLoginUser
 );
-
-router.route('/register').post(AuthCtrl.apiRegisterUser);
-
-router.route('/logout').get(AuthCtrl.apiLogoutUser);
 
 export default router;

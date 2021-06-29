@@ -6,11 +6,12 @@ import coffee from './api/coffee.route.js';
 import auth from './api/auth.route.js';
 
 import session from 'express-session';
-import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
 import flash from 'connect-flash';
-import MongoStore from 'connect-mongo';
+
+// import cookieParser from 'cookie-parser';
+// import MongoStore from 'connect-mongo';
 
 import dotenv from 'dotenv';
 dotenv.config();

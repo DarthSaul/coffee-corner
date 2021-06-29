@@ -30,12 +30,11 @@ function UserProvider({ children }) {
         }
         try {
             const res = await axios.get(`http://localhost:5000/api/v1/auth`);
-            console.log(res);
             setUser({
                 token: localStorage.getItem('token'),
                 isAuthenticated: true,
                 loading: false,
-                user: res
+                user: res.data.user
             });
         } catch (err) {
             localStorage.removeItem('token');
@@ -62,7 +61,6 @@ function UserProvider({ children }) {
                 body,
                 config
             );
-            console.log(res);
             localStorage.setItem('token', res.data.token);
             loadUser();
             setAlert(`Thanks for registering, ${username}!`, 'success');
@@ -92,7 +90,6 @@ function UserProvider({ children }) {
                 body,
                 config
             );
-            console.log(res);
             localStorage.setItem('token', res.data.token);
             loadUser();
             setAlert(`Welcome back, ${username}!`, 'success');
@@ -110,19 +107,14 @@ function UserProvider({ children }) {
     }
 
     async function logout() {
-        try {
-            await axios.get('http://localhost:5000/api/v1/auth/logout'); // Don't need this...
-            localStorage.removeItem('token');
-            setUser({
-                token: null,
-                isAuthenticated: false,
-                loading: false,
-                user: {}
-            });
-            setAlert(`Successfully logged out.`, 'secondary');
-        } catch (err) {
-            console.error(err);
-        }
+        localStorage.removeItem('token');
+        setUser({
+            token: null,
+            isAuthenticated: false,
+            loading: false,
+            user: null
+        });
+        setAlert(`Successfully logged out.`, 'secondary');
     }
 
     return (
