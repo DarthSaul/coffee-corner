@@ -5,6 +5,7 @@ import { UserContext } from '../contexts/UserContext';
 import { AlertContext } from '../contexts/AlertContext';
 
 import CoffeeDataService from '../services/coffees';
+import setAuthToken from '../services/setAuthToken';
 
 import AddReview from './AddReview';
 import EditReview from './EditReview';
@@ -23,7 +24,7 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
     }, [coffeeReviews]);
 
     const {
-        userObj: { user, loading }
+        userObj: { token, user, loading }
     } = useContext(UserContext);
 
     const { setAlert } = useContext(AlertContext);
@@ -97,6 +98,7 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
 
     const deleteReview = async (reviewId, index) => {
         try {
+            setAuthToken(token);
             await CoffeeDataService.deleteReview(reviewId);
             setReviews(prevState => {
                 prevState.splice(index, 1);
@@ -143,12 +145,13 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
                                                 </button>
                                                 <button
                                                     className='btn btn-sm btn-danger mb-3'
-                                                    onClick={() =>
+                                                    onClick={e => {
+                                                        e.preventDefault();
                                                         deleteReview(
                                                             review._id,
                                                             ind
-                                                        )
-                                                    }
+                                                        );
+                                                    }}
                                                 >
                                                     Delete
                                                 </button>

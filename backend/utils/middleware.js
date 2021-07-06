@@ -5,8 +5,10 @@ dotenv.config();
 import Review from '../models/Review.js';
 
 export const auth = (req, res, next) => {
+    console.log(req.headers);
     const token = req.header('x-auth-token');
     if (!token) {
+        console.log('No token.');
         return res.status(401).json({ msg: 'No token, authorization denied.' });
     }
     try {
@@ -19,12 +21,17 @@ export const auth = (req, res, next) => {
 };
 
 export const isReviewOwner = async (req, res, next) => {
-    const { review_id } = req.body;
-    const review = await Review.findById(review_id);
-    if (!review.owner.equals(req.user.id)) {
-        return res
-            .status(401)
-            .json({ msg: 'You do not have permission to do that' });
+    try {
+        const { id } = req.query;
+        const review = await Review.findById(id);
+        if (!review.owner.equals(req.user.id)) {
+            return res
+                .status(401)
+                .json({ msg: 'You do not have permission to do that' });
+        }
+        return next();
+    } catch (err) {
+        console.log('Whoops, something went wrong...');
+        return next();
     }
-    next();
 };

@@ -6,10 +6,6 @@ import setAuthToken from '../services/setAuthToken';
 
 const UserContext = React.createContext();
 
-if (localStorage.token) {
-    setAuthToken(localStorage.token);
-}
-
 function UserProvider({ children }) {
     const [userObj, setUser] = useState({
         token: localStorage.getItem('token'),
@@ -25,10 +21,10 @@ function UserProvider({ children }) {
     }, []);
 
     async function loadUser() {
-        if (localStorage.token) {
-            setAuthToken(localStorage.token);
-        }
         try {
+            if (localStorage.token) {
+                setAuthToken(localStorage.token);
+            }
             const res = await axios.get(`http://localhost:5000/api/v1/auth`);
             setUser({
                 token: localStorage.getItem('token'),
