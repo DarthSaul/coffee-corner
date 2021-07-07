@@ -18,7 +18,7 @@ dotenv.config();
 
 import User from './models/User.js';
 
-app.use(cors({ credentials: true }));
+app.use(cors());
 app.use(express.json());
 
 // const dbUrl = process.env.MONGO_DB_URI;
@@ -51,11 +51,6 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
-// app.use((req, res, next) => {
-//     console.log(req.user);
-//     next();
-// });
 
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/coffee', coffee);

@@ -5,7 +5,6 @@ import { UserContext } from '../contexts/UserContext';
 import { AlertContext } from '../contexts/AlertContext';
 
 import CoffeeDataService from '../services/coffees';
-import setAuthToken from '../services/setAuthToken';
 
 import AddReview from './AddReview';
 import EditReview from './EditReview';
@@ -24,7 +23,7 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
     }, [coffeeReviews]);
 
     const {
-        userObj: { token, user, loading }
+        userObj: { user, loading }
     } = useContext(UserContext);
 
     const { setAlert } = useContext(AlertContext);
@@ -98,7 +97,6 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
 
     const deleteReview = async (reviewId, index) => {
         try {
-            setAuthToken(token);
             await CoffeeDataService.deleteReview(reviewId);
             setReviews(prevState => {
                 prevState.splice(index, 1);

@@ -17,14 +17,15 @@ function UserProvider({ children }) {
     const { setAlert } = useContext(AlertContext);
 
     useEffect(() => {
+        if (localStorage.token) {
+            setAuthToken(localStorage.token);
+        }
         loadUser();
     }, []);
 
     async function loadUser() {
         try {
-            if (localStorage.token) {
-                setAuthToken(localStorage.token);
-            }
+            setAuthToken(localStorage.token);
             const res = await axios.get(`http://localhost:5000/api/v1/auth`);
             setUser({
                 token: localStorage.getItem('token'),

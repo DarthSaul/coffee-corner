@@ -4,14 +4,15 @@ export default class ReviewsController {
     static async apiPostReview(req, res, next) {
         try {
             const { coffee_id, text, user_id } = req.body;
-            const reviewResponse = await ReviewsDAO.addReview(
+            const response = await ReviewsDAO.addReview(
                 coffee_id,
                 text,
                 user_id
             );
-            const { review } = reviewResponse;
+            const { review } = response;
             res.json({ status: 'success', review });
         } catch (err) {
+            console.log(err);
             res.status(500).json({ error: err.message });
         }
     }
@@ -19,12 +20,12 @@ export default class ReviewsController {
     static async apiUpdateReview(req, res, next) {
         try {
             const { review_id, text } = req.body;
-            const reviewResponse = await ReviewsDAO.updateReview(
+            const response = await ReviewsDAO.updateReview(
                 review_id,
                 text,
                 Date.now()
             );
-            const { error, review } = reviewResponse;
+            const { error, review } = response;
             if (error) {
                 return res.status(400).json({ error });
             }
@@ -37,8 +38,8 @@ export default class ReviewsController {
     static async apiDeleteReview(req, res, next) {
         try {
             const { id } = req.query;
-            const reviewResponse = await ReviewsDAO.deleteReview(id);
-            const { deletedReview } = reviewResponse;
+            const response = await ReviewsDAO.deleteReview(id);
+            const { deletedReview } = response;
             res.json({ status: 'success', deletedReview });
         } catch (err) {
             res.status(500).json({ error: err.message });
