@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import { UserContext } from '../contexts/UserContext';
-import { AlertContext } from '../contexts/AlertContext';
+import { UserContext } from '../../contexts/UserContext';
+import { AlertContext } from '../../contexts/AlertContext';
 
-import CoffeeDataService from '../services/coffees';
+import CoffeeDataService from '../../services/coffees';
 
 import AddReview from './AddReview';
 import EditReview from './EditReview';
@@ -23,18 +23,21 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
     }, [coffeeReviews]);
 
     const {
-        userObj: { user, loading }
+        userObj: { token, user, loading }
     } = useContext(UserContext);
 
     const { setAlert } = useContext(AlertContext);
 
     const handleReviewSubmit = async text => {
         try {
-            const res = await CoffeeDataService.createReview({
-                coffee_id: coffeeId,
-                text,
-                user_id: user._id
-            });
+            const res = await CoffeeDataService.createReview(
+                {
+                    coffee_id: coffeeId,
+                    text,
+                    user_id: user._id
+                },
+                token
+            );
             setAlert(`Review posted!`, 'success');
             const { review } = res.data;
             setReviews(prevState => [
@@ -67,10 +70,13 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
 
     const handleEditSubmit = async (reviewId, text) => {
         try {
-            const res = await CoffeeDataService.updateReview({
-                review_id: reviewId,
-                text: text
-            });
+            const res = await CoffeeDataService.updateReview(
+                {
+                    review_id: reviewId,
+                    text: text
+                },
+                token
+            );
             const { review } = res.data;
             setReviews(prevState => [
                 ...prevState,
@@ -91,13 +97,24 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
             window.scrollTo(0, 0);
             setAlert(`Review updated!`, 'success');
         } catch (err) {
-            console.log(err);
+            setEdit({
+                reviewId: null,
+                reviewText: '',
+                show: false,
+                ind: null
+            });
+            window.scrollTo(0, 0);
+            setAlert(
+                `${err.response.data.msg}. Please refresh the page.`,
+                'danger'
+            );
+            console.error(err);
         }
     };
 
     const deleteReview = async (reviewId, index) => {
         try {
-            await CoffeeDataService.deleteReview(reviewId);
+            await CoffeeDataService.deleteReview(reviewId, token);
             setReviews(prevState => {
                 prevState.splice(index, 1);
                 return [...prevState];

@@ -11,8 +11,8 @@ router.route('/distributors').get(CoffeeCtrl.apiGetCoffeeDist);
 
 router
     .route('/review')
-    .post(ReviewsCtrl.apiPostReview)
-    .put(ReviewsCtrl.apiUpdateReview)
-    .delete(ReviewsCtrl.apiDeleteReview);
+    .post(auth, ReviewsCtrl.apiPostReview)
+    .put(auth, isReviewOwner, ReviewsCtrl.apiUpdateReview)
+    .delete(auth, isReviewOwner, ReviewsCtrl.apiDeleteReview);
 
 export default router;

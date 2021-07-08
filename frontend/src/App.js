@@ -4,12 +4,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import './App.css';
 
-import Alert from './components/Alert';
-import Navigation from './components/Nav';
-import CoffeeList from './components/CoffeeList';
-import CoffeeItem from './components/CoffeeItem';
-import Login from './components/Login';
-import Register from './components/Register';
+import Alert from './components/layout/Alert';
+import Navigation from './components/layout/Nav';
+import Login from './components/layout/Login';
+import Register from './components/layout/Register';
+
+import CoffeeList from './components/coffee/CoffeeList';
+import CoffeeItem from './components/coffee/CoffeeItem';
 
 const App = () => (
     <Router>

@@ -15,15 +15,18 @@ class CoffeeDataService {
         );
     }
 
-    createReview(data) {
+    createReview(data, token) {
+        http.defaults.headers.common['x-auth-token'] = token;
         return http.post('/review', data);
     }
 
-    updateReview(data) {
+    updateReview(data, token) {
+        http.defaults.headers.common['x-auth-token'] = token;
         return http.put('/review', data);
     }
 
-    deleteReview(id) {
+    deleteReview(id, token) {
+        http.defaults.headers.common['x-auth-token'] = token;
         return http.delete(`/review?id=${id}`);
     }
 

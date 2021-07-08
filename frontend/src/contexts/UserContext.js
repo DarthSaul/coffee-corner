@@ -17,15 +17,14 @@ function UserProvider({ children }) {
     const { setAlert } = useContext(AlertContext);
 
     useEffect(() => {
-        if (localStorage.token) {
-            setAuthToken(localStorage.token);
-        }
         loadUser();
     }, []);
 
     async function loadUser() {
         try {
-            setAuthToken(localStorage.token);
+            if (localStorage.token) {
+                setAuthToken(localStorage.token);
+            }
             const res = await axios.get(`http://localhost:5000/api/v1/auth`);
             setUser({
                 token: localStorage.getItem('token'),
@@ -62,15 +61,9 @@ function UserProvider({ children }) {
             loadUser();
             setAlert(`Thanks for registering, ${username}!`, 'success');
         } catch (err) {
-            localStorage.removeItem('token');
-            setUser({
-                token: null,
-                isAuthenticated: false,
-                loading: false,
-                user: null
-            });
-            setAlert(err.response.data, 'danger');
-            console.error(err);
+            const error = err.response.data;
+            setAlert(error, 'danger');
+            authError(error);
         }
     }
 
@@ -91,19 +84,18 @@ function UserProvider({ children }) {
             loadUser();
             setAlert(`Welcome back, ${username}!`, 'success');
         } catch (err) {
-            localStorage.removeItem('token');
-            setUser({
-                token: null,
-                isAuthenticated: false,
-                loading: false,
-                user: null
-            });
             setAlert('Incorrect username or password.', 'danger');
-            console.error(err);
+            const error = err.response.data;
+            authError(error);
         }
     }
 
     async function logout() {
+        authError();
+        setAlert(`Successfully logged out.`, 'secondary');
+    }
+
+    function authError(error) {
         localStorage.removeItem('token');
         setUser({
             token: null,
@@ -111,12 +103,14 @@ function UserProvider({ children }) {
             loading: false,
             user: null
         });
-        setAlert(`Successfully logged out.`, 'secondary');
+        if (error) {
+            console.error(error);
+        }
     }
 
     return (
         <UserContext.Provider
-            value={{ userObj, loadUser, register, login, logout }}
+            value={{ userObj, loadUser, register, login, logout, authError }}
         >
             {children}
         </UserContext.Provider>

@@ -4,8 +4,8 @@ import capitalize from 'capitalize';
 
 import Reviews from './Reviews';
 
-import CoffeeDataService from '../services/coffees';
-import coffeePic from '../img/coffee_beans_ground.jpg';
+import CoffeeDataService from '../../services/coffees';
+import coffeePic from '../../img/coffee_beans_ground.jpg';
 
 const CoffeeItem = () => {
     const [coffeeState, setCoffeeState] = useState({
