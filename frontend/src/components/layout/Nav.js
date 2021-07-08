@@ -63,12 +63,20 @@ const Navigation = () => {
                                 </>
                             ) : (
                                 !loading && (
-                                    <span
-                                        className='nav-link'
-                                        onClick={handleLogout}
-                                    >
-                                        Logout
-                                    </span>
+                                    <>
+                                        <Link
+                                            className='nav-link'
+                                            to='/dashboard'
+                                        >
+                                            Dashboard
+                                        </Link>
+                                        <span
+                                            className='nav-link'
+                                            onClick={handleLogout}
+                                        >
+                                            Logout
+                                        </span>
+                                    </>
                                 )
                             )}
                         </div>

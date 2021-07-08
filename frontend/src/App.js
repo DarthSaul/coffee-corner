@@ -9,6 +9,10 @@ import Navigation from './components/layout/Nav';
 import Login from './components/layout/Login';
 import Register from './components/layout/Register';
 
+import Dashboard from './components/dashboard/Dashboard';
+
+import CreateProfile from './components/profile/CreateProfile';
+
 import CoffeeList from './components/coffee/CoffeeList';
 import CoffeeItem from './components/coffee/CoffeeItem';
 
@@ -29,6 +33,12 @@ const App = () => (
                 </Route>
                 <Route exact path='/register'>
                     <Register />
+                </Route>
+                <Route exact path='/dashboard'>
+                    <Dashboard />
+                </Route>
+                <Route exact path='/profile/create'>
+                    <CreateProfile />
                 </Route>
             </Switch>
         </div>
