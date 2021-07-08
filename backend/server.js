@@ -2,19 +2,19 @@ import express from 'express';
 const app = express();
 
 import cors from 'cors';
-import coffee from './api/coffee.route.js';
-import auth from './api/auth.route.js';
-
 import session from 'express-session';
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
 import flash from 'connect-flash';
-
+import dotenv from 'dotenv';
 // import cookieParser from 'cookie-parser';
 // import MongoStore from 'connect-mongo';
 
-import dotenv from 'dotenv';
 dotenv.config();
+
+import coffee from './api/coffee.route.js';
+import profile from './api/profile.route.js';
+import auth from './api/auth.route.js';
 
 import User from './models/User.js';
 
@@ -53,6 +53,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use('/api/v1/auth', auth);
+app.use('/api/v1/profile', profile);
 app.use('/api/v1/coffee', coffee);
 app.use('*', (req, res) => {
     res.status(404).json({ error: 'not found' });

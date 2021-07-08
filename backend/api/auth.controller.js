@@ -8,10 +8,10 @@ export default class AuthController {
     static async apiGetUser(req, res, next) {
         try {
             const user = await UserDAO.getUser(req.user.id);
-            return res.json(user);
+            res.json(user);
         } catch (err) {
             console.error(err.message);
-            return res.status(500).send('Server error');
+            res.status(500).send('Server error');
         }
     }
 
