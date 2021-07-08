@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import coffeeCup from '../coffee-cup.svg';
+import coffeeCup from '../../coffee-cup.svg';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Nav from 'react-bootstrap/Nav';
 
-import { UserContext } from '../contexts/UserContext';
+import { UserContext } from '../../contexts/UserContext';
 
 const Navigation = () => {
     const {
@@ -14,6 +14,7 @@ const Navigation = () => {
     } = useContext(UserContext);
 
     const history = useHistory();
+
     const handleLogout = event => {
         event.preventDefault();
         logout();

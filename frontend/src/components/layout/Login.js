@@ -1,15 +1,15 @@
 import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import { UserContext } from '../contexts/UserContext';
+import { UserContext } from '../../contexts/UserContext';
 
-const Register = () => {
+const Login = () => {
     const [formData, setFormData] = useState({
-        email: '',
         username: '',
         password: ''
     });
-    const { register, userObj } = useContext(UserContext);
+
+    const { userObj, login } = useContext(UserContext);
 
     const handleChange = event => {
         const { name, value } = event.target;
@@ -18,32 +18,22 @@ const Register = () => {
             [name]: value
         }));
     };
+
     const handleSubmit = async event => {
         event.preventDefault();
-        await register(email, username, password);
+        await login(username, password);
     };
 
     if (userObj.isAuthenticated) {
         return <Redirect to='/coffee' />;
     }
 
-    const { email, username, password } = formData;
+    const { username, password } = formData;
 
     return (
         <div className='card col-md-8 col-lg-6 m-auto p-4'>
             <div className='card-body'>
                 <form onSubmit={handleSubmit}>
-                    <div className='mb-3'>
-                        <label className='form-label'>Email</label>
-                        <input
-                            type='email'
-                            placeholder='Email'
-                            name='email'
-                            value={email}
-                            onChange={handleChange}
-                            className='form-control'
-                        />
-                    </div>
                     <div className='mb-3'>
                         <label className='form-label'>Username</label>
                         <input
@@ -75,4 +65,4 @@ const Register = () => {
     );
 };
 
-export default Register;
+export default Login;

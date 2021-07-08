@@ -6,7 +6,7 @@ import {
     faChevronLeft
 } from '@fortawesome/free-solid-svg-icons';
 
-import CoffeeDataService from '../services/coffees';
+import CoffeeDataService from '../../services/coffees';
 import capitalize from 'capitalize';
 
 const CoffeeList = () => {

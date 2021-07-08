@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import { UserContext } from '../contexts/UserContext';
-import { AlertContext } from '../contexts/AlertContext';
+import { UserContext } from '../../contexts/UserContext';
+import { AlertContext } from '../../contexts/AlertContext';
 
-import CoffeeDataService from '../services/coffees';
+import CoffeeDataService from '../../services/coffees';
 
 import AddReview from './AddReview';
 import EditReview from './EditReview';
@@ -23,18 +23,21 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
     }, [coffeeReviews]);
 
     const {
-        userObj: { user, loading }
+        userObj: { token, user, loading }
     } = useContext(UserContext);
 
     const { setAlert } = useContext(AlertContext);
 
     const handleReviewSubmit = async text => {
         try {
-            const res = await CoffeeDataService.createReview({
-                coffee_id: coffeeId,
-                text,
-                user_id: user.user_id
-            });
+            const res = await CoffeeDataService.createReview(
+                {
+                    coffee_id: coffeeId,
+                    text,
+                    user_id: user._id
+                },
+                token
+            );
             setAlert(`Review posted!`, 'success');
             const { review } = res.data;
             setReviews(prevState => [
@@ -42,7 +45,7 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
                 {
                     ...review,
                     owner: {
-                        _id: user.user_id,
+                        _id: user._id,
                         username: user.username
                     }
                 }
@@ -67,17 +70,20 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
 
     const handleEditSubmit = async (reviewId, text) => {
         try {
-            const res = await CoffeeDataService.updateReview({
-                review_id: reviewId,
-                text: text
-            });
+            const res = await CoffeeDataService.updateReview(
+                {
+                    review_id: reviewId,
+                    text: text
+                },
+                token
+            );
             const { review } = res.data;
             setReviews(prevState => [
                 ...prevState,
                 {
                     ...review,
                     owner: {
-                        _id: user.user_id,
+                        _id: user._id,
                         username: user.username
                     }
                 }
@@ -91,13 +97,24 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
             window.scrollTo(0, 0);
             setAlert(`Review updated!`, 'success');
         } catch (err) {
-            console.log(err);
+            setEdit({
+                reviewId: null,
+                reviewText: '',
+                show: false,
+                ind: null
+            });
+            window.scrollTo(0, 0);
+            setAlert(
+                `${err.response.data.msg}. Please refresh the page.`,
+                'danger'
+            );
+            console.error(err);
         }
     };
 
     const deleteReview = async (reviewId, index) => {
         try {
-            await CoffeeDataService.deleteReview(reviewId);
+            await CoffeeDataService.deleteReview(reviewId, token);
             setReviews(prevState => {
                 prevState.splice(index, 1);
                 return [...prevState];
@@ -127,7 +144,7 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
                                     </p>
                                     {!loading &&
                                         user &&
-                                        user.user_id === review.owner._id && (
+                                        user._id === review.owner._id && (
                                             <>
                                                 <button
                                                     className='btn btn-sm btn-warning mb-3 me-2'
@@ -143,12 +160,13 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
                                                 </button>
                                                 <button
                                                     className='btn btn-sm btn-danger mb-3'
-                                                    onClick={() =>
+                                                    onClick={e => {
+                                                        e.preventDefault();
                                                         deleteReview(
                                                             review._id,
                                                             ind
-                                                        )
-                                                    }
+                                                        );
+                                                    }}
                                                 >
                                                     Delete
                                                 </button>
