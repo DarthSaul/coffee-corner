@@ -26,6 +26,7 @@ const CreateProfile = () => {
             [name]: value
         }));
     };
+
     const handleSubmit = async event => {
         event.preventDefault();
         try {
@@ -43,7 +44,9 @@ const CreateProfile = () => {
             console.error(err);
         }
     };
+
     const { firstName, lastName, location } = formData;
+
     return (
         <div className='card col-md-8 col-lg-6 m-auto p-4'>
             <div className='card-body'>

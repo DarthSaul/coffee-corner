@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import {
@@ -12,8 +11,9 @@ import {
 import ProfileDataService from '../../services/profiles';
 
 import EditProfile from './EditProfile';
+import EditUser from './EditUser';
 
-const Profile = ({ loading, token, id, email }) => {
+const Profile = ({ loading, token, id, email, username }) => {
     const [profile, setProfile] = useState({
         userId: null,
         firstName: '',
@@ -136,9 +136,9 @@ const Profile = ({ loading, token, id, email }) => {
                 <EditProfile
                     firstName={firstName}
                     lastName={lastName}
-                    email={email}
                     location={location}
                 />
+                <EditUser email={email} username={username} />
             </div>
         </div>
     );

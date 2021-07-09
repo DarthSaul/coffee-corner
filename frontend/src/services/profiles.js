@@ -5,12 +5,20 @@ class ProfileDataService {
         http.defaults.headers.common['x-auth-token'] = token;
         return http.get('/profile');
     }
+    updateUser(data, token) {
+        http.defaults.headers.common['x-auth-token'] = token;
+        return http.put('/profile', data);
+    }
     getProfileById(id) {
         return http.get(`/profile/id/${id}`);
     }
     createProfile(data, token) {
         http.defaults.headers.common['x-auth-token'] = token;
         return http.post('/profile/create', data);
+    }
+    updateProfile(data, token) {
+        http.defaults.headers.common['x-auth-token'] = token;
+        return http.put('/profile/edit', data);
     }
 }
 
