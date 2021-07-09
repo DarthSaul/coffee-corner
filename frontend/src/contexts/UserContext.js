@@ -110,7 +110,15 @@ function UserProvider({ children }) {
 
     return (
         <UserContext.Provider
-            value={{ userObj, loadUser, register, login, logout, authError }}
+            value={{
+                userObj,
+                setUser,
+                loadUser,
+                register,
+                login,
+                logout,
+                authError
+            }}
         >
             {children}
         </UserContext.Provider>

@@ -63,19 +63,16 @@ const Profile = ({ loading, token, id, email }) => {
                                 className='rounded-circle'
                                 width='150'
                             />
-                            <div className='my-4'>
+                            <div className='mt-4'>
                                 <h1>{fullName}</h1>
-                                <p className='text-muted fs-2'>{location}</p>
-                                <div className='flex'>
+                                <p className='text-muted fs-3'>{location}</p>
+                                <div className='d-flex justify-content-center'>
                                     <FontAwesomeIcon
                                         icon={faInstagram}
                                         size='2x'
                                     />
                                 </div>
                             </div>
-                            <Link to='/profile/edit' className='fw-light'>
-                                Edit
-                            </Link>
                         </div>
                     </div>
                 </div>
