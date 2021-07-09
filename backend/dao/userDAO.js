@@ -40,4 +40,18 @@ export default class UserDAO {
             console.error(err);
         }
     }
+    static async updateProfile(id, profileData) {
+        try {
+            const updatedUser = await User.findByIdAndUpdate(
+                id,
+                {
+                    profile: profileData
+                },
+                { new: true }
+            ).select('-password');
+            return updatedUser.profile;
+        } catch (error) {
+            console.error(err);
+        }
+    }
 }

@@ -31,4 +31,17 @@ export default class ProfileController {
             res.status(500).json({ error: err.message });
         }
     }
+
+    static async apiUpdateProfile(req, res, next) {
+        try {
+            const updatedProfile = await UserDAO.updateProfile(
+                req.user.id,
+                req.body
+            );
+            res.json({ status: 'succes', updatedProfile });
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({ error: err.message });
+        }
+    }
 }

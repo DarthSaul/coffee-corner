@@ -1,4 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+
+import ProfileDataService from '../../services/profiles';
+
+import { AlertContext } from '../../contexts/AlertContext';
+import { UserContext } from '../../contexts/UserContext';
 
 const EditProfile = ({ firstName, lastName, location, email }) => {
     const [formData, setFormData] = useState({
@@ -7,6 +12,12 @@ const EditProfile = ({ firstName, lastName, location, email }) => {
         loc: '',
         mail: ''
     });
+
+    const {
+        loadUser,
+        userObj: { token }
+    } = useContext(UserContext);
+    const { setAlert } = useContext(AlertContext);
 
     useEffect(() => {
         setFormData({
@@ -23,10 +34,23 @@ const EditProfile = ({ firstName, lastName, location, email }) => {
         setEditState(prevState => !prevState);
     };
 
-    const handleSubmit = event => {
+    const handleSubmit = async event => {
         event.preventDefault();
-        console.log('Making request to PUT route...');
-        setEditState(prevState => !prevState);
+        try {
+            console.log('Making request to PUT route...');
+            const res = await ProfileDataService.updateProfile(
+                {
+                    firstName: first,
+                    lastName: last,
+                    location: loc
+                },
+                token
+            );
+            console.log(res);
+            setEditState(prevState => !prevState);
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     const handleChange = event => {
