@@ -10,6 +10,10 @@ const EditUser = ({ email, username }) => {
         mail: '',
         uName: ''
     });
+    const [original] = useState({
+        email,
+        username
+    });
 
     const { loadUser, setUser, userObj } = useContext(UserContext);
 
@@ -25,17 +29,27 @@ const EditUser = ({ email, username }) => {
     const [editState, setEditState] = useState(false);
 
     const toggleEdit = event => {
+        setFormData({
+            mail: email,
+            uName: username
+        });
         setEditState(prevState => !prevState);
     };
 
+    const { mail, uName } = formData;
+
     const handleSubmit = async event => {
         event.preventDefault();
+        const data = {};
+        if (mail !== original.email) {
+            data.email = mail;
+        }
+        if (uName !== original.username) {
+            data.username = uName;
+        }
         try {
             const res = await ProfileDataService.updateUser(
-                {
-                    email: mail,
-                    username: uName
-                },
+                data,
                 userObj.token
             );
             const { error } = res.data;
@@ -64,8 +78,6 @@ const EditUser = ({ email, username }) => {
             [name]: value
         }));
     };
-
-    const { mail, uName } = formData;
 
     return (
         <div className='card mb-3'>

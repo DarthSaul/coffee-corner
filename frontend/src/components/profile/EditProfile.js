@@ -27,6 +27,11 @@ const EditProfile = ({ firstName, lastName, location }) => {
     const [editState, setEditState] = useState(false);
 
     const toggleEdit = event => {
+        setFormData({
+            first: firstName,
+            last: lastName,
+            loc: location
+        });
         setEditState(prevState => !prevState);
     };
 

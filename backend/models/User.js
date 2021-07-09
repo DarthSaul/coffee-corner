@@ -47,8 +47,18 @@ const options = {
 userSchema.plugin(passportLocalMongoose, options);
 
 userSchema.post('save', (error, doc, next) => {
-    if (error.name === 'MongoError' && error.code === 11000) {
+    if (
+        error.name === 'MongoError' &&
+        error.code === 11000 &&
+        error.keyValue.email
+    ) {
         next(new Error('Email is already associated with an account.'));
+    } else if (
+        error.name === 'MongoError' &&
+        error.code === 11000 &&
+        error.keyValue.username
+    ) {
+        next(new Error('Username is unavailable. Please try another.'));
     } else {
         next(error);
     }
