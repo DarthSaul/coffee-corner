@@ -6,7 +6,24 @@ export default class UserDAO {
             const user = await User.findById(id).select('-password');
             return { user };
         } catch (err) {
-            console.error(err.message);
+            console.error(err);
+            return { error: err.message };
+        }
+    }
+    static async updateUser(id, { email, username }) {
+        try {
+            const user = await User.findById(id).select('-password');
+            if (username) {
+                user.username = username;
+                await user.save();
+            }
+            if (email) {
+                user.email = email;
+                await user.save();
+            }
+            return { user };
+        } catch (err) {
+            console.error(err);
             return { error: err.message };
         }
     }
@@ -16,7 +33,7 @@ export default class UserDAO {
             const registerUser = await User.register(newUser, password);
             return { registerUser };
         } catch (err) {
-            console.error(err.message);
+            console.error(err);
             return { error: err.message };
         }
     }
@@ -26,7 +43,7 @@ export default class UserDAO {
             const { profile } = user;
             return { profile };
         } catch (err) {
-            console.error(err.message);
+            console.error(err);
             return { error: err.message };
         }
     }
@@ -38,6 +55,7 @@ export default class UserDAO {
             return user.profile;
         } catch (err) {
             console.error(err);
+            return { error: err.message };
         }
     }
     static async updateProfile(id, profileData) {
@@ -52,6 +70,7 @@ export default class UserDAO {
             return updatedUser.profile;
         } catch (error) {
             console.error(err);
+            return { error: err.message };
         }
     }
 }

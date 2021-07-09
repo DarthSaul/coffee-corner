@@ -5,11 +5,10 @@ import ProfileDataService from '../../services/profiles';
 import { AlertContext } from '../../contexts/AlertContext';
 import { UserContext } from '../../contexts/UserContext';
 
-const EditProfile = ({ firstName, lastName, location }) => {
+const EditUser = ({ email, username }) => {
     const [formData, setFormData] = useState({
-        first: '',
-        last: '',
-        loc: ''
+        mail: '',
+        uName: ''
     });
 
     const { loadUser, setUser, userObj } = useContext(UserContext);
@@ -18,11 +17,10 @@ const EditProfile = ({ firstName, lastName, location }) => {
 
     useEffect(() => {
         setFormData({
-            first: firstName,
-            last: lastName,
-            loc: location
+            mail: email,
+            uName: username
         });
-    }, [firstName, lastName, location]);
+    }, [email, username]);
 
     const [editState, setEditState] = useState(false);
 
@@ -33,14 +31,17 @@ const EditProfile = ({ firstName, lastName, location }) => {
     const handleSubmit = async event => {
         event.preventDefault();
         try {
-            await ProfileDataService.updateProfile(
+            const res = await ProfileDataService.updateUser(
                 {
-                    firstName: first,
-                    lastName: last,
-                    location: loc
+                    email: mail,
+                    username: uName
                 },
                 userObj.token
             );
+            const { error } = res.data;
+            if (error) {
+                throw new Error(error);
+            }
             setUser(prevState => ({
                 ...prevState,
                 loading: true
@@ -48,8 +49,10 @@ const EditProfile = ({ firstName, lastName, location }) => {
             await loadUser();
             setEditState(prevState => !prevState);
             window.scroll(0, 0);
-            setAlert('Profile updated!', 'success');
+            setAlert('User info updated!', 'success');
         } catch (err) {
+            window.scroll(0, 0);
+            setAlert(err.message, 'danger');
             console.error(err);
         }
     };
@@ -62,7 +65,7 @@ const EditProfile = ({ firstName, lastName, location }) => {
         }));
     };
 
-    const { first, last, loc } = formData;
+    const { mail, uName } = formData;
 
     return (
         <div className='card mb-3'>
@@ -70,44 +73,29 @@ const EditProfile = ({ firstName, lastName, location }) => {
                 <form className='my-2' onSubmit={handleSubmit}>
                     <div className='row mb-3'>
                         <label className='col-sm-3 col-xl-2 col-form-label'>
-                            First Name
+                            Email
                         </label>
                         <div className='col-sm-9 col-xl-10'>
                             <input
                                 disabled={!editState}
-                                type='text'
-                                name='first'
-                                value={first}
+                                type='email'
+                                name='mail'
+                                value={mail}
                                 onChange={handleChange}
                                 className='form-control'
                             />
                         </div>
                     </div>
                     <div className='row mb-3'>
-                        <label className='col-sm-3 col-xl-2  col-form-label'>
-                            Last Name
+                        <label className='col-sm-3 col-xl-2 col-form-label'>
+                            Username
                         </label>
                         <div className='col-sm-9 col-xl-10'>
                             <input
                                 disabled={!editState}
                                 type='text'
-                                name='last'
-                                value={last}
-                                onChange={handleChange}
-                                className='form-control'
-                            />
-                        </div>
-                    </div>
-                    <div className='row mb-3'>
-                        <label className='col-sm-3 col-xl-2  col-form-label'>
-                            Location
-                        </label>
-                        <div className='col-sm-9 col-xl-10'>
-                            <input
-                                disabled={!editState}
-                                type='text'
-                                name='loc'
-                                value={loc}
+                                name='uName'
+                                value={uName}
                                 onChange={handleChange}
                                 className='form-control'
                             />
@@ -140,4 +128,4 @@ const EditProfile = ({ firstName, lastName, location }) => {
     );
 };
 
-export default EditProfile;
+export default EditUser;

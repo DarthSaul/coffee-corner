@@ -18,6 +18,7 @@ const Dashboard = () => {
                     loading={loading}
                     id={user._id}
                     email={user.email}
+                    username={user.username}
                 />
             ) : (
                 <Link to='/profile/create' className='btn btn-success'>
