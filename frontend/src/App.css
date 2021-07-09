@@ -7,6 +7,10 @@
 body {
     background-color: var(--dark-color);
 }
+.landing-page {
+    background: center/100%
+        url('https://res.cloudinary.com/darthsaul/image/upload/v1625863643/Coffee-Corner/beans_fwb3li.jpg');
+}
 .btn-theme {
     background-color: var(--dark-color);
     border-color: var(--neutral-color);

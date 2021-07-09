@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { Route, Redirect, useHistory } from 'react-router-dom';
-import { UserContext } from '../contexts/UserContext';
-import { AlertContext } from '../contexts/AlertContext';
+import { UserContext } from '../../contexts/UserContext';
+import { AlertContext } from '../../contexts/AlertContext';
 
 const PrivateRoute = ({ children, ...rest }) => {
     const {
