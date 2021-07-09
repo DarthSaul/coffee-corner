@@ -7,6 +7,7 @@ export default class UserDAO {
             return { user };
         } catch (err) {
             console.error(err.message);
+            return { error: err.message };
         }
     }
     static async registerUser(email, username, password) {
@@ -15,7 +16,28 @@ export default class UserDAO {
             const registerUser = await User.register(newUser, password);
             return { registerUser };
         } catch (err) {
+            console.error(err.message);
             return { error: err.message };
+        }
+    }
+    static async getProfile(id) {
+        try {
+            const user = await User.findById(id).select('-password');
+            const { profile } = user;
+            return { profile };
+        } catch (err) {
+            console.error(err.message);
+            return { error: err.message };
+        }
+    }
+    static async createProfile(id, profileData) {
+        try {
+            const user = await User.findById(id).select('-password');
+            user.profile = profileData;
+            await user.save();
+            return user.profile;
+        } catch (err) {
+            console.error(err);
         }
     }
 }

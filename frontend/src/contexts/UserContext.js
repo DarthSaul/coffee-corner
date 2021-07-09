@@ -11,7 +11,7 @@ function UserProvider({ children }) {
         token: localStorage.getItem('token'),
         isAuthenticated: null,
         loading: true,
-        user: null
+        user: {}
     });
 
     const { setAlert } = useContext(AlertContext);
@@ -38,7 +38,7 @@ function UserProvider({ children }) {
                 token: null,
                 isAuthenticated: false,
                 loading: false,
-                user: null
+                user: {}
             });
             console.error(err);
         }
@@ -101,7 +101,7 @@ function UserProvider({ children }) {
             token: null,
             isAuthenticated: false,
             loading: false,
-            user: null
+            user: {}
         });
         if (error) {
             console.error(error);
@@ -110,7 +110,15 @@ function UserProvider({ children }) {
 
     return (
         <UserContext.Provider
-            value={{ userObj, loadUser, register, login, logout, authError }}
+            value={{
+                userObj,
+                setUser,
+                loadUser,
+                register,
+                login,
+                logout,
+                authError
+            }}
         >
             {children}
         </UserContext.Provider>
