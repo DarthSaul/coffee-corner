@@ -8,6 +8,7 @@ import Alert from './components/layout/Alert';
 import Navigation from './components/layout/Nav';
 import Login from './components/layout/Login';
 import Register from './components/layout/Register';
+import NotFound from './components/layout/NotFound';
 
 import Dashboard from './components/dashboard/Dashboard';
 
@@ -15,6 +16,8 @@ import CreateProfile from './components/profile/CreateProfile';
 
 import CoffeeList from './components/coffee/CoffeeList';
 import CoffeeItem from './components/coffee/CoffeeItem';
+
+import PrivateRoute from './routing/PrivateRoute';
 
 const App = () => (
     <Router>
@@ -34,11 +37,14 @@ const App = () => (
                 <Route exact path='/register'>
                     <Register />
                 </Route>
-                <Route exact path='/dashboard'>
+                <PrivateRoute exact path='/dashboard'>
                     <Dashboard />
-                </Route>
-                <Route exact path='/profile/create'>
+                </PrivateRoute>
+                <PrivateRoute exact path='/profile/create'>
                     <CreateProfile />
+                </PrivateRoute>
+                <Route>
+                    <NotFound />
                 </Route>
             </Switch>
         </div>
