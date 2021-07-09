@@ -13,10 +13,8 @@ const EditProfile = ({ firstName, lastName, location, email }) => {
         mail: ''
     });
 
-    const {
-        loadUser,
-        userObj: { token }
-    } = useContext(UserContext);
+    const { loadUser, setUser, userObj } = useContext(UserContext);
+
     const { setAlert } = useContext(AlertContext);
 
     useEffect(() => {
@@ -37,17 +35,22 @@ const EditProfile = ({ firstName, lastName, location, email }) => {
     const handleSubmit = async event => {
         event.preventDefault();
         try {
-            console.log('Making request to PUT route...');
-            const res = await ProfileDataService.updateProfile(
+            await ProfileDataService.updateProfile(
                 {
                     firstName: first,
                     lastName: last,
                     location: loc
                 },
-                token
+                userObj.token
             );
-            console.log(res);
+            setUser(prevState => ({
+                ...prevState,
+                loading: true
+            }));
+            await loadUser();
             setEditState(prevState => !prevState);
+            window.scroll(0, 0);
+            setAlert('Profile updated!', 'success');
         } catch (err) {
             console.error(err);
         }
