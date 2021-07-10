@@ -1,0 +1,9 @@
+import express from 'express';
+import BrewCtrl from './brew.controller.js';
+import { auth } from '../utils/middleware.js';
+
+const router = express.Router();
+
+router.route('/new').post(auth, BrewCtrl.apiCreateBrew);
+
+export default router;

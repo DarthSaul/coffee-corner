@@ -1,0 +1,23 @@
+import BrewDAO from '../dao/brewDAO.js';
+
+export default class BrewController {
+    static async apiCreateBrew(req, res, next) {
+        try {
+            const { name, description, items } = req.body;
+            const response = await BrewDAO.addBrew(
+                name,
+                description,
+                items,
+                req.user.id
+            );
+            const { brew, error } = response;
+            if (error) {
+                throw new Error(error);
+            }
+            res.json({ status: 'success', brew });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: err.message });
+        }
+    }
+}
