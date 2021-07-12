@@ -5,7 +5,19 @@ export default class BrewController {
         const { brewMethods } = await BrewDAO.getBrewMethods();
         res.json(brewMethods);
     }
-
+    static async apiGetBrewById(req, res, next) {
+        try {
+            const { id } = req.params || {};
+            const brewMethod = await BrewDAO.getBrewById(id);
+            if (!brewMethod) {
+                return res.status(404).json({ error: 'Not found' });
+            }
+            res.json(brewMethod);
+        } catch (err) {
+            console.error(`api, ${err}`);
+            res.status(500).json({ error: err.message });
+        }
+    }
     static async apiCreateBrew(req, res, next) {
         try {
             const { name, description, weights, grindType, items } = req.body;

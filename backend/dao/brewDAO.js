@@ -13,6 +13,18 @@ export default class BrewDAO {
             return { error: err };
         }
     }
+    static async getBrewById(id) {
+        try {
+            const brewMethod = await BrewMethod.findById(id).populate(
+                'user',
+                'profile.firstName profile.lastName'
+            );
+            return brewMethod;
+        } catch (err) {
+            console.error(`Unable to find brew method, ${err}`);
+            return { error: err };
+        }
+    }
     static async addBrew(
         name,
         description,

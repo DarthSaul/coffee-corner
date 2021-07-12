@@ -7,9 +7,9 @@ import Reviews from './Reviews';
 import CoffeeDataService from '../../services/coffees';
 import coffeePic from '../../img/coffee_beans_ground.jpg';
 
-const CoffeeItem = () => {
+const Coffee = () => {
     const [coffeeState, setCoffeeState] = useState({
-        id: null,
+        _id: null,
         name: '',
         origin: '',
         distributor: '',
@@ -29,7 +29,7 @@ const CoffeeItem = () => {
             const coffee = await CoffeeDataService.get(id);
             setCoffeeState(coffee.data);
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
     };
 
@@ -62,4 +62,4 @@ const CoffeeItem = () => {
     );
 };
 
-export default CoffeeItem;
+export default Coffee;

@@ -11,9 +11,10 @@ import Dashboard from '../dashboard/Dashboard';
 import CreateProfile from '../profile/CreateProfile';
 
 import CoffeeList from '../coffee/CoffeeList';
-import CoffeeItem from '../coffee/CoffeeItem';
+import Coffee from '../coffee/Coffee';
 
 import BrewList from '../brewMethods/BrewList';
+import BrewMethod from '../brewMethods/BrewMethod';
 import AddBrew from '../brewMethods/AddBrew';
 
 import PrivateRoute from './PrivateRoute';
@@ -30,7 +31,7 @@ const Routes = () => {
                     <NotFound />
                 </Route>
                 <Route exact path='/coffee/:id'>
-                    <CoffeeItem />
+                    <Coffee />
                 </Route>
                 <Route exact path='/login'>
                     <Login />
@@ -41,6 +42,9 @@ const Routes = () => {
 
                 <Route exact path='/brews'>
                     <BrewList />
+                </Route>
+                <Route exact path='/brew/:id'>
+                    <BrewMethod />
                 </Route>
                 <PrivateRoute exact path='/brews/new'>
                     <AddBrew />
