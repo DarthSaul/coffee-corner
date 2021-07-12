@@ -39,4 +39,15 @@ export default class BrewController {
             res.status(500).json({ error: err.message });
         }
     }
+    static async apiDeleteBrew(req, res, next) {
+        try {
+            const { id } = req.params;
+            const response = await BrewDAO.deleteBrewMethod(id, req.user.id);
+            const { deletedBrew } = response;
+            res.json({ status: 'success', deletedBrew });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: err.message });
+        }
+    }
 }

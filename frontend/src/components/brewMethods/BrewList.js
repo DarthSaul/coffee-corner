@@ -30,9 +30,7 @@ const BrewList = () => {
                                     className='text-decoration-none brew-title'
                                 >
                                     <h5 className='card-header py-3'>
-                                        {`${capitalize(
-                                            brew.user.profile.firstName
-                                        )}'s`}{' '}
+                                        {`${capitalize(brew.user.username)}'s`}{' '}
                                         {capitalize.words(brew.name)}
                                     </h5>
                                 </Link>

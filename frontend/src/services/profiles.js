@@ -18,6 +18,7 @@ class ProfileDataService {
     }
     updateProfile(data, token) {
         http.defaults.headers.common['x-auth-token'] = token;
+        console.log(data);
         return http.put('/profile/edit', data);
     }
 }

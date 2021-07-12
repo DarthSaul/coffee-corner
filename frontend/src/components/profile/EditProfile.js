@@ -5,14 +5,14 @@ import ProfileDataService from '../../services/profiles';
 import { AlertContext } from '../../contexts/AlertContext';
 import { UserContext } from '../../contexts/UserContext';
 
-const EditProfile = ({ firstName, lastName, location }) => {
+const EditProfile = ({ profile: { firstName, lastName, location } }) => {
     const [formData, setFormData] = useState({
         first: '',
         last: '',
         loc: ''
     });
 
-    const { loadUser, setUser, userObj } = useContext(UserContext);
+    const { userObj } = useContext(UserContext);
 
     const { setAlert } = useContext(AlertContext);
 
@@ -46,11 +46,6 @@ const EditProfile = ({ firstName, lastName, location }) => {
                 },
                 userObj.token
             );
-            setUser(prevState => ({
-                ...prevState,
-                loading: true
-            }));
-            await loadUser();
             setEditState(prevState => !prevState);
             window.scroll(0, 0);
             setAlert('Profile updated!', 'success');

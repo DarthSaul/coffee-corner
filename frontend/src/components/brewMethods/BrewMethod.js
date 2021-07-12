@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import BrewDataService from '../../services/brewMethods';
 import capitalize from 'capitalize';
+
+import { UserContext } from '../../contexts/UserContext';
+import { AlertContext } from '../../contexts/AlertContext';
 
 const BrewMethod = () => {
     const [brewState, setBrewState] = useState({
@@ -14,10 +17,20 @@ const BrewMethod = () => {
         user: {}
     });
     const [loading, setLoading] = useState(true);
+    const {
+        userObj: { token }
+    } = useContext(UserContext);
+
+    const { setAlert } = useContext(AlertContext);
+
     const { id } = useParams();
+
+    const history = useHistory();
+
     useEffect(() => {
         getBrewMethod(id);
     }, [id]);
+
     const getBrewMethod = async id => {
         try {
             const brewMethod = await BrewDataService.getBrewById(id);
@@ -27,14 +40,18 @@ const BrewMethod = () => {
             console.error(err);
         }
     };
-    const {
-        name,
-        description,
-        weights,
-        grindType,
-        items,
-        user: { profile }
-    } = brewState;
+
+    const { name, description, weights, grindType, items, user } = brewState;
+
+    const deleteBrew = async () => {
+        try {
+            await BrewDataService.deleteBrew(id, token);
+            setAlert(`Brew method removed.`, 'secondary');
+            history.push('/brews');
+        } catch (err) {
+            console.error(err);
+        }
+    };
     return (
         <div className='card col-xl-10 m-auto'>
             {!loading && (
@@ -43,7 +60,7 @@ const BrewMethod = () => {
                         {capitalize.words(name)}
                     </h2>
                     <h6 className='card-subtitle mb-4 text-muted'>
-                        By {capitalize.words(profile.firstName)}
+                        By {capitalize.words(user.username)}
                     </h6>
                     <div className='card-text'>
                         <div className='mb-3'>
@@ -65,6 +82,11 @@ const BrewMethod = () => {
                                 Water: {weights.waterRatio}
                             </div>
                         )}
+                    </div>
+                    <div className='card-footer'>
+                        <button className='btn btn-danger' onClick={deleteBrew}>
+                            Delete
+                        </button>
                     </div>
                 </div>
             )}
