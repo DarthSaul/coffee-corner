@@ -20,6 +20,15 @@ body {
     background-color: var(--medium-color);
     color: white;
 }
+.btn-landing {
+    background-color: var(--neutral-color);
+    border-color: var(--medium-color);
+    color: var(--dark-color);
+}
+.btn-landing:hover {
+    background-color: var(--dark-color);
+    color: white;
+}
 .card {
     border-color: var(--neutral-color);
 }

@@ -19,21 +19,28 @@ const Profile = ({ loading, token, id, email, username }) => {
         firstName: '',
         lastName: '',
         fullName: '',
-        location: ''
+        location: '',
+        brewMethods: []
     });
     useEffect(() => {
         async function getProfile() {
             try {
                 const res = await ProfileDataService.getUserProfile(token);
                 if (res.data.profile) {
-                    const { firstName, lastName, fullName, location } =
-                        res.data.profile;
+                    const {
+                        firstName,
+                        lastName,
+                        fullName,
+                        location,
+                        brewMethods
+                    } = res.data.profile;
                     setProfile({
                         userId: id,
                         firstName,
                         lastName,
                         fullName,
-                        location
+                        location,
+                        brewMethods
                     });
                 }
             } catch (err) {
@@ -42,7 +49,8 @@ const Profile = ({ loading, token, id, email, username }) => {
                     firstName: '',
                     lastName: '',
                     fullName: '',
-                    location: ''
+                    location: '',
+                    brewMethods: []
                 });
                 console.error(err);
             }
@@ -50,7 +58,7 @@ const Profile = ({ loading, token, id, email, username }) => {
         getProfile();
     }, [loading, token, id]);
 
-    const { firstName, lastName, fullName, location } = profile;
+    const { firstName, lastName, fullName, location, brewMethods } = profile;
     return (
         <div className='row'>
             <div className='col-lg-4 mb-3'>
@@ -97,7 +105,7 @@ const Profile = ({ loading, token, id, email, username }) => {
                                 </div>
                                 <span className='col-9'>Brew Methods</span>
                                 <span className='col text-secondary text-end'>
-                                    0
+                                    {brewMethods.length}
                                 </span>
                             </div>
                         </li>

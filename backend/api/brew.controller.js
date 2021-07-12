@@ -3,10 +3,12 @@ import BrewDAO from '../dao/brewDAO.js';
 export default class BrewController {
     static async apiCreateBrew(req, res, next) {
         try {
-            const { name, description, items } = req.body;
+            const { name, description, weights, grindType, items } = req.body;
             const response = await BrewDAO.addBrew(
                 name,
                 description,
+                weights,
+                grindType,
                 items,
                 req.user.id
             );

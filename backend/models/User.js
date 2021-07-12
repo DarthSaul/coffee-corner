@@ -17,6 +17,18 @@ const profileSchema = new Schema(
             url: String,
             filename: String
         },
+        brewMethods: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'BrewMethod'
+            }
+        ],
+        coffees: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Coffee'
+            }
+        ],
         date: {
             type: Date,
             default: Date.now

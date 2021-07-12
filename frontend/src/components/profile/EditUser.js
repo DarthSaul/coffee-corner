@@ -28,7 +28,7 @@ const EditUser = ({ email, username }) => {
 
     const [editState, setEditState] = useState(false);
 
-    const toggleEdit = event => {
+    const toggleEdit = () => {
         setFormData({
             mail: email,
             uName: username

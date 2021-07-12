@@ -1,10 +1,27 @@
 import BrewMethod from '../models/BrewMethod.js';
+import User from '../models/User.js';
 
 export default class BrewDAO {
-    static async addBrew(name, description, items, user_id) {
+    static async addBrew(
+        name,
+        description,
+        weights,
+        grindType,
+        items,
+        user_id
+    ) {
         try {
-            const brew = new BrewMethod({ name, description, items });
+            const user = await User.findById(user_id);
+            const brew = new BrewMethod({
+                name,
+                description,
+                weights,
+                grindType,
+                items
+            });
+            user.profile.brewMethods.push(brew);
             brew.user = user_id;
+            await user.save();
             await brew.save();
             return { brew };
         } catch (err) {

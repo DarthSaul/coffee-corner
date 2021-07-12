@@ -14,17 +14,12 @@ const brewSchema = new Schema({
         type: String,
         required: true
     },
-    items: [
-        {
-            name: {
-                type: String,
-                required: true
-            },
-            quantity: {
-                type: Schema.Types.Mixed
-            }
-        }
-    ]
+    weights: {
+        coffee: String,
+        waterRatio: String
+    },
+    grindType: String,
+    items: [String]
 });
 
 const BrewMethod = mongoose.model('BrewMethod', brewSchema);
