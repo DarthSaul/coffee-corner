@@ -13,6 +13,7 @@ import CreateProfile from '../profile/CreateProfile';
 import CoffeeList from '../coffee/CoffeeList';
 import CoffeeItem from '../coffee/CoffeeItem';
 
+import BrewList from '../brewMethods/BrewList';
 import AddBrew from '../brewMethods/AddBrew';
 
 import PrivateRoute from './PrivateRoute';
@@ -22,7 +23,7 @@ const Routes = () => {
         <div className='container p-4 mt-4'>
             <Alert />
             <Switch>
-                <Route exact path={'/coffee'}>
+                <Route exact path='/coffee'>
                     <CoffeeList />
                 </Route>
                 <Route exact path='/coffee/new'>
@@ -37,9 +38,13 @@ const Routes = () => {
                 <Route exact path='/register'>
                     <Register />
                 </Route>
-                <Route exact path='/brews/new'>
-                    <AddBrew />
+
+                <Route exact path='/brews'>
+                    <BrewList />
                 </Route>
+                <PrivateRoute exact path='/brews/new'>
+                    <AddBrew />
+                </PrivateRoute>
 
                 <PrivateRoute exact path='/dashboard'>
                     <Dashboard />

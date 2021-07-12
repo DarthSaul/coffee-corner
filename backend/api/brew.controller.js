@@ -1,6 +1,11 @@
 import BrewDAO from '../dao/brewDAO.js';
 
 export default class BrewController {
+    static async apiGetBrews(req, res, next) {
+        const { brewMethods } = await BrewDAO.getBrewMethods();
+        res.json(brewMethods);
+    }
+
     static async apiCreateBrew(req, res, next) {
         try {
             const { name, description, weights, grindType, items } = req.body;

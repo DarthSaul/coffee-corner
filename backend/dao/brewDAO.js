@@ -2,6 +2,17 @@ import BrewMethod from '../models/BrewMethod.js';
 import User from '../models/User.js';
 
 export default class BrewDAO {
+    static async getBrewMethods() {
+        try {
+            const brewMethods = await BrewMethod.find().populate({
+                path: 'user'
+            });
+            return { brewMethods };
+        } catch (err) {
+            console.error(`Unable to retrieve brew methods, ${err}`);
+            return { error: err };
+        }
+    }
     static async addBrew(
         name,
         description,

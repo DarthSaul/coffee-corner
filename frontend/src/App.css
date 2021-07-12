@@ -29,17 +29,16 @@ body {
     background-color: var(--dark-color);
     color: white;
 }
+nav span:hover {
+    cursor: pointer;
+}
+
 .card {
     border-color: var(--neutral-color);
 }
 .card-header {
     background-color: var(--light-color);
-}
-.card-header {
     color: var(--dark-color);
-}
-nav span:hover {
-    cursor: pointer;
 }
 
 .coffee-list-card {
@@ -58,4 +57,13 @@ nav span:hover {
     background-color: var(--neutral-color);
     color: var(--dark-color);
     font-weight: 600;
+}
+
+.brew-title .card-header {
+    color: var(--dark-color);
+}
+
+.brew-title .card-header:hover {
+    background-color: var(--dark-color);
+    color: var(--light-color);
 }
