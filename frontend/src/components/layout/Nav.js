@@ -18,7 +18,7 @@ const Navigation = () => {
     const handleLogout = event => {
         event.preventDefault();
         logout();
-        history.push('/');
+        history.push('/coffee');
     };
 
     return (

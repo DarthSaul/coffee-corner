@@ -9,7 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const Profile = ({ profile }) => {
-    const { fullName, location, brewMethods } = profile;
+    const { fullName, location, brewMethods, social } = profile;
     return (
         <>
             <div className='card'>
@@ -24,9 +24,21 @@ const Profile = ({ profile }) => {
                         <div className='mt-4'>
                             <h1>{fullName}</h1>
                             <p className='text-muted fs-3'>{location}</p>
-                            <div className='d-flex justify-content-center'>
-                                <FontAwesomeIcon icon={faInstagram} size='2x' />
-                            </div>
+                            {social && social.instagram && (
+                                <div className='d-flex justify-content-center'>
+                                    <a
+                                        href={`https://www.instagram.com/${social.instagram}`}
+                                        target='_blank'
+                                        rel='noreferrer external'
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faInstagram}
+                                            size='2x'
+                                            className='text-dark'
+                                        />
+                                    </a>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

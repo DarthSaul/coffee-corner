@@ -43,10 +43,10 @@ const Coffee = () => {
                 <div className='card'>
                     <img src={coffeePic} className='card-img-top' alt='...' />
                     <div className='card-body px-4 mb-3'>
-                        <h5 className='card-title mb-2 display-2'>
+                        <h5 className='card-title mb-4 display-3'>
                             {capitalize(name)}
                         </h5>
-                        <h6 className='card-subtitle mb-2 text-muted'>
+                        <h6 className='card-subtitle fs-4 fw-light mb-2 text-muted'>
                             {capitalize.words(origin)}
                         </h6>
                         <p className='card-text'>
@@ -56,7 +56,7 @@ const Coffee = () => {
                             <strong>Roast: </strong>
                             {capitalize.words(roastType)}
                             <br />
-                            <strong>Tags: </strong>
+                            <strong>Notes: </strong>
                             {capitalize.words(tags.join(', '))}
                         </p>
                     </div>

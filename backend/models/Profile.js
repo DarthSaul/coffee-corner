@@ -20,6 +20,9 @@ const profileSchema = new Schema(
             url: String,
             filename: String
         },
+        social: {
+            instagram: String
+        },
         brewMethods: [
             {
                 type: Schema.Types.ObjectId,
