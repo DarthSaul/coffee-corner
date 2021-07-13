@@ -147,7 +147,14 @@ const AddBrew = () => {
                         </div>
                         <div className='form-text mb-3'>
                             {formData.items.length > 0
-                                ? formData.items.map(el => `${el}, `)
+                                ? formData.items.map(
+                                      (el, ind) =>
+                                          `${el}${
+                                              ind + 1 === items.length
+                                                  ? ''
+                                                  : ', '
+                                          } `
+                                  )
                                 : 'Items added will appear here.'}
                         </div>
                     </div>

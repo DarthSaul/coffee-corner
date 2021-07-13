@@ -48,18 +48,12 @@ export default class BrewDAO {
             return { error: err };
         }
     }
-    static async deleteBrewMethod(brew_id, user_id) {
+    static async deleteBrewMethod(brew_id, profile_id) {
         try {
             const deletedBrew = await BrewMethod.findByIdAndDelete(brew_id);
-            const user = await User.findById(user_id);
-            const index = user.profile.brewMethods.findIndex(
-                el => el == brew_id
-            );
-            user.profile.brewMethods.splice(
-                user.profile.brewMethods.findIndex(el => el == brew_id),
-                1
-            );
-            await user.save();
+            await Profile.findByIdAndUpdate(profile_id, {
+                $pull: { brewMethods: brew_id }
+            });
             if (deletedBrew) {
                 return { deletedBrew };
             } else {

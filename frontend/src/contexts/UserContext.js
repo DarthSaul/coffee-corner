@@ -4,6 +4,8 @@ import axios from 'axios';
 import { AlertContext } from './AlertContext';
 import setAuthToken from '../services/setAuthToken';
 
+import ProfileDataService from '../services/profiles';
+
 const UserContext = React.createContext();
 
 function UserProvider({ children }) {
@@ -11,7 +13,8 @@ function UserProvider({ children }) {
         token: localStorage.getItem('token'),
         isAuthenticated: null,
         loading: true,
-        user: {}
+        user: null,
+        profile: null
     });
 
     const { setAlert } = useContext(AlertContext);
@@ -25,12 +28,16 @@ function UserProvider({ children }) {
             if (localStorage.token) {
                 setAuthToken(localStorage.token);
             }
-            const res = await axios.get(`http://localhost:5000/api/v1/auth`);
+            const user = await axios.get(`http://localhost:5000/api/v1/auth`);
+            const profile = await ProfileDataService.getUserProfile(
+                localStorage.token
+            );
             setUser({
                 token: localStorage.getItem('token'),
                 isAuthenticated: true,
                 loading: false,
-                user: res.data.user
+                user: user.data.user,
+                profile: profile.data.profile
             });
         } catch (err) {
             localStorage.removeItem('token');
@@ -38,7 +45,8 @@ function UserProvider({ children }) {
                 token: null,
                 isAuthenticated: false,
                 loading: false,
-                user: {}
+                user: null,
+                profile: null
             });
             console.error(err);
         }
@@ -101,7 +109,8 @@ function UserProvider({ children }) {
             token: null,
             isAuthenticated: false,
             loading: false,
-            user: {}
+            user: null,
+            profile: null
         });
         if (error) {
             console.error(error);

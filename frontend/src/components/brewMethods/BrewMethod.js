@@ -17,9 +17,7 @@ const BrewMethod = () => {
         user: {}
     });
     const [loading, setLoading] = useState(true);
-    const {
-        userObj: { token }
-    } = useContext(UserContext);
+    const { userObj } = useContext(UserContext);
 
     const { setAlert } = useContext(AlertContext);
 
@@ -45,50 +43,76 @@ const BrewMethod = () => {
 
     const deleteBrew = async () => {
         try {
-            await BrewDataService.deleteBrew(id, token);
+            await BrewDataService.deleteBrew(
+                id,
+                userObj.profile._id,
+                userObj.token
+            );
             setAlert(`Brew method removed.`, 'secondary');
             history.push('/brews');
         } catch (err) {
+            setAlert(`Whoops, something went wrong.`, 'danger');
             console.error(err);
         }
     };
     return (
         <div className='card col-xl-10 m-auto'>
             {!loading && (
-                <div className='card-body p-5'>
-                    <h2 className='card-title mb-2'>
-                        {capitalize.words(name)}
-                    </h2>
-                    <h6 className='card-subtitle mb-4 text-muted'>
-                        By {capitalize.words(user.username)}
-                    </h6>
-                    <div className='card-text'>
-                        <div className='mb-3'>
-                            <strong>Description</strong>
-                            <br />
-                            {description}
-                        </div>
-                        <div className='mb-3'>
-                            <strong>Grind</strong>
-                            <br />
-                            {grindType}
-                        </div>
-                        {weights && (
+                <>
+                    <div className='card-body p-5'>
+                        <h2 className='card-title mb-2'>
+                            {capitalize.words(name)}
+                        </h2>
+                        <h6 className='card-subtitle mb-4 text-muted'>
+                            By {capitalize.words(user.username)}
+                        </h6>
+                        <div className='card-text'>
                             <div className='mb-3'>
-                                <strong>Measurements</strong>
+                                <strong>Description</strong>
                                 <br />
-                                Coffee: {weights.coffee}
-                                <br />
-                                Water: {weights.waterRatio}
+                                {description}
                             </div>
-                        )}
+                            <div className='mb-3'>
+                                <strong>Grind</strong>
+                                <br />
+                                {grindType}
+                            </div>
+                            {weights && (
+                                <div className='mb-3'>
+                                    <strong>Measurements</strong>
+                                    <br />
+                                    Coffee: {weights.coffee}
+                                    <br />
+                                    Water: {weights.waterRatio}
+                                </div>
+                            )}
+                            {items && (
+                                <div className='mb-3'>
+                                    <strong>Items</strong>
+                                    <br />
+                                    {items.map((el, ind) => (
+                                        <span key={ind}>
+                                            {el}
+                                            {ind + 1 === items.length
+                                                ? ''
+                                                : ', '}
+                                        </span>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                     </div>
-                    <div className='card-footer'>
-                        <button className='btn btn-danger' onClick={deleteBrew}>
-                            Delete
-                        </button>
-                    </div>
-                </div>
+                    {userObj.user && user._id === userObj.user._id && (
+                        <div className='card-footer ps-5'>
+                            <button
+                                className='btn btn-danger'
+                                onClick={deleteBrew}
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    )}
+                </>
             )}
         </div>
     );
