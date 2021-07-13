@@ -12,7 +12,7 @@ export default class ReviewsController {
             const { review } = response;
             res.json({ status: 'success', review });
         } catch (err) {
-            console.log(err);
+            console.error(err);
             res.status(500).json({ error: err.message });
         }
     }
@@ -31,6 +31,7 @@ export default class ReviewsController {
             }
             res.json({ status: 'success', review });
         } catch (err) {
+            console.error(err);
             res.status(500).json({ error: err });
         }
     }
@@ -42,6 +43,7 @@ export default class ReviewsController {
             const { deletedReview } = response;
             res.json({ status: 'success', deletedReview });
         } catch (err) {
+            console.error(err);
             res.status(500).json({ error: err.message });
         }
     }

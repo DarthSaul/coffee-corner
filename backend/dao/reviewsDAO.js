@@ -6,7 +6,7 @@ export default class ReviewDAO {
         try {
             const coffee = await Coffee.findById(coffee_id);
             const review = new Review({ text });
-            review.owner = user_id;
+            review.user = user_id;
             coffee.reviews.push(review);
             await coffee.save();
             await review.save();

@@ -44,7 +44,7 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
                 ...prevState,
                 {
                     ...review,
-                    owner: {
+                    user: {
                         _id: user._id,
                         username: user.username
                     }
@@ -82,7 +82,7 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
                 ...prevState,
                 {
                     ...review,
-                    owner: {
+                    user: {
                         _id: user._id,
                         username: user.username
                     }
@@ -140,11 +140,11 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
                                 >
                                     <h5 className='mb-4'>{review.text}</h5>
                                     <p className='mb-4 text-muted'>
-                                        - <i>By @{review.owner.username}</i>
+                                        - <i>By @{review.user.username}</i>
                                     </p>
                                     {!loading &&
                                         user &&
-                                        user._id === review.owner._id && (
+                                        user._id === review.user._id && (
                                             <>
                                                 <button
                                                     className='btn btn-sm btn-warning mb-3 me-2'

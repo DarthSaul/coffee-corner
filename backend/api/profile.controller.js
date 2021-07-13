@@ -1,16 +1,7 @@
 import UserDAO from '../dao/userDAO.js';
+import ProfileDAO from '../dao/profileDAO.js';
 
 export default class ProfileController {
-    static async apiGetUserProfile(req, res, next) {
-        try {
-            const profile = await UserDAO.getProfile(req.user.id);
-            res.json(profile);
-        } catch (err) {
-            console.error(err);
-            res.status(500).json({ error: err.message });
-        }
-    }
-
     static async apiUpdateUser(req, res, next) {
         try {
             const user = await UserDAO.updateUser(req.user.id, req.body);
@@ -21,10 +12,20 @@ export default class ProfileController {
         }
     }
 
+    static async apiGetUserProfile(req, res, next) {
+        try {
+            const profile = await ProfileDAO.getProfile(req.user.id);
+            res.json(profile);
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: err.message });
+        }
+    }
+
     static async apiGetProfileById(req, res, next) {
         try {
-            const { id } = req.query;
-            const profile = await UserDAO.getProfile(id);
+            const { id } = req.params;
+            const profile = await ProfileDAO.getProfile(id);
             res.json(profile);
         } catch (err) {
             console.error(err);
@@ -34,7 +35,10 @@ export default class ProfileController {
 
     static async apiCreateProfile(req, res, next) {
         try {
-            const profile = await UserDAO.createProfile(req.user.id, req.body);
+            const profile = await ProfileDAO.createProfile(
+                req.user.id,
+                req.body
+            );
             res.json({ status: 'success', profile });
         } catch (err) {
             console.error(err);
@@ -44,7 +48,7 @@ export default class ProfileController {
 
     static async apiUpdateProfile(req, res, next) {
         try {
-            const updatedProfile = await UserDAO.updateProfile(
+            const updatedProfile = await ProfileDAO.updateProfile(
                 req.user.id,
                 req.body
             );

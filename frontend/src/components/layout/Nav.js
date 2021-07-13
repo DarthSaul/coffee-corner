@@ -40,15 +40,20 @@ const Navigation = () => {
                         <Link className='nav-link' to='/'>
                             Home
                         </Link>
-                        <Link className='nav-link' to='/coffee'>
-                            Coffee
-                        </Link>
-                        <NavDropdown
-                            title='Distributors'
-                            id='basic-nav-dropdown'
-                        >
-                            <Link className='dropdown-item' to='#/3.1'>
-                                Action
+                        <NavDropdown title='Coffee'>
+                            <Link className='dropdown-item' to='/coffee'>
+                                View All
+                            </Link>
+                            <Link className='dropdown-item' to='/coffee/new'>
+                                Add New
+                            </Link>
+                        </NavDropdown>
+                        <NavDropdown title='Brew Methods'>
+                            <Link className='dropdown-item' to='/brews'>
+                                View All
+                            </Link>
+                            <Link className='dropdown-item' to='/brews/new'>
+                                Add New
                             </Link>
                         </NavDropdown>
                         <div className='d-md-flex ms-md-auto'>

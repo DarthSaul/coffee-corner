@@ -5,62 +5,57 @@ import ProfileDataService from '../../services/profiles';
 import { AlertContext } from '../../contexts/AlertContext';
 import { UserContext } from '../../contexts/UserContext';
 
-const EditUser = ({ email, username }) => {
+const EditUser = ({ token, user }) => {
     const [formData, setFormData] = useState({
-        mail: '',
-        uName: ''
-    });
-    const [original] = useState({
-        email,
-        username
+        email: '',
+        username: ''
     });
 
-    const { loadUser, setUser, userObj } = useContext(UserContext);
+    const [original, setOriginal] = useState({
+        email: user.email,
+        username: user.username
+    });
 
     const { setAlert } = useContext(AlertContext);
+    const { loadUser } = useContext(UserContext);
 
     useEffect(() => {
         setFormData({
-            mail: email,
-            uName: username
+            email: user.email,
+            username: user.username
         });
-    }, [email, username]);
+        setOriginal({
+            email: user.email,
+            username: user.username
+        });
+    }, [user]);
 
     const [editState, setEditState] = useState(false);
 
-    const toggleEdit = event => {
-        setFormData({
-            mail: email,
-            uName: username
-        });
+    const toggleEdit = async () => {
+        await loadUser();
         setEditState(prevState => !prevState);
     };
-
-    const { mail, uName } = formData;
 
     const handleSubmit = async event => {
         event.preventDefault();
         const data = {};
-        if (mail !== original.email) {
-            data.email = mail;
+        if (email !== original.email) {
+            data.email = email;
         }
-        if (uName !== original.username) {
-            data.username = uName;
+        if (username !== original.username) {
+            data.username = username;
         }
         try {
-            const res = await ProfileDataService.updateUser(
-                data,
-                userObj.token
-            );
+            const res = await ProfileDataService.updateUser(data, token);
             const { error } = res.data;
             if (error) {
                 throw new Error(error);
             }
-            setUser(prevState => ({
-                ...prevState,
-                loading: true
-            }));
-            await loadUser();
+            setFormData({
+                email: res.data.user.email,
+                username: res.data.user.username
+            });
             setEditState(prevState => !prevState);
             window.scroll(0, 0);
             setAlert('User info updated!', 'success');
@@ -79,6 +74,8 @@ const EditUser = ({ email, username }) => {
         }));
     };
 
+    const { email, username } = formData;
+
     return (
         <div className='card mb-3'>
             <div className='card-body'>
@@ -91,8 +88,8 @@ const EditUser = ({ email, username }) => {
                             <input
                                 disabled={!editState}
                                 type='email'
-                                name='mail'
-                                value={mail}
+                                name='email'
+                                value={email}
                                 onChange={handleChange}
                                 className='form-control'
                             />
@@ -106,8 +103,8 @@ const EditUser = ({ email, username }) => {
                             <input
                                 disabled={!editState}
                                 type='text'
-                                name='uName'
-                                value={uName}
+                                name='username'
+                                value={username}
                                 onChange={handleChange}
                                 className='form-control'
                             />

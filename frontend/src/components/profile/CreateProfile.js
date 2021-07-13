@@ -41,6 +41,7 @@ const CreateProfile = () => {
                 history.push('/dashboard');
             }
         } catch (err) {
+            setAlert(`Whoops, something went wrong.`, 'danger');
             console.error(err);
         }
     };
