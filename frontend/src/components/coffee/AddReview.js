@@ -14,9 +14,9 @@ const AddReview = ({ handleReviewSubmit }) => {
         handleReviewSubmit(text);
     };
     return (
-        <div className='card col-md-10 col-lg-8 col-xl-6 m-auto mt-5'>
+        <div className='card mt-4'>
             <div className='card-body'>
-                <h5 className='card-title fs-2 mb-3'>Leave a Review:</h5>
+                <p className='card-title fs-3 mb-3'>Leave a Review:</p>
                 <form onSubmit={handleSubmit}>
                     <div className='mb-3'>
                         <textarea
