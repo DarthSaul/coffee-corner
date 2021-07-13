@@ -3,6 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import ProfileDataService from '../../services/profiles';
 
 import { AlertContext } from '../../contexts/AlertContext';
+import { UserContext } from '../../contexts/UserContext';
 
 const EditUser = ({ token, user }) => {
     const [formData, setFormData] = useState({
@@ -16,6 +17,7 @@ const EditUser = ({ token, user }) => {
     });
 
     const { setAlert } = useContext(AlertContext);
+    const { loadUser } = useContext(UserContext);
 
     useEffect(() => {
         setFormData({
@@ -26,7 +28,8 @@ const EditUser = ({ token, user }) => {
 
     const [editState, setEditState] = useState(false);
 
-    const toggleEdit = () => {
+    const toggleEdit = async () => {
+        await loadUser();
         setEditState(prevState => !prevState);
     };
 

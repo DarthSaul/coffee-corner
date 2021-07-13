@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import Review from '../models/Review.js';
+import BrewMethod from '../models/BrewMethod.js';
 
 export const auth = (req, res, next) => {
     const token = req.header('x-auth-token');
@@ -30,6 +31,22 @@ export const isReviewOwner = async (req, res, next) => {
         const { review_id } = req.body;
         const review = await Review.findById(review_id);
         if (!review.owner.equals(req.user.id)) {
+            return res
+                .status(401)
+                .json({ msg: 'You do not have permission to do that' });
+        }
+        next();
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ msg: 'Server Error' });
+    }
+};
+
+export const isBrewOwner = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const brewMethod = await BrewMethod.findById(id);
+        if (!brewMethod.user.equals(req.user.id)) {
             return res
                 .status(401)
                 .json({ msg: 'You do not have permission to do that' });

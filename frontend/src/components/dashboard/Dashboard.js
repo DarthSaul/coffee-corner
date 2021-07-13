@@ -15,26 +15,25 @@ const Dashboard = () => {
         loading: true
     });
 
-    const {
-        userObj: { user, token }
-    } = useContext(UserContext);
+    const { userObj } = useContext(UserContext);
 
     useEffect(() => {
-        getProfile(token);
-    }, [token]);
-
-    const getProfile = async token => {
-        try {
-            const profile = await ProfileDataService.getUserProfile(token);
-            const { data } = profile;
-            setProfileData({
-                profile: data.profile,
-                loading: false
-            });
-        } catch (err) {
-            console.error(err);
-        }
-    };
+        const getProfile = async token => {
+            try {
+                const profile = await ProfileDataService.getUserProfile(
+                    userObj.token
+                );
+                const { data } = profile;
+                setProfileData({
+                    profile: data.profile,
+                    loading: false
+                });
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        getProfile(userObj.token);
+    }, [userObj.token]);
 
     const { loading, profile } = profileData;
 
@@ -47,7 +46,12 @@ const Dashboard = () => {
                     </div>
                     <div className='col-lg-8'>
                         <EditProfile profile={profile} />
-                        {/* <EditUser token={token} user={user} /> */}
+                        {!userObj.loading && (
+                            <EditUser
+                                token={userObj.token}
+                                user={userObj.user}
+                            />
+                        )}
                     </div>
                 </div>
             ) : (
