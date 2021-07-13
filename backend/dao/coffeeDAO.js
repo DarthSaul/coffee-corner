@@ -22,7 +22,7 @@ export default class CoffeeDAO {
 
         try {
             const coffeesList = await Coffee.find(query)
-                .populate({ path: 'reviews', populate: { path: 'owner' } })
+                .populate({ path: 'reviews', populate: { path: 'user' } })
                 .limit(perPage)
                 .skip(perPage * page);
             const totalNumCoffees = await Coffee.countDocuments(query);
@@ -39,7 +39,7 @@ export default class CoffeeDAO {
         try {
             const coffee = await Coffee.findById(id).populate({
                 path: 'reviews',
-                populate: { path: 'owner' }
+                populate: { path: 'user' }
             });
             return coffee;
         } catch (err) {

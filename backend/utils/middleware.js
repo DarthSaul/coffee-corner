@@ -29,8 +29,9 @@ export const auth = (req, res, next) => {
 export const isReviewOwner = async (req, res, next) => {
     try {
         const { review_id } = req.body;
-        const review = await Review.findById(review_id);
-        if (!review.owner.equals(req.user.id)) {
+        const { id } = req.query;
+        const review = await Review.findById(review_id || id);
+        if (!review.user.equals(req.user.id)) {
             return res
                 .status(401)
                 .json({ msg: 'You do not have permission to do that' });

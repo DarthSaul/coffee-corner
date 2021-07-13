@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 
 import { UserContext } from '../../contexts/UserContext';
 
-import ProfileDataService from '../../services/profiles';
-
 import Profile from '../profile/Profile';
 import EditProfile from '../profile/EditProfile';
 import EditUser from '../profile/EditUser';
@@ -18,22 +16,14 @@ const Dashboard = () => {
     const { userObj } = useContext(UserContext);
 
     useEffect(() => {
-        const getProfile = async token => {
-            try {
-                const profile = await ProfileDataService.getUserProfile(
-                    userObj.token
-                );
-                const { data } = profile;
-                setProfileData({
-                    profile: data.profile,
-                    loading: false
-                });
-            } catch (err) {
-                console.error(err);
-            }
+        const setUser = async () => {
+            setProfileData({
+                profile: userObj.profile,
+                loading: false
+            });
         };
-        getProfile(userObj.token);
-    }, [userObj.token]);
+        setUser();
+    }, [userObj.profile]);
 
     const { loading, profile } = profileData;
 

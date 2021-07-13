@@ -11,7 +11,7 @@ const EditUser = ({ token, user }) => {
         username: ''
     });
 
-    const [original] = useState({
+    const [original, setOriginal] = useState({
         email: user.email,
         username: user.username
     });
@@ -21,6 +21,10 @@ const EditUser = ({ token, user }) => {
 
     useEffect(() => {
         setFormData({
+            email: user.email,
+            username: user.username
+        });
+        setOriginal({
             email: user.email,
             username: user.username
         });
@@ -48,6 +52,10 @@ const EditUser = ({ token, user }) => {
             if (error) {
                 throw new Error(error);
             }
+            setFormData({
+                email: res.data.user.email,
+                username: res.data.user.username
+            });
             setEditState(prevState => !prevState);
             window.scroll(0, 0);
             setAlert('User info updated!', 'success');

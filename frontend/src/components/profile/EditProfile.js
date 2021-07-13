@@ -12,7 +12,7 @@ const EditProfile = ({ profile: { firstName, lastName, location } }) => {
         loc: ''
     });
 
-    const { userObj } = useContext(UserContext);
+    const { userObj, loadUser } = useContext(UserContext);
 
     const { setAlert } = useContext(AlertContext);
 
@@ -46,6 +46,7 @@ const EditProfile = ({ profile: { firstName, lastName, location } }) => {
                 },
                 userObj.token
             );
+            await loadUser();
             setEditState(prevState => !prevState);
             window.scroll(0, 0);
             setAlert('Profile updated!', 'success');

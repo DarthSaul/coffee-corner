@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const reviewSchema = new Schema({
-    owner: {
+    user: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
