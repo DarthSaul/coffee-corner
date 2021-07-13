@@ -36,8 +36,9 @@ export default class CoffeeController {
         try {
             const { id } = req.params || {};
             const coffee = await CoffeeDAO.getCoffeeById(id);
-            if (!coffee) {
-                return res.status(404).json({ error: 'Not found' });
+            const { error } = coffee;
+            if (error) {
+                return res.status(404).json({ error });
             }
             res.json(coffee);
         } catch (err) {

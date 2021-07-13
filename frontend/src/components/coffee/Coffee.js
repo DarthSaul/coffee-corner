@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import capitalize from 'capitalize';
 
 import Reviews from './Reviews';
@@ -19,19 +19,21 @@ const Coffee = () => {
     });
 
     const { id } = useParams();
-
+    const history = useHistory();
     useEffect(() => {
+        const getCoffee = async id => {
+            try {
+                const coffee = await CoffeeDataService.get(id);
+                setCoffeeState(coffee.data);
+            } catch (err) {
+                console.error(err);
+                if (err.response.status === 404) {
+                    history.push('/notfound');
+                }
+            }
+        };
         getCoffee(id);
-    }, [id]);
-
-    const getCoffee = async id => {
-        try {
-            const coffee = await CoffeeDataService.get(id);
-            setCoffeeState(coffee.data);
-        } catch (err) {
-            console.error(err);
-        }
-    };
+    }, [history, id]);
 
     const { name, origin, distributor, roastType, tags, reviews } = coffeeState;
 

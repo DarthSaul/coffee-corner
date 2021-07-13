@@ -44,6 +44,9 @@ export default class CoffeeDAO {
             return coffee;
         } catch (err) {
             console.error(`Unable to find coffee, ${err}`);
+            if (err.kind == 'ObjectId') {
+                return { error: 'Coffee not found' };
+            }
             return { error: err };
         }
     }
