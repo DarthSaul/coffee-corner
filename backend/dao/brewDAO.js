@@ -39,7 +39,7 @@ export default class BrewDAO {
                 items
             });
             profile.brewMethods.push(brew._id);
-            brew.user = profile.user._id;
+            brew.user = user_id;
             await profile.save();
             await brew.save();
             return { brew };

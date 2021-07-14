@@ -75,4 +75,21 @@ export default class CoffeeController {
             res.status(500).json({ error: err.message });
         }
     }
+
+    static async apiDeleteCoffee(req, res, next) {
+        try {
+            const response = await CoffeeDAO.deleteCoffee(
+                req.params.id,
+                req.query.profile
+            );
+            const { deletedCoffee, error } = response;
+            if (error) {
+                throw new Error(error);
+            }
+            res.json({ status: 'success', deletedCoffee });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: err.message });
+        }
+    }
 }

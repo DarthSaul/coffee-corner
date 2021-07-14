@@ -9,7 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const Profile = ({ profile }) => {
-    const { fullName, location, brewMethods, social } = profile;
+    const { fullName, location, social, brewMethods, coffees } = profile;
     return (
         <>
             <div className='card'>
@@ -53,7 +53,7 @@ const Profile = ({ profile }) => {
                             </div>
                             <span className='col-9'>Coffees</span>
                             <span className='col text-secondary text-end'>
-                                0
+                                {coffees.length}
                             </span>
                         </div>
                     </li>

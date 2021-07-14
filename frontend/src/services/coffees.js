@@ -15,6 +15,16 @@ class CoffeeDataService {
         );
     }
 
+    createCoffee(data, token) {
+        http.defaults.headers.common['x-auth-token'] = token;
+        return http.post('/coffee/new', data);
+    }
+
+    deleteCoffee(coffee_id, profile_id, token) {
+        http.defaults.headers.common['x-auth-token'] = token;
+        return http.delete(`/coffee/delete/${coffee_id}?profile=${profile_id}`);
+    }
+
     createReview(data, token) {
         http.defaults.headers.common['x-auth-token'] = token;
         return http.post('/coffee/review', data);

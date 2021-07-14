@@ -89,7 +89,7 @@ const AddBrew = () => {
             <div className='card-body'>
                 <form onSubmit={handleSubmit}>
                     <div className='mb-3'>
-                        <label className='form-label'>Method Name</label>
+                        <label className='form-label'>Brew Method Name</label>
                         <input
                             type='text'
                             name='name'

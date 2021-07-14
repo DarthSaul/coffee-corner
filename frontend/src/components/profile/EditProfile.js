@@ -24,7 +24,7 @@ const EditProfile = ({
             first: firstName,
             last: lastName,
             loc: location,
-            insta: social.instagram
+            insta: social ? social.instagram : ''
         });
     }, [firstName, lastName, location, social]);
 

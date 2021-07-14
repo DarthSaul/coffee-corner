@@ -12,6 +12,7 @@ import CreateProfile from '../profile/CreateProfile';
 
 import CoffeeList from '../coffee/CoffeeList';
 import Coffee from '../coffee/Coffee';
+import AddCoffee from '../coffee/AddCoffee';
 
 import BrewList from '../brewMethods/BrewList';
 import BrewMethod from '../brewMethods/BrewMethod';
@@ -28,7 +29,7 @@ const Routes = () => {
                     <CoffeeList />
                 </Route>
                 <Route exact path='/coffee/new'>
-                    <NotFound />
+                    <AddCoffee />
                 </Route>
                 <Route exact path='/coffee/:id'>
                     <Coffee />

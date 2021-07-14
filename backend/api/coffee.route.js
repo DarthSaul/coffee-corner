@@ -9,6 +9,7 @@ router.route('/').get(CoffeeCtrl.apiGetCoffees);
 router.route('/new').post(auth, CoffeeCtrl.apiCreateCoffee);
 router.route('/id/:id').get(CoffeeCtrl.apiGetCoffeeById);
 router.route('/distributors').get(CoffeeCtrl.apiGetCoffeeDist);
+router.route('/delete/:id').delete(auth, CoffeeCtrl.apiDeleteCoffee);
 
 router
     .route('/review')
