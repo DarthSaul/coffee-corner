@@ -61,4 +61,18 @@ export default class CoffeeController {
             res.status(500).json({ error: err });
         }
     }
+
+    static async apiCreateCoffee(req, res, next) {
+        try {
+            const response = await CoffeeDAO.addCoffee(req.body, req.user.id);
+            const { error, coffee } = response;
+            if (error) {
+                throw new Error(error);
+            }
+            res.json({ status: 'success', coffee });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: err.message });
+        }
+    }
 }

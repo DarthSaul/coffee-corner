@@ -1,4 +1,5 @@
 import Coffee from '../models/Coffee.js';
+import Profile from '../models/Profile.js';
 
 export default class CoffeeDAO {
     static async getCoffees({ filters = null, page = 0, perPage = 50 } = {}) {
@@ -59,6 +60,20 @@ export default class CoffeeDAO {
         } catch (err) {
             console.error(`Unable to get distributors, ${err}`);
             return distributors;
+        }
+    }
+
+    static async addCoffee(coffeeData, user_id) {
+        try {
+            const coffee = new Coffee(coffeeData);
+            const profile = await Profile.findOne({ user: `${user_id}` });
+            profile.coffees.push(coffee._id);
+            await coffee.save();
+            await profile.save();
+            return { coffee };
+        } catch (err) {
+            console.error(`Unable to add coffee, ${err}`);
+            return { error: err };
         }
     }
 }

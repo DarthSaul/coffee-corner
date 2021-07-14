@@ -30,7 +30,7 @@ export default class BrewDAO {
         user_id
     ) {
         try {
-            const profile = await Profile.findOne({ user: `${user_id}` });
+            const profile = await Profile.findOne({ user: `${user_id}` }); // FIX!!
             const brew = new BrewMethod({
                 name,
                 description,
