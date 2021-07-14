@@ -9,7 +9,8 @@ const AddBrew = () => {
         name: '',
         description: '',
         coffeeWeight: '',
-        waterRatio: '',
+        ratioWater: 15,
+        ratioCoffee: 1,
         grindType: '',
         items: []
     });
@@ -17,7 +18,8 @@ const AddBrew = () => {
     const [itemText, setItemText] = useState('');
 
     const {
-        userObj: { token }
+        userObj: { token },
+        loadUser
     } = useContext(UserContext);
     const { setAlert } = useContext(AlertContext);
 
@@ -40,7 +42,7 @@ const AddBrew = () => {
                     description,
                     weight: {
                         coffee: coffeeWeight,
-                        waterRatio
+                        waterRatio: `${ratioWater} grams water per ${ratioCoffee} grams coffee`
                     },
                     grindType,
                     items
@@ -50,6 +52,7 @@ const AddBrew = () => {
             const { status } = res.data;
             if (status === 'success') {
                 setAlert(`Brew method added!`, 'success');
+                loadUser();
                 history.push('/brews');
             }
         } catch (err) {
@@ -71,11 +74,18 @@ const AddBrew = () => {
         setItemText('');
     };
 
-    const { name, description, coffeeWeight, waterRatio, grindType, items } =
-        formData;
+    const {
+        name,
+        description,
+        coffeeWeight,
+        ratioWater,
+        ratioCoffee,
+        grindType,
+        items
+    } = formData;
 
     return (
-        <div className='card col-md-8 col-lg-6 m-auto p-4'>
+        <div className='card col-10 col-xl-8 m-auto p-4'>
             <div className='card-body'>
                 <form onSubmit={handleSubmit}>
                     <div className='mb-3'>
@@ -107,17 +117,41 @@ const AddBrew = () => {
                             onChange={handleChange}
                             className='form-control'
                         />
+                        <div className='form-text'>Ex: "20-40 grams"</div>
                     </div>
                     <div className='mb-3'>
                         <label className='form-label'>Water Ratio</label>
-                        <input
-                            type='text'
-                            name='waterRatio'
-                            value={waterRatio}
-                            onChange={handleChange}
-                            className='form-control'
-                        />
+                        <div className='row g-2 align-items-center'>
+                            <div className='col-4 col-md-2'>
+                                <input
+                                    type='number'
+                                    name='ratioWater'
+                                    value={ratioWater}
+                                    onChange={handleChange}
+                                    placeholder='15'
+                                    min='1'
+                                    className='form-control'
+                                />
+                            </div>
+                            <div className='col-8 col-md-auto'>
+                                grams water per
+                            </div>
+                            <div className='col-4 col-md-2 col-lg-1'>
+                                <input
+                                    type='number'
+                                    name='ratioCoffee'
+                                    value={ratioCoffee}
+                                    onChange={handleChange}
+                                    min='1'
+                                    className='form-control'
+                                />
+                            </div>
+                            <div className='col-8 col-md-4 col-lg-3'>
+                                grams coffee
+                            </div>
+                        </div>
                     </div>
+
                     <div className='mb-3'>
                         <label className='form-label'>Grind Type</label>
                         <input

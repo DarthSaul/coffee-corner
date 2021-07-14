@@ -17,7 +17,7 @@ const BrewMethod = () => {
         user: {}
     });
     const [loading, setLoading] = useState(true);
-    const { userObj } = useContext(UserContext);
+    const { userObj, loadUser } = useContext(UserContext);
 
     const { setAlert } = useContext(AlertContext);
 
@@ -49,6 +49,7 @@ const BrewMethod = () => {
                 userObj.token
             );
             setAlert(`Brew method removed.`, 'secondary');
+            loadUser();
             history.push('/brews');
         } catch (err) {
             setAlert(`Whoops, something went wrong.`, 'danger');

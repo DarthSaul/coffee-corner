@@ -20,10 +20,15 @@ const BrewList = () => {
     };
     return (
         <div className='row'>
+            <div className='col-10 mx-auto text-center mb-5'>
+                <button className='btn btn-new-brew'>
+                    <Link to='/brews/new'>Post New Brew Method</Link>
+                </button>
+            </div>
             {!loading &&
                 brewMethods.map((brew, ind) => {
                     return (
-                        <div className='col-xl-6' key={ind}>
+                        <div className='col-xl-10 mx-auto' key={ind}>
                             <div className='card mb-4'>
                                 <Link
                                     to={`/brew/${brew._id}`}

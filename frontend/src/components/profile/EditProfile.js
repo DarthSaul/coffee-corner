@@ -127,17 +127,25 @@ const EditProfile = ({
                             Instagram
                         </label>
                         <div className='col-sm-9 col-xl-10'>
-                            <input
-                                disabled={!editState}
-                                type='text'
-                                name='insta'
-                                value={insta}
-                                onChange={handleChange}
-                                className='form-control'
-                                placeholder={'@'}
-                            />
+                            <div className='input-group'>
+                                <span
+                                    className='input-group-text'
+                                    id='basic-addon1'
+                                >
+                                    @
+                                </span>
+                                <input
+                                    disabled={!editState}
+                                    type='text'
+                                    name='insta'
+                                    value={insta}
+                                    onChange={handleChange}
+                                    className='form-control'
+                                    placeholder='Handle'
+                                />
+                            </div>
                             <div className='form-text'>
-                                Handle only, i.e. 'therock'
+                                Handle only, ex: <i>therock</i>
                             </div>
                         </div>
                     </div>
