@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import {
@@ -9,21 +10,34 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const Profile = ({ profile }) => {
-    const { fullName, location, social, brewMethods, coffees } = profile;
+    const { fullName, location, social, brewMethods, coffees, avatar } =
+        profile;
+    const profileImage = avatar
+        ? avatar.thumbnail
+        : 'https://res.cloudinary.com/darthsaul/image/upload/w_150/v1626367195/Coffee-Corner/no_image_wkgy3c.png';
     return (
         <>
             <div className='card'>
                 <div className='card-body'>
                     <div className='d-flex flex-column align-items-center text-center'>
                         <img
-                            src='https://bootdey.com/img/Content/avatar/avatar7.png'
+                            src={profileImage}
                             alt='Admin'
-                            className='rounded-circle'
-                            width='150'
+                            className='rounded-circle mb-2'
+                            // width='150'
                         />
+
+                        <Link to='/upload'>
+                            <button className='btn btn-outline-success btn-sm'>
+                                Edit Image
+                            </button>
+                        </Link>
+
                         <div className='mt-4'>
-                            <h1>{fullName}</h1>
-                            <p className='text-muted fs-3'>{location}</p>
+                            <h1 className='display-4 fw-normal'>{fullName}</h1>
+                            <p className='text-muted fs-3 fw-light'>
+                                {location}
+                            </p>
                             {social && social.instagram && (
                                 <div className='d-flex justify-content-center'>
                                     <a

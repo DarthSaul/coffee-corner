@@ -7,7 +7,7 @@ const avatarSchema = new Schema(
         filename: String,
         originalname: String
     },
-    { toJSON: { virutals: true } }
+    { toJSON: { virtuals: true } }
 );
 
 // Move to frontend with Cloudinary SDK !!

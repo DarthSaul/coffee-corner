@@ -13,14 +13,17 @@ const FileUpload = () => {
         imagePath: null,
         loading: false
     });
+
     const {
-        userObj: { user, token },
-        loading
+        userObj: { token, profile },
+        loadUser
     } = useContext(UserContext);
+
     const handleChange = event => {
         setFile(event.target.files[0]);
         setFileName(event.target.files[0].name);
     };
+
     const handleSubmit = async event => {
         event.preventDefault();
         setUploadedFile(prevState => ({
@@ -37,7 +40,13 @@ const FileUpload = () => {
                 fileName,
                 loading: false
             });
+            loadUser();
         } catch (err) {
+            setUploadedFile({
+                imagePath: null,
+                fileName: null,
+                loading: false
+            });
             if (err.response.status === 500) {
                 console.log('There was a problem with the server');
             } else {
@@ -56,8 +65,9 @@ const FileUpload = () => {
                                 type='file'
                                 id='customFile'
                                 onChange={handleChange}
+                                className='mb-3'
                             />
-                            <div className='mt'>
+                            <div className='mb-3'>
                                 <label htmlFor='customFile'>
                                     Selected: {fileName}
                                 </label>
@@ -67,23 +77,23 @@ const FileUpload = () => {
                             <input
                                 type='submit'
                                 value={
-                                    user.avatar && user.avatar.filename
+                                    profile.avatar && profile.avatar.filename
                                         ? 'Replace'
                                         : 'Upload'
                                 }
-                                className='btn btn-primary'
+                                className='btn btn-primary mb-3'
                             />
                         )}
                     </form>
-                    {user === null || loading ? (
-                        <div>
-                            <Spinner />
+                    {profile === null || uploadedFile.loading ? (
+                        <div className='mt-4'>
+                            <Spinner color='black' />
                         </div>
                     ) : (
                         <div className='my-2'>
-                            {user.avatar || uploadedFile.imagePath ? (
+                            {profile.avatar || uploadedFile.imagePath ? (
                                 <>
-                                    <h3 className='mt'>
+                                    <h3 className='mb-2'>
                                         {uploadedFile.imagePath
                                             ? 'Just uploaded'
                                             : 'Current'}
@@ -96,7 +106,7 @@ const FileUpload = () => {
                                         src={
                                             uploadedFile.imagePath
                                                 ? uploadedFile.imagePath
-                                                : user.avatar.url
+                                                : profile.avatar.url
                                         }
                                         alt=''
                                     />
