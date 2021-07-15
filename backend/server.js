@@ -16,6 +16,7 @@ import coffee from './api/coffee.route.js';
 import brew from './api/brew.route.js';
 import profile from './api/profile.route.js';
 import auth from './api/auth.route.js';
+import uploader from './api/upload.route.js';
 
 import User from './models/User.js';
 
@@ -57,6 +58,7 @@ app.use('/api/v1/auth', auth);
 app.use('/api/v1/profile', profile);
 app.use('/api/v1/coffee', coffee);
 app.use('/api/v1/brew', brew);
+app.use('/api/v1/upload', uploader);
 app.use('*', (req, res) => {
     res.status(404).json({ error: 'not found' });
 });

@@ -9,6 +9,7 @@ import NotFound from '../layout/NotFound';
 import Dashboard from '../dashboard/Dashboard';
 
 import CreateProfile from '../profile/CreateProfile';
+import FileUpload from '../profile/FileUpload';
 
 import CoffeeList from '../coffee/CoffeeList';
 import Coffee from '../coffee/Coffee';
@@ -57,6 +58,10 @@ const Routes = () => {
                 <PrivateRoute exact path='/profile/create'>
                     <CreateProfile />
                 </PrivateRoute>
+
+                <Route exact path='/upload'>
+                    <FileUpload />
+                </Route>
 
                 <Route>
                     <NotFound />

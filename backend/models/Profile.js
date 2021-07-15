@@ -1,12 +1,30 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
+const avatarSchema = new Schema(
+    {
+        url: String,
+        filename: String,
+        originalname: String
+    },
+    { toJSON: { virutals: true } }
+);
+
+// Move to frontend with Cloudinary SDK !!
+avatarSchema.virtual('medium').get(function () {
+    return this.url.replace('/upload', '/upload/w_500');
+});
+avatarSchema.virtual('thumbnail').get(function () {
+    return this.url.replace('/upload', '/upload/w_150');
+});
+
 const profileSchema = new Schema(
     {
         user: {
             type: Schema.Types.ObjectId,
             ref: 'User'
         },
+        avatar: avatarSchema,
         firstName: {
             type: String
         },
