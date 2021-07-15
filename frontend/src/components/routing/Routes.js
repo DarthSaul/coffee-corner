@@ -26,15 +26,6 @@ const Routes = () => {
         <div className='container p-4 mt-4'>
             <Alert />
             <Switch>
-                <Route exact path='/coffee'>
-                    <CoffeeList />
-                </Route>
-                <Route exact path='/coffee/new'>
-                    <AddCoffee />
-                </Route>
-                <Route exact path='/coffee/:id'>
-                    <Coffee />
-                </Route>
                 <Route exact path='/login'>
                     <Login />
                 </Route>
@@ -42,15 +33,25 @@ const Routes = () => {
                     <Register />
                 </Route>
 
+                <Route exact path='/coffee'>
+                    <CoffeeList />
+                </Route>
+                <PrivateRoute exact path='/coffee/new'>
+                    <AddCoffee />
+                </PrivateRoute>
+                <Route exact path='/coffee/:id'>
+                    <Coffee />
+                </Route>
+
                 <Route exact path='/brews'>
                     <BrewList />
-                </Route>
-                <Route exact path='/brew/:id'>
-                    <BrewMethod />
                 </Route>
                 <PrivateRoute exact path='/brews/new'>
                     <AddBrew />
                 </PrivateRoute>
+                <Route exact path='/brew/:id'>
+                    <BrewMethod />
+                </Route>
 
                 <PrivateRoute exact path='/dashboard'>
                     <Dashboard />
@@ -59,9 +60,9 @@ const Routes = () => {
                     <CreateProfile />
                 </PrivateRoute>
 
-                <Route exact path='/upload'>
+                <PrivateRoute exact path='/upload'>
                     <FileUpload />
-                </Route>
+                </PrivateRoute>
 
                 <Route>
                     <NotFound />
