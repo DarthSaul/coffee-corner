@@ -30,7 +30,7 @@ export default class BrewDAO {
         user_id
     ) {
         try {
-            const profile = await Profile.findOne({ user: `${user_id}` });
+            const profile = await Profile.findOne({ user: `${user_id}` }); // FIX!!
             const brew = new BrewMethod({
                 name,
                 description,
@@ -39,7 +39,7 @@ export default class BrewDAO {
                 items
             });
             profile.brewMethods.push(brew._id);
-            brew.user = profile.user._id;
+            brew.user = user_id;
             await profile.save();
             await brew.save();
             return { brew };
@@ -48,6 +48,22 @@ export default class BrewDAO {
             return { error: err };
         }
     }
+
+    static async updateBrewMethod(brew_id, data) {
+        try {
+            const brew = await BrewMethod.findByIdAndUpdate(brew_id, data, {
+                new: true
+            });
+            if (!brew) {
+                throw new Error('Unable to retrieve brew method for update.');
+            }
+            return { brew };
+        } catch (err) {
+            console.error(`Unable to update brew method, ${err}`);
+            return { error: err };
+        }
+    }
+
     static async deleteBrewMethod(brew_id, profile_id) {
         try {
             const deletedBrew = await BrewMethod.findByIdAndDelete(brew_id);

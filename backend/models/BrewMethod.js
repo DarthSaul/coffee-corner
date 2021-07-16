@@ -16,7 +16,10 @@ const brewSchema = new Schema({
     },
     weights: {
         coffee: String,
-        waterRatio: String
+        waterRatio: {
+            gramsWater: Number,
+            gramsCoffee: Number
+        }
     },
     grindType: String,
     items: [String]

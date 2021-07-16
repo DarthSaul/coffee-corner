@@ -36,8 +36,9 @@ export default class CoffeeController {
         try {
             const { id } = req.params || {};
             const coffee = await CoffeeDAO.getCoffeeById(id);
-            if (!coffee) {
-                return res.status(404).json({ error: 'Not found' });
+            const { error } = coffee;
+            if (error) {
+                return res.status(404).json({ error });
             }
             res.json(coffee);
         } catch (err) {
@@ -57,7 +58,55 @@ export default class CoffeeController {
             res.json(distributors);
         } catch (err) {
             console.error(`Unable to get distributors, ${err}`);
-            res.status(500).json({ error: err });
+            res.status(500).json({ error: err.message });
+        }
+    }
+
+    static async apiCreateCoffee(req, res, next) {
+        try {
+            const response = await CoffeeDAO.addCoffee(req.body, req.user.id);
+            const { error, coffee } = response;
+            if (error) {
+                throw new Error(error);
+            }
+            res.json({ status: 'success', coffee });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: err.message });
+        }
+    }
+
+    static async apiUpdateCoffee(req, res, next) {
+        try {
+            const response = await CoffeeDAO.updateCoffee(
+                req.params.id,
+                req.body
+            );
+            const { coffee, error } = response;
+            if (error) {
+                throw new Error(error);
+            }
+            res.json({ status: 'success', coffee });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: err.message });
+        }
+    }
+
+    static async apiDeleteCoffee(req, res, next) {
+        try {
+            const response = await CoffeeDAO.deleteCoffee(
+                req.params.id,
+                req.query.profile
+            );
+            const { deletedCoffee, error } = response;
+            if (error) {
+                throw new Error(error);
+            }
+            res.json({ status: 'success', deletedCoffee });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: err.message });
         }
     }
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import BrewDataService from '../../services/brewMethods';
 import capitalize from 'capitalize';
 
@@ -11,13 +11,15 @@ const BrewMethod = () => {
         _id: null,
         name: '',
         description: '',
-        weights: {},
+        coffeeWeight: '',
+        ratioWater: 0,
+        ratioCoffee: 1,
         grindType: '',
         items: [],
         user: {}
     });
     const [loading, setLoading] = useState(true);
-    const { userObj } = useContext(UserContext);
+    const { userObj, loadUser } = useContext(UserContext);
 
     const { setAlert } = useContext(AlertContext);
 
@@ -32,14 +34,29 @@ const BrewMethod = () => {
     const getBrewMethod = async id => {
         try {
             const brewMethod = await BrewDataService.getBrewById(id);
-            setBrewState(brewMethod.data);
+            setBrewState({
+                ...brewMethod.data,
+                coffeeWeight: brewMethod.data.weights.coffee,
+                ratioWater: brewMethod.data.weights.waterRatio.gramsWater,
+                ratioCoffee: brewMethod.data.weights.waterRatio.gramsCoffee
+            });
             setLoading(false);
         } catch (err) {
             console.error(err);
         }
     };
 
-    const { name, description, weights, grindType, items, user } = brewState;
+    const {
+        _id,
+        name,
+        description,
+        coffeeWeight,
+        ratioWater,
+        ratioCoffee,
+        grindType,
+        items,
+        user
+    } = brewState;
 
     const deleteBrew = async () => {
         try {
@@ -49,6 +66,7 @@ const BrewMethod = () => {
                 userObj.token
             );
             setAlert(`Brew method removed.`, 'secondary');
+            loadUser();
             history.push('/brews');
         } catch (err) {
             setAlert(`Whoops, something went wrong.`, 'danger');
@@ -77,13 +95,14 @@ const BrewMethod = () => {
                                 <br />
                                 {grindType}
                             </div>
-                            {weights && (
+                            {coffeeWeight && (
                                 <div className='mb-3'>
                                     <strong>Measurements</strong>
                                     <br />
-                                    Coffee: {weights.coffee}
+                                    Coffee: {coffeeWeight}
                                     <br />
-                                    Water: {weights.waterRatio}
+                                    Water:{' '}
+                                    {`${ratioWater} grams water per ${ratioCoffee} grams coffee`}
                                 </div>
                             )}
                             {items && (
@@ -104,6 +123,12 @@ const BrewMethod = () => {
                     </div>
                     {userObj.user && user._id === userObj.user._id && (
                         <div className='card-footer ps-5'>
+                            <Link to={`/brew/edit/${_id}`}>
+                                <button className='btn btn-warning me-3'>
+                                    Edit
+                                </button>
+                            </Link>
+
                             <button
                                 className='btn btn-danger'
                                 onClick={deleteBrew}

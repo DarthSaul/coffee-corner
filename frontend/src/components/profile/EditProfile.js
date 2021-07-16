@@ -5,11 +5,14 @@ import ProfileDataService from '../../services/profiles';
 import { AlertContext } from '../../contexts/AlertContext';
 import { UserContext } from '../../contexts/UserContext';
 
-const EditProfile = ({ profile: { firstName, lastName, location } }) => {
+const EditProfile = ({
+    profile: { firstName, lastName, location, social }
+}) => {
     const [formData, setFormData] = useState({
         first: '',
         last: '',
-        loc: ''
+        loc: '',
+        insta: ''
     });
 
     const { userObj, loadUser } = useContext(UserContext);
@@ -20,9 +23,10 @@ const EditProfile = ({ profile: { firstName, lastName, location } }) => {
         setFormData({
             first: firstName,
             last: lastName,
-            loc: location
+            loc: location,
+            insta: social ? social.instagram : ''
         });
-    }, [firstName, lastName, location]);
+    }, [firstName, lastName, location, social]);
 
     const [editState, setEditState] = useState(false);
 
@@ -30,7 +34,8 @@ const EditProfile = ({ profile: { firstName, lastName, location } }) => {
         setFormData({
             first: firstName,
             last: lastName,
-            loc: location
+            loc: location,
+            insta: social ? social.instagram : ''
         });
         setEditState(prevState => !prevState);
     };
@@ -42,7 +47,10 @@ const EditProfile = ({ profile: { firstName, lastName, location } }) => {
                 {
                     firstName: first,
                     lastName: last,
-                    location: loc
+                    location: loc,
+                    social: {
+                        instagram: insta
+                    }
                 },
                 userObj.token
             );
@@ -63,7 +71,7 @@ const EditProfile = ({ profile: { firstName, lastName, location } }) => {
         }));
     };
 
-    const { first, last, loc } = formData;
+    const { first, last, loc, insta } = formData;
 
     return (
         <div className='card mb-3'>
@@ -112,6 +120,33 @@ const EditProfile = ({ profile: { firstName, lastName, location } }) => {
                                 onChange={handleChange}
                                 className='form-control'
                             />
+                        </div>
+                    </div>
+                    <div className='row mb-3'>
+                        <label className='col-sm-3 col-xl-2 col-form-label'>
+                            Instagram
+                        </label>
+                        <div className='col-sm-9 col-xl-10'>
+                            <div className='input-group'>
+                                <span
+                                    className='input-group-text'
+                                    id='basic-addon1'
+                                >
+                                    @
+                                </span>
+                                <input
+                                    disabled={!editState}
+                                    type='text'
+                                    name='insta'
+                                    value={insta}
+                                    onChange={handleChange}
+                                    className='form-control'
+                                    placeholder='Handle'
+                                />
+                            </div>
+                            <div className='form-text'>
+                                Handle only, ex: <i>therock</i>
+                            </div>
                         </div>
                     </div>
                     <div className='row'>

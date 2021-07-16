@@ -71,10 +71,8 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
     const handleEditSubmit = async (reviewId, text) => {
         try {
             const res = await CoffeeDataService.updateReview(
-                {
-                    review_id: reviewId,
-                    text: text
-                },
+                reviewId,
+                { text },
                 token
             );
             const { review } = res.data;
@@ -105,10 +103,10 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
             });
             window.scrollTo(0, 0);
             setAlert(
-                `${err.response.data.msg}. Please refresh the page.`,
+                `Whoops, something went wrong. Please refresh the page.`,
                 'danger'
             );
-            console.error(err);
+            console.error(err.response);
         }
     };
 
@@ -128,9 +126,9 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
 
     return (
         <>
-            <div className='card col-md-10 col-lg-8 col-xl-6 m-auto mt-5'>
-                <h5 className='card-title fs-2 p-3'>Reviews</h5>
-                <ul className='list-group list-group-flush p-3'>
+            <div className='card mt-4 mt-xl-0'>
+                <p className='card-title fs-3 p-3'>Reviews</p>
+                <ul className='list-group list-group-flush px-3 pt-1'>
                     {reviews.length > 0 ? (
                         reviews.map((review, ind) => {
                             return (
@@ -176,7 +174,7 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
                             );
                         })
                     ) : (
-                        <h6>No reviews yet.</h6>
+                        <p className='fs-3 p-3'>No reviews yet.</p>
                     )}
                 </ul>
             </div>
@@ -192,7 +190,7 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
             {!loading && user ? (
                 <AddReview handleReviewSubmit={handleReviewSubmit} />
             ) : (
-                <div className='card col-md-10 col-lg-8 col-xl-6 m-auto mt-5'>
+                <div className='card mt-4'>
                     <div className='card-body'>
                         <h5 className='card-title fs-2 mb-3'>
                             Leave a Review:

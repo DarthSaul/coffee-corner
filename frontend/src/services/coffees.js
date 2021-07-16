@@ -15,14 +15,29 @@ class CoffeeDataService {
         );
     }
 
+    createCoffee(data, token) {
+        http.defaults.headers.common['x-auth-token'] = token;
+        return http.post('/coffee/new', data);
+    }
+
+    updateCoffee(coffee_id, data, token) {
+        http.defaults.headers.common['x-auth-token'] = token;
+        return http.put(`/coffee/edit/${coffee_id}`, data);
+    }
+
+    deleteCoffee(coffee_id, profile_id, token) {
+        http.defaults.headers.common['x-auth-token'] = token;
+        return http.delete(`/coffee/delete/${coffee_id}?profile=${profile_id}`);
+    }
+
     createReview(data, token) {
         http.defaults.headers.common['x-auth-token'] = token;
         return http.post('/coffee/review', data);
     }
 
-    updateReview(data, token) {
+    updateReview(id, data, token) {
         http.defaults.headers.common['x-auth-token'] = token;
-        return http.put('/coffee/review', data);
+        return http.put(`/coffee/review?id=${id}`, data);
     }
 
     deleteReview(id, token) {

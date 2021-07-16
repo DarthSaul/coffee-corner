@@ -1,5 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMinusCircle } from '@fortawesome/free-solid-svg-icons';
+
 import BrewDataService from '../../services/brewMethods';
 import { UserContext } from '../../contexts/UserContext';
 import { AlertContext } from '../../contexts/AlertContext';
@@ -9,7 +13,8 @@ const AddBrew = () => {
         name: '',
         description: '',
         coffeeWeight: '',
-        waterRatio: '',
+        ratioWater: 15,
+        ratioCoffee: 1,
         grindType: '',
         items: []
     });
@@ -17,8 +22,10 @@ const AddBrew = () => {
     const [itemText, setItemText] = useState('');
 
     const {
-        userObj: { token }
+        userObj: { token },
+        loadUser
     } = useContext(UserContext);
+
     const { setAlert } = useContext(AlertContext);
 
     const history = useHistory();
@@ -38,9 +45,12 @@ const AddBrew = () => {
                 {
                     name,
                     description,
-                    weight: {
+                    weights: {
                         coffee: coffeeWeight,
-                        waterRatio
+                        waterRatio: {
+                            gramsWater: ratioWater,
+                            gramsCoffee: ratioCoffee
+                        }
                     },
                     grindType,
                     items
@@ -50,6 +60,7 @@ const AddBrew = () => {
             const { status } = res.data;
             if (status === 'success') {
                 setAlert(`Brew method added!`, 'success');
+                loadUser();
                 history.push('/brews');
             }
         } catch (err) {
@@ -71,15 +82,29 @@ const AddBrew = () => {
         setItemText('');
     };
 
-    const { name, description, coffeeWeight, waterRatio, grindType, items } =
-        formData;
+    const handleItemRemove = el => {
+        setFormData(prevState => ({
+            ...prevState,
+            items: prevState.items.filter(item => item !== el)
+        }));
+    };
+
+    const {
+        name,
+        description,
+        coffeeWeight,
+        ratioWater,
+        ratioCoffee,
+        grindType,
+        items
+    } = formData;
 
     return (
-        <div className='card col-md-8 col-lg-6 m-auto p-4'>
+        <div className='card col-10 col-xl-8 m-auto p-4'>
             <div className='card-body'>
                 <form onSubmit={handleSubmit}>
                     <div className='mb-3'>
-                        <label className='form-label'>Method Name</label>
+                        <label className='form-label'>Brew Method Name</label>
                         <input
                             type='text'
                             name='name'
@@ -107,17 +132,41 @@ const AddBrew = () => {
                             onChange={handleChange}
                             className='form-control'
                         />
+                        <div className='form-text'>Ex: "20-40 grams"</div>
                     </div>
                     <div className='mb-3'>
                         <label className='form-label'>Water Ratio</label>
-                        <input
-                            type='text'
-                            name='waterRatio'
-                            value={waterRatio}
-                            onChange={handleChange}
-                            className='form-control'
-                        />
+                        <div className='row g-2 align-items-center'>
+                            <div className='col-4 col-md-2'>
+                                <input
+                                    type='number'
+                                    name='ratioWater'
+                                    value={ratioWater}
+                                    onChange={handleChange}
+                                    placeholder='15'
+                                    min='1'
+                                    className='form-control'
+                                />
+                            </div>
+                            <div className='col-8 col-md-auto'>
+                                grams water per
+                            </div>
+                            <div className='col-4 col-md-2 col-lg-1'>
+                                <input
+                                    type='number'
+                                    name='ratioCoffee'
+                                    value={ratioCoffee}
+                                    onChange={handleChange}
+                                    min='1'
+                                    className='form-control'
+                                />
+                            </div>
+                            <div className='col-8 col-md-4 col-lg-3'>
+                                grams coffee
+                            </div>
+                        </div>
                     </div>
+
                     <div className='mb-3'>
                         <label className='form-label'>Grind Type</label>
                         <input
@@ -145,18 +194,24 @@ const AddBrew = () => {
                                 className='form-control'
                             />
                         </div>
-                        <div className='form-text mb-3'>
-                            {formData.items.length > 0
-                                ? formData.items.map(
-                                      (el, ind) =>
-                                          `${el}${
-                                              ind + 1 === items.length
-                                                  ? ''
-                                                  : ', '
-                                          } `
-                                  )
-                                : 'Items added will appear here.'}
-                        </div>
+                        {items.length > 0 ? (
+                            items.map((el, ind) => {
+                                return (
+                                    <div className='form-text my-2' key={ind}>
+                                        <FontAwesomeIcon
+                                            icon={faMinusCircle}
+                                            className='text-danger me-2'
+                                            onClick={e => handleItemRemove(el)}
+                                        />
+                                        {el}
+                                    </div>
+                                );
+                            })
+                        ) : (
+                            <div className='form-text mb-3'>
+                                Items added will appear here.
+                            </div>
+                        )}
                     </div>
 
                     <button type='submit' className='btn btn-success'>

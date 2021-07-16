@@ -18,7 +18,7 @@ const Navigation = () => {
     const handleLogout = event => {
         event.preventDefault();
         logout();
-        history.push('/');
+        history.push('/login');
     };
 
     return (
@@ -34,28 +34,40 @@ const Navigation = () => {
                     />
                     CC
                 </Link>
-                <Navbar.Toggle aria-controls='basic-navbar-nav' />
-                <Navbar.Collapse id='basic-navbar-nav'>
+                <Navbar.Toggle
+                    data-bs-target='#navbarSupportedContent'
+                    aria-controls='navbarSupportedContent'
+                    aria-expanded='false'
+                    aria-label='Toggle navigation'
+                />
+                <Navbar.Collapse id='navbarSupportedContent'>
                     <Nav className='mr-auto w-100'>
                         <Link className='nav-link' to='/'>
                             Home
                         </Link>
-                        <NavDropdown title='Coffee'>
-                            <Link className='dropdown-item' to='/coffee'>
+
+                        <NavDropdown title='Coffee' id='coffee-dropdown'>
+                            <NavDropdown.Item href='/coffee'>
                                 View All
-                            </Link>
-                            <Link className='dropdown-item' to='/coffee/new'>
+                            </NavDropdown.Item>
+                            <NavDropdown.Item href='/coffee/new'>
                                 Add New
-                            </Link>
+                            </NavDropdown.Item>
                         </NavDropdown>
-                        <NavDropdown title='Brew Methods'>
-                            <Link className='dropdown-item' to='/brews'>
+
+                        <NavDropdown
+                            title='Brew Methods'
+                            id='brew-methods-dropdown'
+                        >
+                            <NavDropdown.Item href='/brews'>
                                 View All
-                            </Link>
-                            <Link className='dropdown-item' to='/brews/new'>
+                            </NavDropdown.Item>
+
+                            <NavDropdown.Item href='/brews/new'>
                                 Add New
-                            </Link>
+                            </NavDropdown.Item>
                         </NavDropdown>
+
                         <div className='d-md-flex ms-md-auto'>
                             {!loading && !isAuthenticated ? (
                                 <>

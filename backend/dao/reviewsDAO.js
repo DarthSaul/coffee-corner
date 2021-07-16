@@ -16,18 +16,15 @@ export default class ReviewDAO {
             return { error: err };
         }
     }
-    static async updateReview(review_id, text, date) {
+    static async updateReview(review_id, data) {
         try {
-            const review = await Review.findByIdAndUpdate(
-                review_id,
-                { text, date },
-                { new: true }
-            );
-            if (review) {
-                return { review };
-            } else {
+            const review = await Review.findByIdAndUpdate(review_id, data, {
+                new: true
+            });
+            if (!review) {
                 throw new Error('Unable to find review to update.');
             }
+            return { review };
         } catch (err) {
             console.error(`Unable to update review, ${err}`);
             return { error: err };

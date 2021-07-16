@@ -1,4 +1,5 @@
 import Profile from '../models/Profile.js';
+import { cloudinary } from '../cloudinary/index.js';
 
 export default class ProfileDAO {
     static async getProfile(id) {
@@ -21,14 +22,28 @@ export default class ProfileDAO {
             return { error: err.message };
         }
     }
-    static async updateProfile(id, profileData) {
+    static async updateProfile(user_id, profileData) {
         try {
             const updatedProfile = await Profile.findOneAndUpdate(
-                { user: `${id}` },
+                { user: `${user_id}` },
                 profileData,
                 { new: true }
             );
             return updatedProfile;
+        } catch (error) {
+            console.error(err);
+            return { error: err.message };
+        }
+    }
+    static async avatarUpload(user_id, imageData) {
+        try {
+            const profile = await Profile.findOne({ user: `${user_id}` });
+            if (profile.avatar) {
+                await cloudinary.uploader.destroy(profile.avatar.filename);
+            }
+            profile.avatar = imageData;
+            await profile.save();
+            return profile;
         } catch (error) {
             console.error(err);
             return { error: err.message };
