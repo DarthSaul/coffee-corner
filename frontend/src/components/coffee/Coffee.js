@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import capitalize from 'capitalize';
 
 import Reviews from './Reviews';
@@ -67,7 +67,7 @@ const Coffee = () => {
             <div className='col-xl-6'>
                 <div className='card'>
                     <img src={coffeePic} className='card-img-top' alt='...' />
-                    <div className='card-body px-4 mb-3'>
+                    <div className='card-body p-5 mb-3'>
                         <h5 className='card-title mb-4 display-3'>
                             {capitalize.words(name)}
                         </h5>
@@ -86,7 +86,12 @@ const Coffee = () => {
                         </p>
                     </div>
                     {userObj.user && user && userObj.user._id === user && (
-                        <div className='card-footer ps-4'>
+                        <div className='card-footer ps-5'>
+                            <Link to={`/coffee/edit/${_id}`}>
+                                <button className='btn btn-warning me-3'>
+                                    Edit
+                                </button>
+                            </Link>
                             <button
                                 className='btn btn-danger'
                                 onClick={deleteCoffee}

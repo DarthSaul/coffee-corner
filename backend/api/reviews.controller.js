@@ -19,12 +19,10 @@ export default class ReviewsController {
 
     static async apiUpdateReview(req, res, next) {
         try {
-            const { review_id, text } = req.body;
-            const response = await ReviewsDAO.updateReview(
-                review_id,
-                text,
-                Date.now()
-            );
+            const response = await ReviewsDAO.updateReview(req.query.id, {
+                text: req.body.text,
+                date: Date.now()
+            });
             const { error, review } = response;
             if (error) {
                 return res.status(400).json({ error });
@@ -32,7 +30,7 @@ export default class ReviewsController {
             res.json({ status: 'success', review });
         } catch (err) {
             console.error(err);
-            res.status(500).json({ error: err });
+            res.status(500).json({ error: err.message });
         }
     }
 

@@ -10,8 +10,8 @@ export default class AuthController {
             const user = await UserDAO.getUser(req.user.id);
             res.json(user);
         } catch (err) {
-            console.error(err.message);
-            res.status(500).send('Server error');
+            console.error(err);
+            res.status(500).json({ error: err.message });
         }
     }
 
@@ -46,8 +46,8 @@ export default class AuthController {
                 );
             });
         } catch (err) {
-            console.error(err.messsage);
-            return res.status(401).send(err.message);
+            console.error(err);
+            return res.status(401).json({ error: err.message });
         }
     }
 

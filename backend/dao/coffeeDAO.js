@@ -78,6 +78,21 @@ export default class CoffeeDAO {
         }
     }
 
+    static async updateCoffee(coffee_id, data) {
+        try {
+            const coffee = await Coffee.findByIdAndUpdate(coffee_id, data, {
+                new: true
+            });
+            if (!coffee) {
+                throw new Error('Unable to retrieve coffee for update');
+            }
+            return { coffee };
+        } catch (err) {
+            console.error(`Unable to update coffee, ${err}`);
+            return { error: err };
+        }
+    }
+
     static async deleteCoffee(coffee_id, profile_id) {
         try {
             const deletedCoffee = await Coffee.findByIdAndDelete(coffee_id);

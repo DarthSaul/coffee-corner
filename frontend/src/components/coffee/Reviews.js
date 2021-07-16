@@ -71,10 +71,8 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
     const handleEditSubmit = async (reviewId, text) => {
         try {
             const res = await CoffeeDataService.updateReview(
-                {
-                    review_id: reviewId,
-                    text: text
-                },
+                reviewId,
+                { text },
                 token
             );
             const { review } = res.data;
@@ -105,10 +103,10 @@ const Reviews = ({ coffeeId, coffeeReviews }) => {
             });
             window.scrollTo(0, 0);
             setAlert(
-                `${err.response.data.msg}. Please refresh the page.`,
+                `Whoops, something went wrong. Please refresh the page.`,
                 'danger'
             );
-            console.error(err);
+            console.error(err.response);
         }
     };
 

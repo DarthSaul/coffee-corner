@@ -14,10 +14,12 @@ import FileUpload from '../profile/FileUpload';
 import CoffeeList from '../coffee/CoffeeList';
 import Coffee from '../coffee/Coffee';
 import AddCoffee from '../coffee/AddCoffee';
+import EditCoffee from '../coffee/EditCoffee';
 
 import BrewList from '../brewMethods/BrewList';
 import BrewMethod from '../brewMethods/BrewMethod';
 import AddBrew from '../brewMethods/AddBrew';
+import EditBrew from '../brewMethods/EditBrew';
 
 import PrivateRoute from './PrivateRoute';
 
@@ -39,6 +41,9 @@ const Routes = () => {
                 <PrivateRoute exact path='/coffee/new'>
                     <AddCoffee />
                 </PrivateRoute>
+                <PrivateRoute exact path='/coffee/edit/:id'>
+                    <EditCoffee />
+                </PrivateRoute>
                 <Route exact path='/coffee/:id'>
                     <Coffee />
                 </Route>
@@ -48,6 +53,9 @@ const Routes = () => {
                 </Route>
                 <PrivateRoute exact path='/brews/new'>
                     <AddBrew />
+                </PrivateRoute>
+                <PrivateRoute exact path='/brew/edit/:id'>
+                    <EditBrew />
                 </PrivateRoute>
                 <Route exact path='/brew/:id'>
                     <BrewMethod />

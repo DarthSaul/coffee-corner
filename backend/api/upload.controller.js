@@ -15,7 +15,7 @@ export default class UploadController {
             res.json(req.file);
         } catch (err) {
             console.error(err);
-            res.status(500).send('Server error');
+            res.status(500).json({ error: err.message });
         }
     }
 }

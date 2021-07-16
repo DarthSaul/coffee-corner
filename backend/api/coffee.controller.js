@@ -58,7 +58,7 @@ export default class CoffeeController {
             res.json(distributors);
         } catch (err) {
             console.error(`Unable to get distributors, ${err}`);
-            res.status(500).json({ error: err });
+            res.status(500).json({ error: err.message });
         }
     }
 
@@ -66,6 +66,23 @@ export default class CoffeeController {
         try {
             const response = await CoffeeDAO.addCoffee(req.body, req.user.id);
             const { error, coffee } = response;
+            if (error) {
+                throw new Error(error);
+            }
+            res.json({ status: 'success', coffee });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: err.message });
+        }
+    }
+
+    static async apiUpdateCoffee(req, res, next) {
+        try {
+            const response = await CoffeeDAO.updateCoffee(
+                req.params.id,
+                req.body
+            );
+            const { coffee, error } = response;
             if (error) {
                 throw new Error(error);
             }

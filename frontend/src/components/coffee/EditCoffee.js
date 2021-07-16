@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons';
@@ -8,7 +8,7 @@ import CoffeeDataService from '../../services/coffees';
 import { UserContext } from '../../contexts/UserContext';
 import { AlertContext } from '../../contexts/AlertContext';
 
-const AddCoffee = () => {
+const EditCoffee = () => {
     const [formData, setFormData] = useState({
         name: '',
         distributor: '',
@@ -27,6 +27,20 @@ const AddCoffee = () => {
 
     const history = useHistory();
 
+    const { id } = useParams();
+
+    useEffect(() => {
+        const getCoffee = async id => {
+            try {
+                const coffee = await CoffeeDataService.get(id);
+                setFormData(coffee.data);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        getCoffee(id);
+    }, [history, id]);
+
     const handleChange = event => {
         const { name, value } = event.target;
         setFormData(state => ({
@@ -38,7 +52,11 @@ const AddCoffee = () => {
     const handleSubmit = async event => {
         event.preventDefault();
         try {
-            const res = await CoffeeDataService.createCoffee(formData, token);
+            const res = await CoffeeDataService.updateCoffee(
+                id,
+                formData,
+                token
+            );
             const { status } = res.data;
             if (status === 'success') {
                 setAlert('Coffee added!', 'success');
@@ -161,4 +179,4 @@ const AddCoffee = () => {
     );
 };
 
-export default AddCoffee;
+export default EditCoffee;

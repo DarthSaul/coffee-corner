@@ -2,8 +2,13 @@ import BrewDAO from '../dao/brewDAO.js';
 
 export default class BrewController {
     static async apiGetBrews(req, res, next) {
-        const { brewMethods } = await BrewDAO.getBrewMethods();
-        res.json(brewMethods);
+        try {
+            const { brewMethods } = await BrewDAO.getBrewMethods();
+            res.json(brewMethods);
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: err.message });
+        }
     }
     static async apiGetBrewById(req, res, next) {
         try {
@@ -39,6 +44,24 @@ export default class BrewController {
             res.status(500).json({ error: err.message });
         }
     }
+
+    static async apiUpdateBrew(req, res, next) {
+        try {
+            const response = await BrewDAO.updateBrewMethod(
+                req.params.id,
+                req.body
+            );
+            const { brew, error } = response;
+            if (error) {
+                throw new Error(error);
+            }
+            res.json({ status: 'success', brew });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: err.message });
+        }
+    }
+
     static async apiDeleteBrew(req, res, next) {
         try {
             const response = await BrewDAO.deleteBrewMethod(

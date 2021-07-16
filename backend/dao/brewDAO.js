@@ -48,6 +48,22 @@ export default class BrewDAO {
             return { error: err };
         }
     }
+
+    static async updateBrewMethod(brew_id, data) {
+        try {
+            const brew = await BrewMethod.findByIdAndUpdate(brew_id, data, {
+                new: true
+            });
+            if (!brew) {
+                throw new Error('Unable to retrieve brew method for update.');
+            }
+            return { brew };
+        } catch (err) {
+            console.error(`Unable to update brew method, ${err}`);
+            return { error: err };
+        }
+    }
+
     static async deleteBrewMethod(brew_id, profile_id) {
         try {
             const deletedBrew = await BrewMethod.findByIdAndDelete(brew_id);

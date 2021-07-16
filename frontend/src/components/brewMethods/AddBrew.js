@@ -1,5 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMinusCircle } from '@fortawesome/free-solid-svg-icons';
+
 import BrewDataService from '../../services/brewMethods';
 import { UserContext } from '../../contexts/UserContext';
 import { AlertContext } from '../../contexts/AlertContext';
@@ -21,6 +25,7 @@ const AddBrew = () => {
         userObj: { token },
         loadUser
     } = useContext(UserContext);
+
     const { setAlert } = useContext(AlertContext);
 
     const history = useHistory();
@@ -40,9 +45,12 @@ const AddBrew = () => {
                 {
                     name,
                     description,
-                    weight: {
+                    weights: {
                         coffee: coffeeWeight,
-                        waterRatio: `${ratioWater} grams water per ${ratioCoffee} grams coffee`
+                        waterRatio: {
+                            gramsWater: ratioWater,
+                            gramsCoffee: ratioCoffee
+                        }
                     },
                     grindType,
                     items
@@ -72,6 +80,13 @@ const AddBrew = () => {
             items: prevState.items.concat(itemText)
         }));
         setItemText('');
+    };
+
+    const handleItemRemove = el => {
+        setFormData(prevState => ({
+            ...prevState,
+            items: prevState.items.filter(item => item !== el)
+        }));
     };
 
     const {
@@ -179,18 +194,24 @@ const AddBrew = () => {
                                 className='form-control'
                             />
                         </div>
-                        <div className='form-text mb-3'>
-                            {formData.items.length > 0
-                                ? formData.items.map(
-                                      (el, ind) =>
-                                          `${el}${
-                                              ind + 1 === items.length
-                                                  ? ''
-                                                  : ', '
-                                          } `
-                                  )
-                                : 'Items added will appear here.'}
-                        </div>
+                        {items.length > 0 ? (
+                            items.map((el, ind) => {
+                                return (
+                                    <div className='form-text my-2' key={ind}>
+                                        <FontAwesomeIcon
+                                            icon={faMinusCircle}
+                                            className='text-danger me-2'
+                                            onClick={e => handleItemRemove(el)}
+                                        />
+                                        {el}
+                                    </div>
+                                );
+                            })
+                        ) : (
+                            <div className='form-text mb-3'>
+                                Items added will appear here.
+                            </div>
+                        )}
                     </div>
 
                     <button type='submit' className='btn btn-success'>
