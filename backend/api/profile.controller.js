@@ -14,7 +14,7 @@ export default class ProfileController {
 
     static async apiGetUserProfile(req, res, next) {
         try {
-            const profile = await ProfileDAO.getProfile(req.user.id);
+            const profile = await ProfileDAO.getProfileByUserId(req.user.id);
             res.json(profile);
         } catch (err) {
             console.error(err);
@@ -22,10 +22,10 @@ export default class ProfileController {
         }
     }
 
-    static async apiGetProfileById(req, res, next) {
+    static async apiGetProfileByUserId(req, res, next) {
         try {
-            const { id } = req.params;
-            const profile = await ProfileDAO.getProfile(id);
+            const { user_id } = req.params;
+            const profile = await ProfileDAO.getProfileByUserId(user_id);
             res.json(profile);
         } catch (err) {
             console.error(err);

@@ -10,6 +10,7 @@ import Dashboard from '../dashboard/Dashboard';
 
 import CreateProfile from '../profile/CreateProfile';
 import FileUpload from '../profile/FileUpload';
+import ProfilePage from '../profile/ProfilePage';
 
 import CoffeeList from '../coffee/CoffeeList';
 import Coffee from '../coffee/Coffee';
@@ -25,7 +26,7 @@ import PrivateRoute from './PrivateRoute';
 
 const Routes = () => {
     return (
-        <div className='container p-4 mt-4'>
+        <div className='container px-3 px-sm-1 mt-4 '>
             <Alert />
             <Switch>
                 <Route exact path='/login'>
@@ -67,6 +68,10 @@ const Routes = () => {
                 <PrivateRoute exact path='/profile/create'>
                     <CreateProfile />
                 </PrivateRoute>
+
+                <Route exact path='/profile/:id'>
+                    <ProfilePage />
+                </Route>
 
                 <PrivateRoute exact path='/upload'>
                     <FileUpload />

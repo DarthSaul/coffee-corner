@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { UserContext } from '../../contexts/UserContext';
 
-import Profile from '../profile/Profile';
+import DashboardProfile from './DashboardProfile';
 import EditProfile from '../profile/EditProfile';
 import EditUser from '../profile/EditUser';
 import Spinner from '../layout/Spinner';
@@ -35,7 +35,7 @@ const Dashboard = () => {
             ) : !loading && profile ? (
                 <div className='row'>
                     <div className='col-lg-4 mb-3'>
-                        <Profile loading={loading} profile={profile} />
+                        <DashboardProfile loading={loading} profile={profile} />
                     </div>
                     <div className='col-lg-8'>
                         <EditProfile profile={profile} />

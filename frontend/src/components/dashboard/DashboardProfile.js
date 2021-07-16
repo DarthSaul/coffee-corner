@@ -9,7 +9,7 @@ import {
     faQuestion
 } from '@fortawesome/free-solid-svg-icons';
 
-const Profile = ({ profile }) => {
+const DashboardProfile = ({ profile }) => {
     const { fullName, location, social, brewMethods, coffees, avatar } =
         profile;
     const profileImage = avatar
@@ -116,4 +116,4 @@ const Profile = ({ profile }) => {
     );
 };
 
-export default Profile;
+export default DashboardProfile;
