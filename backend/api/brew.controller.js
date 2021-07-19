@@ -12,8 +12,8 @@ export default class BrewController {
     }
     static async apiGetBrewById(req, res, next) {
         try {
-            const { id } = req.params || {};
-            const brewMethod = await BrewDAO.getBrewById(id);
+            const { brew_id } = req.params || {};
+            const brewMethod = await BrewDAO.getBrewById(brew_id);
             if (!brewMethod) {
                 return res.status(404).json({ error: 'Not found' });
             }
@@ -42,8 +42,9 @@ export default class BrewController {
 
     static async apiUpdateBrew(req, res, next) {
         try {
+            console.log(req.params.brew_id);
             const response = await BrewDAO.updateBrewMethod(
-                req.params.id,
+                req.params.brew_id,
                 req.body
             );
             const { brew, error } = response;
@@ -60,7 +61,7 @@ export default class BrewController {
     static async apiDeleteBrew(req, res, next) {
         try {
             const response = await BrewDAO.deleteBrewMethod(
-                req.params.id,
+                req.params.brew_id,
                 req.query.profile
             );
             const { deletedBrew } = response;

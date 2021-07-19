@@ -109,7 +109,7 @@ const AddBrew = () => {
                 {loading ? (
                     <Spinner color='black' margin='auto' />
                 ) : !loading && !profile ? (
-                    <div className='card-text text-center'>
+                    <div className='card-text text-center py-4'>
                         <span className='fs-4'>
                             To add a brew method, please first{' '}
                             <Link

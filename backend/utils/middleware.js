@@ -45,8 +45,8 @@ export const isReviewOwner = async (req, res, next) => {
 
 export const isBrewOwner = async (req, res, next) => {
     try {
-        const { id } = req.params;
-        const brewMethod = await BrewMethod.findById(id);
+        const { brew_id } = req.params;
+        const brewMethod = await BrewMethod.findById(brew_id);
         if (!brewMethod.user.equals(req.user.id)) {
             return res
                 .status(401)

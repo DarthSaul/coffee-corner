@@ -22,7 +22,10 @@ import BrewMethod from '../brewMethods/BrewMethod';
 import AddBrew from '../brewMethods/AddBrew';
 import EditBrew from '../brewMethods/EditBrew';
 
+import PostList from '../posts/PostList';
+import Post from '../posts/Post';
 import AddPost from '../posts/AddPost';
+import EditPost from '../posts/EditPost';
 
 import PrivateRoute from './PrivateRoute';
 
@@ -64,9 +67,18 @@ const Routes = () => {
                     <BrewMethod />
                 </Route>
 
+                <Route exact path='/posts'>
+                    <PostList />
+                </Route>
                 <PrivateRoute exact path='/post/new'>
                     <AddPost />
                 </PrivateRoute>
+                <PrivateRoute exact path='/post/edit/:post_id'>
+                    <EditPost />
+                </PrivateRoute>
+                <Route exact path='/post/:post_id'>
+                    <Post />
+                </Route>
 
                 <PrivateRoute exact path='/dashboard'>
                     <Dashboard />
