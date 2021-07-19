@@ -25,14 +25,9 @@ export default class BrewController {
     }
     static async apiCreateBrew(req, res, next) {
         try {
-            const { name, description, weights, grindType, items } = req.body;
             const response = await BrewDAO.addBrew(
-                name,
-                description,
-                weights,
-                grindType,
-                items,
-                req.user.id
+                req.body,
+                req.params.profile_id
             );
             const { brew, error } = response;
             if (error) {

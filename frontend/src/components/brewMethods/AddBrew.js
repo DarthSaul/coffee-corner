@@ -45,6 +45,7 @@ const AddBrew = () => {
         event.preventDefault();
         try {
             const res = await BrewDataService.newBrew(
+                profile._id,
                 {
                     name,
                     description,

@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.route('/').get(BrewCtrl.apiGetBrews);
 router.route('/:id').get(BrewCtrl.apiGetBrewById);
-router.route('/new').post(auth, BrewCtrl.apiCreateBrew);
+router.route('/new/:profile_id').post(auth, BrewCtrl.apiCreateBrew);
 router.route('/edit/:id').put(auth, isBrewOwner, BrewCtrl.apiUpdateBrew);
 router.route('/delete/:id').delete(auth, isBrewOwner, BrewCtrl.apiDeleteBrew);
 

@@ -19,14 +19,12 @@ const ProfilePage = () => {
         loading: true
     });
 
-    const { id } = useParams();
+    const { profile_id } = useParams();
 
     useEffect(() => {
-        const getProfile = async user_id => {
+        const getProfile = async profile_id => {
             try {
-                const res = await ProfileDataService.getProfileByUserId(
-                    user_id
-                );
+                const res = await ProfileDataService.getProfileById(profile_id);
                 setProfileData({
                     ...res.data,
                     loading: false
@@ -35,8 +33,8 @@ const ProfilePage = () => {
                 console.error(err);
             }
         };
-        getProfile(id);
-    }, [id]);
+        getProfile(profile_id);
+    }, [profile_id]);
 
     const { profile, loading } = profileData;
 

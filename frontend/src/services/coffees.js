@@ -15,9 +15,9 @@ class CoffeeDataService {
         );
     }
 
-    createCoffee(data, token) {
+    createCoffee(profile_id, data, token) {
         http.defaults.headers.common['x-auth-token'] = token;
-        return http.post('/coffee/new', data);
+        return http.post(`/coffee/new/${profile_id}`, data);
     }
 
     updateCoffee(coffee_id, data, token) {

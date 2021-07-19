@@ -68,7 +68,7 @@ const ProfileCard = ({ userId }) => {
                                 </div>
                             </div>
                             <div className='mt-2'>
-                                <Link to={`/profile/${userId}`}>
+                                <Link to={`/profile/${profile._id}`}>
                                     <button className='btn btn-outline-success'>
                                         View Profile
                                     </button>

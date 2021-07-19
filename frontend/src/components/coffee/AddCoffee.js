@@ -40,7 +40,11 @@ const AddCoffee = () => {
     const handleSubmit = async event => {
         event.preventDefault();
         try {
-            const res = await CoffeeDataService.createCoffee(formData, token);
+            const res = await CoffeeDataService.createCoffee(
+                profile._id,
+                formData,
+                token
+            );
             const { status } = res.data;
             if (status === 'success') {
                 setAlert('Coffee added!', 'success');

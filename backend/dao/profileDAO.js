@@ -12,6 +12,15 @@ export default class ProfileDAO {
             return { error: err.message };
         }
     }
+    static async getProfileById(profile_id) {
+        try {
+            const profile = await Profile.findById(profile_id);
+            return { profile };
+        } catch (error) {
+            console.error(err);
+            return { error: err.message };
+        }
+    }
     static async createProfile(user_id, profileData) {
         try {
             const profile = new Profile(profileData);

@@ -21,27 +21,14 @@ export default class BrewDAO {
             return { error: err };
         }
     }
-    static async addBrew(
-        name,
-        description,
-        weights,
-        grindType,
-        items,
-        user_id
-    ) {
+    static async addBrew(data, profile_id) {
         try {
-            const profile = await Profile.findOne({ user: `${user_id}` }); // FIX!!
-            const brew = new BrewMethod({
-                name,
-                description,
-                weights,
-                grindType,
-                items
-            });
-            profile.brewMethods.push(brew._id);
-            brew.user = user_id;
-            await profile.save();
+            const profile = await Profile.findById(profile_id);
+            const brew = new BrewMethod(data);
+            brew.user = profile.user;
             await brew.save();
+            profile.brewMethods.push(brew._id);
+            await profile.save();
             return { brew };
         } catch (err) {
             console.error(`Unable to create brew method, ${err}`);

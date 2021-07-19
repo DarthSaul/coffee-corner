@@ -69,7 +69,7 @@ const Routes = () => {
                     <CreateProfile />
                 </PrivateRoute>
 
-                <Route exact path='/profile/:id'>
+                <Route exact path='/profile/:profile_id'>
                     <ProfilePage />
                 </Route>
 

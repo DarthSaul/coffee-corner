@@ -33,6 +33,17 @@ export default class ProfileController {
         }
     }
 
+    static async apiGetProfileById(req, res, next) {
+        try {
+            const { profile_id } = req.params;
+            const profile = await ProfileDAO.getProfileById(profile_id);
+            res.json(profile);
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: err.message });
+        }
+    }
+
     static async apiCreateProfile(req, res, next) {
         try {
             const profile = await ProfileDAO.createProfile(
