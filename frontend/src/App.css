@@ -78,3 +78,10 @@ nav span:hover {
     background-color: var(--dark-color);
     color: var(--light-color);
 }
+
+.create-profile {
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -29,32 +29,42 @@ const Dashboard = () => {
     const { loading, profile } = profileData;
 
     return (
-        <div>
+        <>
             {userObj.loading ? (
-                <Spinner />
+                <div className='create-profile'>
+                    <Spinner margin='auto' />
+                </div>
             ) : !loading && profile ? (
-                <div className='row'>
-                    <div className='col-lg-4 mb-3'>
-                        <DashboardProfile loading={loading} profile={profile} />
-                    </div>
-                    <div className='col-lg-8'>
-                        <EditProfile profile={profile} />
-                        {!userObj.loading && (
-                            <EditUser
-                                token={userObj.token}
-                                user={userObj.user}
+                <div>
+                    <div className='row'>
+                        <div className='col-lg-4 mb-3'>
+                            <DashboardProfile
+                                loading={loading}
+                                profile={profile}
                             />
-                        )}
+                        </div>
+                        <div className='col-lg-8'>
+                            <EditProfile profile={profile} />
+                            {!userObj.loading && (
+                                <EditUser
+                                    token={userObj.token}
+                                    user={userObj.user}
+                                />
+                            )}
+                        </div>
                     </div>
                 </div>
             ) : (
-                <>
-                    <Link to='/profile/create' className='btn btn-success'>
+                <div className='create-profile'>
+                    <Link
+                        to='/profile/create'
+                        className='btn btn-success btn-lg'
+                    >
                         Create a Profile to view Dashboard
                     </Link>
-                </>
+                </div>
             )}
-        </div>
+        </>
     );
 };
 

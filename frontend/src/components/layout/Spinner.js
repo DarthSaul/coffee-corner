@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
-const Spinner = ({ color = 'white' }) => (
+const Spinner = ({ color = 'white', margin }) => (
     <>
         <div>
             <FontAwesomeIcon
@@ -13,6 +13,7 @@ const Spinner = ({ color = 'white' }) => (
                     display: 'block',
                     color
                 }}
+                className={margin ? `m-${margin}` : ''}
             />
         </div>
     </>
