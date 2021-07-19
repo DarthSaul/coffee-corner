@@ -22,6 +22,8 @@ import BrewMethod from '../brewMethods/BrewMethod';
 import AddBrew from '../brewMethods/AddBrew';
 import EditBrew from '../brewMethods/EditBrew';
 
+import AddPost from '../posts/AddPost';
+
 import PrivateRoute from './PrivateRoute';
 
 const Routes = () => {
@@ -61,6 +63,10 @@ const Routes = () => {
                 <Route exact path='/brew/:id'>
                     <BrewMethod />
                 </Route>
+
+                <PrivateRoute exact path='/post/new'>
+                    <AddPost />
+                </PrivateRoute>
 
                 <PrivateRoute exact path='/dashboard'>
                     <Dashboard />

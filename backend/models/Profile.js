@@ -53,6 +53,12 @@ const profileSchema = new Schema(
                 ref: 'Coffee'
             }
         ],
+        posts: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Post'
+            }
+        ],
         date: {
             type: Date,
             default: Date.now
