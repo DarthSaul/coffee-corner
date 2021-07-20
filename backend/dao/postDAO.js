@@ -14,7 +14,9 @@ export default class PostDAO {
 
     static async getPostById(id) {
         try {
-            const post = await Post.findById(id).populate({ path: 'profile' });
+            const post = await Post.findById(id)
+                .populate({ path: 'profile' })
+                .populate({ path: 'comments', populate: { path: 'profile' } });
             return post;
         } catch (err) {
             console.error(`Unable to find post, ${err}`);
@@ -44,7 +46,7 @@ export default class PostDAO {
                 new: true
             });
             if (!post) {
-                throw new Error('Unable to retrive post for update.');
+                throw new Error('Unable to retrieve post for update.');
             }
             return { post };
         } catch (err) {
@@ -101,6 +103,41 @@ export default class PostDAO {
             return { updatedPost };
         } catch (err) {
             console.error(`Unable to unlike post, ${err}`);
+            return { error: err };
+        }
+    }
+
+    static async postComment({ text }, post_id, profile_id) {
+        try {
+            const comment = {
+                text,
+                profile: profile_id
+            };
+            const post = await Post.findById(post_id);
+            post.comments.push(comment);
+            await post.save();
+            return { post };
+        } catch (err) {
+            console.error(`Unable to add comment, ${err}`);
+            return { error: err };
+        }
+    }
+
+    static async deleteComment(post_id, comment_id) {
+        try {
+            const post = await Post.findByIdAndUpdate(
+                post_id,
+                {
+                    $pull: { comments: { _id: comment_id } }
+                },
+                { new: true }
+            );
+            if (!post) {
+                throw new Error('Unable to retrieve post for update.');
+            }
+            return { post };
+        } catch (err) {
+            console.error(`Unable to delete comment, ${err}`);
             return { error: err };
         }
     }

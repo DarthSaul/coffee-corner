@@ -8,6 +8,8 @@ import PostDataService from '../../services/posts';
 import { UserContext } from '../../contexts/UserContext';
 import { AlertContext } from '../../contexts/AlertContext';
 
+import Comments from './Comments';
+
 const Post = () => {
     const [postState, setPostState] = useState({
         _id: null,
@@ -85,11 +87,11 @@ const Post = () => {
         }
     };
 
-    const { _id, title, text, likes, profile } = postState;
+    const { _id, title, text, likes, comments, profile } = postState;
 
     return (
-        <div>
-            <div className='card col-lg-10 m-auto'>
+        <div className='col-lg-10 m-auto mt-5'>
+            <div className='card my-5'>
                 {!loading && (
                     <>
                         <div className='card-body p-5'>
@@ -139,6 +141,8 @@ const Post = () => {
                     </>
                 )}
             </div>
+
+            <Comments comments={comments} post_id={post_id} getPost={getPost} />
         </div>
     );
 };

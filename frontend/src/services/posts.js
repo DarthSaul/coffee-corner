@@ -27,6 +27,17 @@ class PostDataService {
         http.defaults.headers.common['x-auth-token'] = token;
         return http.put(`/posts/unlike/${post_id}?profile=${profile_id}`);
     }
+    postComment(text, post_id, profile_id, token) {
+        http.defaults.headers.common['x-auth-token'] = token;
+        return http.put(
+            `/posts/comment/${post_id}?profile=${profile_id}`,
+            text
+        );
+    }
+    deleteComment(post_id, comment_id, token) {
+        http.defaults.headers.common['x-auth-token'] = token;
+        return http.delete(`/posts/comment/${post_id}?comment=${comment_id}`);
+    }
 }
 
 export default new PostDataService();
