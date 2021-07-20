@@ -10,6 +10,7 @@ import Dashboard from '../dashboard/Dashboard';
 
 import CreateProfile from '../profile/CreateProfile';
 import FileUpload from '../profile/FileUpload';
+import ProfilePage from '../profile/ProfilePage';
 
 import CoffeeList from '../coffee/CoffeeList';
 import Coffee from '../coffee/Coffee';
@@ -21,11 +22,16 @@ import BrewMethod from '../brewMethods/BrewMethod';
 import AddBrew from '../brewMethods/AddBrew';
 import EditBrew from '../brewMethods/EditBrew';
 
+import PostList from '../posts/PostList';
+import Post from '../posts/Post';
+import AddPost from '../posts/AddPost';
+import EditPost from '../posts/EditPost';
+
 import PrivateRoute from './PrivateRoute';
 
 const Routes = () => {
     return (
-        <div className='container p-4 mt-4'>
+        <div className='container px-3 px-sm-1 mt-4 '>
             <Alert />
             <Switch>
                 <Route exact path='/login'>
@@ -61,12 +67,29 @@ const Routes = () => {
                     <BrewMethod />
                 </Route>
 
+                <Route exact path='/posts'>
+                    <PostList />
+                </Route>
+                <PrivateRoute exact path='/post/new'>
+                    <AddPost />
+                </PrivateRoute>
+                <PrivateRoute exact path='/post/edit/:post_id'>
+                    <EditPost />
+                </PrivateRoute>
+                <Route exact path='/post/:post_id'>
+                    <Post />
+                </Route>
+
                 <PrivateRoute exact path='/dashboard'>
                     <Dashboard />
                 </PrivateRoute>
                 <PrivateRoute exact path='/profile/create'>
                     <CreateProfile />
                 </PrivateRoute>
+
+                <Route exact path='/profile/:profile_id'>
+                    <ProfilePage />
+                </Route>
 
                 <PrivateRoute exact path='/upload'>
                     <FileUpload />

@@ -33,11 +33,10 @@ export default class ReviewDAO {
     static async deleteReview(review_id) {
         try {
             const deletedReview = await Review.findByIdAndDelete(review_id);
-            if (deletedReview) {
-                return { deletedReview };
-            } else {
+            if (!deletedReview) {
                 throw new Error('Unable to find review to delete.');
             }
+            return { deletedReview };
         } catch (err) {
             console.error(`Unable to delete review, ${err}`);
             return { error: err };

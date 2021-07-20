@@ -7,9 +7,9 @@ class BrewDataService {
     getBrewById(id) {
         return http.get(`/brew/${id}`);
     }
-    newBrew(data, token) {
+    newBrew(profile_id, data, token) {
         http.defaults.headers.common['x-auth-token'] = token;
-        return http.post('/brew/new', data);
+        return http.post(`/brew/new/${profile_id}`, data);
     }
     updateBrew(brew_id, data, token) {
         http.defaults.headers.common['x-auth-token'] = token;

@@ -68,6 +68,10 @@ const Navigation = () => {
                             </NavDropdown.Item>
                         </NavDropdown>
 
+                        <Link className='nav-link' to='/posts'>
+                            Community
+                        </Link>
+
                         <div className='d-md-flex ms-md-auto'>
                             {!loading && !isAuthenticated ? (
                                 <>

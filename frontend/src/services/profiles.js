@@ -9,8 +9,11 @@ class ProfileDataService {
         http.defaults.headers.common['x-auth-token'] = token;
         return http.put('/profile', data);
     }
-    getProfileById(id) {
-        return http.get(`/profile/id/${id}`);
+    getProfileById(profile_id) {
+        return http.get(`/profile/${profile_id}`);
+    }
+    getProfileByUserId(user_id) {
+        return http.get(`/profile/user/${user_id}`);
     }
     createProfile(data, token) {
         http.defaults.headers.common['x-auth-token'] = token;

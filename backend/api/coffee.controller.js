@@ -64,8 +64,11 @@ export default class CoffeeController {
 
     static async apiCreateCoffee(req, res, next) {
         try {
-            const response = await CoffeeDAO.addCoffee(req.body, req.user.id);
-            const { error, coffee } = response;
+            const response = await CoffeeDAO.addCoffee(
+                req.body,
+                req.params.profile_id
+            );
+            const { coffee, error } = response;
             if (error) {
                 throw new Error(error);
             }

@@ -6,7 +6,7 @@ import { auth, isReviewOwner } from '../utils/middleware.js';
 const router = express.Router();
 
 router.route('/').get(CoffeeCtrl.apiGetCoffees);
-router.route('/new').post(auth, CoffeeCtrl.apiCreateCoffee);
+router.route('/new/:profile_id').post(auth, CoffeeCtrl.apiCreateCoffee);
 router.route('/id/:id').get(CoffeeCtrl.apiGetCoffeeById);
 router.route('/edit/:id').put(auth, CoffeeCtrl.apiUpdateCoffee);
 router.route('/distributors').get(CoffeeCtrl.apiGetCoffeeDist);

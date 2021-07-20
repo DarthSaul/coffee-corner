@@ -6,7 +6,8 @@ const router = express.Router();
 
 router.route('/').get(auth, ProfileCtrl.apiGetUserProfile);
 router.route('/').put(auth, ProfileCtrl.apiUpdateUser);
-router.route('/id/:id').get(ProfileCtrl.apiGetProfileById);
+router.route('/:profile_id').get(ProfileCtrl.apiGetProfileById);
+router.route('/user/:user_id').get(ProfileCtrl.apiGetProfileByUserId);
 router.route('/create').post(auth, ProfileCtrl.apiCreateProfile);
 router.route('/edit').put(auth, ProfileCtrl.apiUpdateProfile);
 

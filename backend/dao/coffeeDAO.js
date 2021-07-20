@@ -63,13 +63,13 @@ export default class CoffeeDAO {
         }
     }
 
-    static async addCoffee(coffeeData, user_id) {
+    static async addCoffee(coffeeData, profile_id) {
         try {
+            const profile = await Profile.findById(profile_id);
             const coffee = new Coffee(coffeeData);
-            coffee.user = user_id;
-            const profile = await Profile.findOne({ user: `${user_id}` });
-            profile.coffees.push(coffee._id);
+            coffee.user = profile.user;
             await coffee.save();
+            profile.coffees.push(coffee._id);
             await profile.save();
             return { coffee };
         } catch (err) {
@@ -96,14 +96,13 @@ export default class CoffeeDAO {
     static async deleteCoffee(coffee_id, profile_id) {
         try {
             const deletedCoffee = await Coffee.findByIdAndDelete(coffee_id);
+            if (!deletedCoffee) {
+                throw new Error('Unable to find coffee to delete.');
+            }
             await Profile.findByIdAndUpdate(profile_id, {
                 $pull: { coffees: coffee_id }
             });
-            if (deletedCoffee) {
-                return { deletedCoffee };
-            } else {
-                throw new Error('Unable to find coffee to delete.');
-            }
+            return { deletedCoffee };
         } catch (err) {
             console.error(err);
             return { error: err };

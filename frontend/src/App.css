@@ -29,15 +29,19 @@ body {
     background-color: var(--dark-color);
     color: white;
 }
-.btn-new-brew {
+.btn-new {
     background-color: var(--neutral-color);
     border-color: var(--medium-color);
     font-size: 1.6em;
     padding: 0.8rem 2.2rem;
 }
-.btn-new-brew a {
+.btn-new a {
     color: var(--dark-color);
     text-decoration: none;
+}
+.btn-new:hover {
+    background-color: var(--light-color);
+    border-color: var(--neutral-color);
 }
 
 nav span:hover {
@@ -77,4 +81,18 @@ nav span:hover {
 .brew-title .card-header:hover {
     background-color: var(--dark-color);
     color: var(--light-color);
+}
+
+.create-profile {
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.post-title {
+    color: var(--dark-color);
+}
+.post-title:hover {
+    color: var(--medium-color);
 }

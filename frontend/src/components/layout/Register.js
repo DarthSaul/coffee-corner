@@ -26,7 +26,14 @@ const Register = () => {
     };
 
     if (userObj.isAuthenticated) {
-        return <Redirect to='/coffee' />;
+        return (
+            <Redirect
+                to={{
+                    pathname: '/profile/create',
+                    state: { fromRegister: true }
+                }}
+            />
+        );
     }
 
     const { email, username, password } = formData;

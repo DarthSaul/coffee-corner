@@ -20,8 +20,8 @@ const BrewList = () => {
     };
     return (
         <div className='row'>
-            <div className='col-10 mx-auto text-center mb-5'>
-                <button className='btn btn-new-brew'>
+            <div className='col-10 mx-auto text-center my-5'>
+                <button className='btn btn-new'>
                     <Link to='/brews/new'>Post New Brew Method</Link>
                 </button>
             </div>
