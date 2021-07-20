@@ -68,4 +68,40 @@ export default class PostDAO {
             return { error: err };
         }
     }
+
+    static async likePost(post_id, profile_id) {
+        try {
+            const post = await Post.findById(post_id);
+            if (post.likes.some(el => `${el._id}` === profile_id)) {
+                return { error: 'User profile already liked post.' };
+            }
+            post.likes.push(profile_id);
+            await post.save();
+            return { post };
+        } catch (err) {
+            console.error(`Unable to like post, ${err}`);
+            return { error: err };
+        }
+    }
+
+    static async unlikePost(post_id, profile_id) {
+        try {
+            const post = await Post.findById(post_id);
+            const notLiked =
+                post.likes.filter(el => `${el._id}` === profile_id).length ===
+                0;
+            if (notLiked) {
+                return { error: 'User profile has not liked this post.' };
+            }
+            const updatedPost = await Post.findByIdAndUpdate(
+                post_id,
+                { $pull: { likes: { _id: profile_id } } },
+                { new: true }
+            );
+            return { updatedPost };
+        } catch (err) {
+            console.error(`Unable to unlike post, ${err}`);
+            return { error: err };
+        }
+    }
 }

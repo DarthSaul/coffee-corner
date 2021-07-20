@@ -46,10 +46,17 @@ const PostList = () => {
                                             />
                                         </div>
                                         <div className='col-sm-9 mt-4 mt-sm-0'>
-                                            <Link to={`/post/${post._id}`}>
-                                                <h1>{post.title}</h1>
+                                            <Link
+                                                to={`/post/${post._id}`}
+                                                className='text-decoration-none'
+                                            >
+                                                <h3 className='post-title'>
+                                                    {post.title}
+                                                </h3>
                                             </Link>
-                                            <p>By {post.profile.firstName}</p>
+                                            <p className='text-muted'>
+                                                By {post.profile.firstName}
+                                            </p>
                                             <p>{post.text}</p>
                                         </div>
                                     </div>

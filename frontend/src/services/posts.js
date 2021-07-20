@@ -19,6 +19,14 @@ class PostDataService {
         http.defaults.headers.common['x-auth-token'] = token;
         return http.delete(`/posts/delete/${post_id}?profile=${profile_id}`);
     }
+    likePost(post_id, profile_id, token) {
+        http.defaults.headers.common['x-auth-token'] = token;
+        return http.put(`/posts/like/${post_id}?profile=${profile_id}`);
+    }
+    unlikePost(post_id, profile_id, token) {
+        http.defaults.headers.common['x-auth-token'] = token;
+        return http.put(`/posts/unlike/${post_id}?profile=${profile_id}`);
+    }
 }
 
 export default new PostDataService();

@@ -89,3 +89,10 @@ nav span:hover {
     justify-content: center;
     align-items: center;
 }
+
+.post-title {
+    color: var(--dark-color);
+}
+.post-title:hover {
+    color: var(--medium-color);
+}

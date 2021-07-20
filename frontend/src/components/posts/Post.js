@@ -1,5 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link, useParams, useHistory } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 
 import PostDataService from '../../services/posts';
 
@@ -25,17 +27,18 @@ const Post = () => {
     const history = useHistory();
 
     useEffect(() => {
-        const getPost = async id => {
-            try {
-                const post = await PostDataService.getPostById(id);
-                setPostState(post.data);
-                setLoading(false);
-            } catch (err) {
-                console.error(err);
-            }
-        };
         getPost(post_id);
     }, [post_id]);
+
+    const getPost = async id => {
+        try {
+            const post = await PostDataService.getPostById(id);
+            setPostState(post.data);
+            setLoading(false);
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     const deletePost = async () => {
         try {
@@ -53,7 +56,36 @@ const Post = () => {
         }
     };
 
-    const { _id, title, text, profile } = postState;
+    const likePost = async () => {
+        try {
+            await PostDataService.likePost(
+                post_id,
+                userObj.profile._id,
+                userObj.token
+            );
+            getPost(post_id);
+            setAlert('Liked post!', 'success');
+        } catch (err) {
+            setAlert(err.response.data.msg, 'danger');
+            console.error(err);
+        }
+    };
+    const unlikePost = async () => {
+        try {
+            await PostDataService.unlikePost(
+                post_id,
+                userObj.profile._id,
+                userObj.token
+            );
+            getPost(post_id);
+            setAlert('Unliked post.', 'secondary');
+        } catch (err) {
+            setAlert(err.response.data.msg, 'danger');
+            console.error(err);
+        }
+    };
+
+    const { _id, title, text, likes, profile } = postState;
 
     return (
         <div>
@@ -65,6 +97,25 @@ const Post = () => {
                             <h6 className='card-subtitle mb-4 text-muted'>
                                 By {profile.firstName}
                             </h6>
+                            <div className='div mb-4'>
+                                <button
+                                    className='btn btn-success me-2'
+                                    onClick={likePost}
+                                >
+                                    <FontAwesomeIcon
+                                        icon={faThumbsUp}
+                                        className='me-2'
+                                    />{' '}
+                                    {likes.length}
+                                </button>
+                                <button
+                                    className='btn btn-warning'
+                                    onClick={unlikePost}
+                                >
+                                    <FontAwesomeIcon icon={faThumbsDown} />
+                                </button>
+                            </div>
+
                             <div className='card-text'>
                                 <p>{text}</p>
                             </div>

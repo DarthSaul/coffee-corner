@@ -73,4 +73,44 @@ export default class PostController {
             res.status(500).json({ error: err.message });
         }
     }
+
+    static async apiLikePost(req, res, next) {
+        try {
+            const response = await PostDAO.likePost(
+                req.params.post_id,
+                req.query.profile
+            );
+            const { post, error } = response;
+            if (error) {
+                throw new Error(error);
+            }
+            res.json({ status: 'success', post });
+        } catch (err) {
+            console.error(err);
+            if (err.kind == 'ObjectId') {
+                return res.status(400).json({ msg: 'Post not found' });
+            }
+            res.status(500).json({ msg: err.message });
+        }
+    }
+
+    static async apiUnlikePost(req, res, next) {
+        try {
+            const response = await PostDAO.unlikePost(
+                req.params.post_id,
+                req.query.profile
+            );
+            const { updatedPost, error } = response;
+            if (error) {
+                throw new Error(error);
+            }
+            res.json({ status: 'success', updatedPost });
+        } catch (err) {
+            console.error(err);
+            if (err.kind == 'ObjectId') {
+                return res.status(400).json({ msg: 'Post not found' });
+            }
+            res.status(500).json({ msg: err.message });
+        }
+    }
 }
