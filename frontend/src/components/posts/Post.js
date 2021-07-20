@@ -4,6 +4,7 @@ import { Link, useParams, useHistory } from 'react-router-dom';
 import PostDataService from '../../services/posts';
 
 import { UserContext } from '../../contexts/UserContext';
+import { AlertContext } from '../../contexts/AlertContext';
 
 const Post = () => {
     const [postState, setPostState] = useState({
@@ -16,7 +17,8 @@ const Post = () => {
     });
     const [loading, setLoading] = useState(true);
 
-    const { userObj } = useContext(UserContext);
+    const { userObj, loadUser } = useContext(UserContext);
+    const { setAlert } = useContext(AlertContext);
 
     const { post_id } = useParams();
 
@@ -35,7 +37,23 @@ const Post = () => {
         getPost(post_id);
     }, [post_id]);
 
-    const { _id, title, text, likes, comments, profile } = postState;
+    const deletePost = async () => {
+        try {
+            await PostDataService.deletePost(
+                post_id,
+                userObj.profile._id,
+                userObj.token
+            );
+            setAlert('Post removed.', 'secondary');
+            loadUser();
+            history.push('/posts');
+        } catch (err) {
+            setAlert(`Whoops, something went wrong.`, 'danger');
+            console.error(err);
+        }
+    };
+
+    const { _id, title, text, profile } = postState;
 
     return (
         <div>
@@ -55,10 +73,16 @@ const Post = () => {
                             profile._id === userObj.profile._id && (
                                 <div className='card-footer px-5'>
                                     <Link to={`/post/edit/${_id}`}>
-                                        <button className='btn btn-warning'>
+                                        <button className='btn btn-warning me-3'>
                                             Edit
                                         </button>
                                     </Link>
+                                    <button
+                                        className='btn btn-danger'
+                                        onClick={deletePost}
+                                    >
+                                        Delete
+                                    </button>
                                 </div>
                             )}
                     </>

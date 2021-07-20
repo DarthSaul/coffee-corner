@@ -11,6 +11,7 @@ export default class PostDAO {
             return { posts: [] };
         }
     }
+
     static async getPostById(id) {
         try {
             const post = await Post.findById(id).populate({ path: 'profile' });
@@ -20,6 +21,7 @@ export default class PostDAO {
             return { error: err };
         }
     }
+
     static async addPost(data, profile_id) {
         try {
             const { title, text } = data;
@@ -35,6 +37,7 @@ export default class PostDAO {
             return { error: err };
         }
     }
+
     static async updatePost(post_id, data) {
         try {
             const post = await Post.findByIdAndUpdate(post_id, data, {
@@ -46,6 +49,22 @@ export default class PostDAO {
             return { post };
         } catch (err) {
             console.error(`Unable to update post, ${err}`);
+            return { error: err };
+        }
+    }
+
+    static async deletePost(post_id, profile_id) {
+        try {
+            const deletedPost = await Post.findByIdAndDelete(post_id);
+            if (!deletedPost) {
+                throw new Error('Unable to find post to delete.');
+            }
+            await Profile.findByIdAndUpdate(profile_id, {
+                $pull: { posts: post_id }
+            });
+            return { deletedPost };
+        } catch (err) {
+            console.error(`Unable to delete post, ${err}`);
             return { error: err };
         }
     }

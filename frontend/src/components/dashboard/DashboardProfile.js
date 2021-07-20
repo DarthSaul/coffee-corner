@@ -6,11 +6,11 @@ import {
     faMugHot,
     faFillDrip,
     faStore,
-    faQuestion
+    faScroll
 } from '@fortawesome/free-solid-svg-icons';
 
 const DashboardProfile = ({ profile }) => {
-    const { fullName, location, social, brewMethods, coffees, avatar } =
+    const { fullName, location, social, brewMethods, coffees, posts, avatar } =
         profile;
     const profileImage = avatar
         ? avatar.thumbnail
@@ -100,13 +100,13 @@ const DashboardProfile = ({ profile }) => {
                         <div className='row d-flex align-items-center'>
                             <div className='col-1'>
                                 <FontAwesomeIcon
-                                    icon={faQuestion}
+                                    icon={faScroll}
                                     className='me-2'
                                 />
                             </div>
-                            <span className='col-9'>Questions</span>
+                            <span className='col-9'>Posts</span>
                             <span className='col text-secondary text-end'>
-                                0
+                                {posts.length}
                             </span>
                         </div>
                     </li>

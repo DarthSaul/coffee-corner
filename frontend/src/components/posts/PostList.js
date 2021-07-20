@@ -23,9 +23,9 @@ const PostList = () => {
     return (
         <div className='row'>
             <div className='col-10 mx-auto text-center my-5'>
-                <button className='btn btn-new'>
-                    <Link to='/post/new'>Start New Post</Link>
-                </button>
+                <Link to='/post/new'>
+                    <button className='btn btn-new'>Start New Post</button>
+                </Link>
             </div>
             {!loading &&
                 posts.map((post, ind) => {

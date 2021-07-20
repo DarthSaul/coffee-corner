@@ -96,14 +96,13 @@ export default class CoffeeDAO {
     static async deleteCoffee(coffee_id, profile_id) {
         try {
             const deletedCoffee = await Coffee.findByIdAndDelete(coffee_id);
+            if (!deletedCoffee) {
+                throw new Error('Unable to find coffee to delete.');
+            }
             await Profile.findByIdAndUpdate(profile_id, {
                 $pull: { coffees: coffee_id }
             });
-            if (deletedCoffee) {
-                return { deletedCoffee };
-            } else {
-                throw new Error('Unable to find coffee to delete.');
-            }
+            return { deletedCoffee };
         } catch (err) {
             console.error(err);
             return { error: err };

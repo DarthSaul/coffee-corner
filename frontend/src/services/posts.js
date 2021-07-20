@@ -15,6 +15,10 @@ class PostDataService {
         http.defaults.headers.common['x-auth-token'] = token;
         return http.put(`/posts/edit/${post_id}`, data);
     }
+    deletePost(post_id, profile_id, token) {
+        http.defaults.headers.common['x-auth-token'] = token;
+        return http.delete(`/posts/delete/${post_id}?profile=${profile_id}`);
+    }
 }
 
 export default new PostDataService();

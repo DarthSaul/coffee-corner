@@ -56,4 +56,21 @@ export default class PostController {
             res.status(500).json({ error: err.message });
         }
     }
+
+    static async apiDeletePost(req, res, next) {
+        try {
+            const response = await PostDAO.deletePost(
+                req.params.post_id,
+                req.query.profile
+            );
+            const { deletedPost } = response;
+            if (!deletedPost) {
+                throw new Error('Server error');
+            }
+            res.json({ status: 'success', deletedPost });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: err.message });
+        }
+    }
 }

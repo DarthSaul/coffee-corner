@@ -54,14 +54,13 @@ export default class BrewDAO {
     static async deleteBrewMethod(brew_id, profile_id) {
         try {
             const deletedBrew = await BrewMethod.findByIdAndDelete(brew_id);
+            if (!deletedBrew) {
+                throw new Error('Unable to find brew method to delete.');
+            }
             await Profile.findByIdAndUpdate(profile_id, {
                 $pull: { brewMethods: brew_id }
             });
-            if (deletedBrew) {
-                return { deletedBrew };
-            } else {
-                throw new Error('Unable to find brew method to delete.');
-            }
+            return { deletedBrew };
         } catch (err) {
             console.error(`Unable to delete brew method, ${err}`);
             return { error: err };
