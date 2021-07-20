@@ -113,4 +113,45 @@ export default class PostController {
             res.status(500).json({ msg: err.message });
         }
     }
+
+    static async apiPostComment(req, res, next) {
+        try {
+            const response = await PostDAO.postComment(
+                req.body,
+                req.params.post_id,
+                req.query.profile
+            );
+            const { post } = response;
+            if (!post) {
+                throw new Error('Server error');
+            }
+            res.json({ status: 'success', post });
+        } catch (err) {
+            console.error(err);
+            if (err.kind == 'ObjectId') {
+                return res.status(400).json({ msg: 'Post not found' });
+            }
+            res.status(500).json({ msg: err.message });
+        }
+    }
+
+    static async apiDeleteComment(req, res, next) {
+        try {
+            const response = await PostDAO.deleteComment(
+                req.params.post_id,
+                req.query.comment
+            );
+            const { post } = response;
+            if (!post) {
+                throw new Error('Server error');
+            }
+            res.json({ status: 'success', post });
+        } catch (error) {
+            console.error(err);
+            if (err.kind == 'ObjectId') {
+                return res.status(400).json({ msg: 'Post not found' });
+            }
+            res.status(500).json({ msg: err.message });
+        }
+    }
 }

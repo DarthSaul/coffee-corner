@@ -34,6 +34,10 @@ const postSchema = new Schema({
             profile: {
                 type: Schema.Types.ObjectId,
                 ref: 'Profile'
+            },
+            date: {
+                type: Date,
+                default: Date.now
             }
         }
     ]

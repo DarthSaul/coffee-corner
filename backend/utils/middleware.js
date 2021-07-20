@@ -77,3 +77,25 @@ export const isPostOwner = async (req, res, next) => {
         res.status(500).json({ msg: 'Server Error' });
     }
 };
+
+export const isCommentOwner = async (req, res, next) => {
+    try {
+        const { comments } = await Post.findById(req.params.post_id).populate({
+            path: 'comments',
+            populate: { path: 'profile' }
+        });
+        const deleteComment = comments.filter(
+            el => `${el._id}` === req.query.comment
+        )[0];
+        if (!deleteComment.profile.user.equals(req.user.id)) {
+            console.log('no permission');
+            return res
+                .status(401)
+                .json({ msg: 'You do not have permission to do that' });
+        }
+        next();
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ msg: 'Server Error' });
+    }
+};
