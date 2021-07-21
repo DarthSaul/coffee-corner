@@ -201,16 +201,17 @@ const CoffeeList = () => {
                                                 )}
                                             </p>
                                         </div>
-
-                                        <Link
-                                            to={`/coffee/${coffee._id}`}
-                                            className='btn btn-theme reviews-btn'
-                                            onClick={e => {
-                                                window.scrollTo(0, 0);
-                                            }}
-                                        >
-                                            See Reviews
-                                        </Link>
+                                        <div className='text-center'>
+                                            <Link
+                                                to={`/coffee/${coffee._id}`}
+                                                className='btn btn-theme reviews-btn'
+                                                onClick={e => {
+                                                    window.scrollTo(0, 0);
+                                                }}
+                                            >
+                                                See Reviews
+                                            </Link>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
