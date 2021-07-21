@@ -185,7 +185,12 @@ const CoffeeList = () => {
                             <div className='col-lg-4 col-md-6 pb-1' key={ind}>
                                 <div className='card my-2 coffee-list-card'>
                                     <div className='card-header d-flex align-items-center fs-3 ps-4 py-2'>
-                                        {capitalize.words(coffee.name)}
+                                        <Link
+                                            to={`/coffee/${coffee._id}`}
+                                            className='text-decoration-none text-reset'
+                                        >
+                                            {capitalize.words(coffee.name)}
+                                        </Link>
                                     </div>
                                     <div className='card-body d-flex flex-column justify-content-around p-4'>
                                         <div>

@@ -22,7 +22,7 @@ const PostList = () => {
 
     return (
         <div className='row'>
-            <div className='col-10 mx-auto text-center my-5'>
+            <div className='col-10 mx-auto text-center mt-3 mb-5'>
                 <Link to='/post/new'>
                     <button className='btn btn-new'>Start New Post</button>
                 </Link>

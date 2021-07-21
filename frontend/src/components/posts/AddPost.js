@@ -55,7 +55,7 @@ const AddPost = () => {
 
     return (
         <div className='card col-lg-10 mx-auto mt-5'>
-            <div className='card-body'>
+            <div className='card-body p-4'>
                 {loading ? (
                     <Spinner margin='auto' />
                 ) : !loading && !profile ? (
@@ -84,7 +84,7 @@ const AddPost = () => {
                                 required
                             />
                         </div>
-                        <div className='mb-3'>
+                        <div className='mb-4'>
                             <label className='form-label fs-4'>Post</label>
                             <textarea
                                 name='text'
@@ -96,7 +96,7 @@ const AddPost = () => {
                                 required
                             />
                         </div>
-                        <button type='submit' className='btn btn-success'>
+                        <button type='submit' className='btn btn-lg btn-theme'>
                             Submit
                         </button>
                     </form>

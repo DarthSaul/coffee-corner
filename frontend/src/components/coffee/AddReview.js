@@ -28,7 +28,7 @@ const AddReview = ({ handleReviewSubmit }) => {
                             rows='4'
                         />
                     </div>
-                    <button type='submit' className='btn btn-success'>
+                    <button type='submit' className='btn btn-theme'>
                         Submit
                     </button>
                 </form>
