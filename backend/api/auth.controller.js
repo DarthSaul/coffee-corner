@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
+import { validationResult } from 'express-validator';
 
 import UserDAO from '../dao/userDAO.js';
 
@@ -16,6 +17,10 @@ export default class AuthController {
     }
 
     static async apiRegisterUser(req, res, next) {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
         try {
             const { email, username, password } = req.body;
             const { registerUser, error } = await UserDAO.registerUser(
