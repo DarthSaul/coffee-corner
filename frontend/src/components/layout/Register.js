@@ -51,6 +51,7 @@ const Register = () => {
                             value={email}
                             onChange={handleChange}
                             className='form-control'
+                            required
                         />
                     </div>
                     <div className='mb-3'>
@@ -62,9 +63,10 @@ const Register = () => {
                             value={username}
                             onChange={handleChange}
                             className='form-control'
+                            required
                         />
                     </div>
-                    <div className='mb-4'>
+                    <div className='mb-5'>
                         <label className='form-label fs-4'>Password</label>
                         <input
                             type='password'
@@ -73,6 +75,7 @@ const Register = () => {
                             value={password}
                             onChange={handleChange}
                             className='form-control'
+                            required
                         />
                     </div>
                     <button type='submit' className='btn btn-lg btn-theme'>

@@ -55,10 +55,7 @@ const Navigation = () => {
                             </NavDropdown.Item>
                         </NavDropdown>
 
-                        <NavDropdown
-                            title='Brew Methods'
-                            id='brew-methods-dropdown'
-                        >
+                        <NavDropdown title='Brewing' id='brew-methods-dropdown'>
                             <NavDropdown.Item href='/brews'>
                                 View All
                             </NavDropdown.Item>

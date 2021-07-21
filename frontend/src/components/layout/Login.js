@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import Form from 'react-bootstrap/Form';
 import { Redirect, useLocation } from 'react-router-dom';
 
 import { UserContext } from '../../contexts/UserContext';
@@ -8,6 +9,7 @@ const Login = () => {
         username: '',
         password: ''
     });
+    const [validated, setValidated] = useState(false);
 
     const { userObj, login } = useContext(UserContext);
 
@@ -22,8 +24,16 @@ const Login = () => {
     };
 
     const handleSubmit = async event => {
-        event.preventDefault();
-        await login(username, password);
+        if (username !== '' && password !== '') {
+            event.preventDefault();
+            return await login(username, password);
+        }
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        setValidated(true);
     };
 
     if (userObj.isAuthenticated) {
@@ -40,7 +50,12 @@ const Login = () => {
                         Please login to view that page.
                     </p>
                 )}
-                <form onSubmit={handleSubmit} className='m-3'>
+                <Form
+                    noValidate
+                    validated={validated}
+                    onSubmit={handleSubmit}
+                    className='m-3'
+                >
                     <div className='mb-3'>
                         <label className='form-label fs-4'>Username</label>
                         <input
@@ -50,9 +65,10 @@ const Login = () => {
                             value={username}
                             onChange={handleChange}
                             className='form-control'
+                            required
                         />
                     </div>
-                    <div className='mb-4'>
+                    <div className='mb-5'>
                         <label className='form-label fs-4'>Password</label>
                         <input
                             type='password'
@@ -61,12 +77,13 @@ const Login = () => {
                             value={password}
                             onChange={handleChange}
                             className='form-control'
+                            required
                         />
                     </div>
                     <button type='submit' className='btn btn-lg btn-theme'>
                         Login
                     </button>
-                </form>
+                </Form>
             </div>
         </div>
     );

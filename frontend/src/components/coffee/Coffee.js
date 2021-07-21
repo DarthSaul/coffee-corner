@@ -71,7 +71,7 @@ const Coffee = () => {
             {loading ? (
                 <Spinner />
             ) : (
-                <div className='row'>
+                <div className='row mb-5'>
                     <div className='col-xl-6'>
                         <div className='card'>
                             <img
@@ -118,7 +118,10 @@ const Coffee = () => {
                         <Reviews coffeeId={id} coffeeReviews={reviews} />
                         {user && (
                             <div className='mt-4'>
-                                <ProfileCard userId={user} />
+                                <ProfileCard
+                                    userId={user}
+                                    text='Coffee posted by'
+                                />
                             </div>
                         )}
                     </div>
