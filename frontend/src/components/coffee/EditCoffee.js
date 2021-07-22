@@ -170,8 +170,8 @@ const EditCoffee = () => {
                             </div>
                         )}
                     </div>
-                    <button type='submit' className='btn btn-success'>
-                        Submit
+                    <button type='submit' className='btn btn-lg btn-theme'>
+                        Update
                     </button>
                 </form>
             </div>

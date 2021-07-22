@@ -169,19 +169,19 @@ const AddCoffee = () => {
                                 </div>
                             )}
                             <div className='input-group'>
-                                <button
-                                    className='btn btn-outline-secondary'
-                                    type='button'
-                                    onClick={handleTagAdd}
-                                >
-                                    Add
-                                </button>
                                 <input
                                     type='text'
                                     value={tagText}
                                     onChange={handleTagChange}
                                     className='form-control'
                                 />
+                                <button
+                                    className='btn btn-outline-secondary px-5'
+                                    type='button'
+                                    onClick={handleTagAdd}
+                                >
+                                    Add
+                                </button>
                             </div>
                             {tags.length > 0 ? (
                                 tags.map((el, ind) => {
