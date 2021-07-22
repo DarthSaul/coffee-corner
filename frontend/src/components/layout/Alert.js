@@ -7,7 +7,7 @@ const Alert = () => {
     const alertComponents = alert !== null && (
         <div
             key={alert.id}
-            className={`alert alert-${alert.type} mx-auto mb-4 text-center`}
+            className={`col-md-4 alert alert-${alert.type} mx-auto my-5 text-center`}
         >
             {alert.msg}
         </div>

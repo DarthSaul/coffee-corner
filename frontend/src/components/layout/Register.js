@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import Form from 'react-bootstrap/Form';
 import { Redirect } from 'react-router-dom';
 
 import { UserContext } from '../../contexts/UserContext';
@@ -9,6 +10,7 @@ const Register = () => {
         username: '',
         password: ''
     });
+    const [validated, setValidated] = useState(false);
 
     const { register, userObj } = useContext(UserContext);
 
@@ -22,7 +24,12 @@ const Register = () => {
 
     const handleSubmit = async event => {
         event.preventDefault();
-        await register(email, username, password);
+        const form = event.currentTarget;
+        if (form.checkValidity()) {
+            setValidated(false);
+            return await register(email, username, password);
+        }
+        setValidated(true);
     };
 
     if (userObj.isAuthenticated) {
@@ -39,11 +46,16 @@ const Register = () => {
     const { email, username, password } = formData;
 
     return (
-        <div className='card col-md-8 col-lg-6 m-auto p-4'>
+        <div className='card col-md-7 col-xl-5 mx-auto p-4'>
             <div className='card-body'>
-                <form onSubmit={handleSubmit}>
+                <Form
+                    noValidate
+                    validated={validated}
+                    onSubmit={handleSubmit}
+                    className='m-3'
+                >
                     <div className='mb-3'>
-                        <label className='form-label'>Email</label>
+                        <label className='form-label fs-4'>Email</label>
                         <input
                             type='email'
                             placeholder='Email'
@@ -51,10 +63,14 @@ const Register = () => {
                             value={email}
                             onChange={handleChange}
                             className='form-control'
+                            required
                         />
+                        <Form.Control.Feedback type='invalid'>
+                            Please provide a valid email.
+                        </Form.Control.Feedback>
                     </div>
                     <div className='mb-3'>
-                        <label className='form-label'>Username</label>
+                        <label className='form-label fs-4'>Username</label>
                         <input
                             type='text'
                             placeholder='Username'
@@ -62,10 +78,15 @@ const Register = () => {
                             value={username}
                             onChange={handleChange}
                             className='form-control'
+                            required
+                            minLength='3'
                         />
+                        <Form.Control.Feedback type='invalid'>
+                            Username must be at least 3 characters.
+                        </Form.Control.Feedback>
                     </div>
-                    <div className='mb-3'>
-                        <label className='form-label'>Password</label>
+                    <div className='mb-5'>
+                        <label className='form-label fs-4'>Password</label>
                         <input
                             type='password'
                             placeholder='Password'
@@ -73,12 +94,17 @@ const Register = () => {
                             value={password}
                             onChange={handleChange}
                             className='form-control'
+                            required
+                            minLength='6'
                         />
+                        <Form.Control.Feedback type='invalid'>
+                            Password must be at least 6 characters.
+                        </Form.Control.Feedback>
                     </div>
-                    <button type='submit' className='btn btn-success'>
-                        Submit
+                    <button type='submit' className='btn btn-lg btn-theme'>
+                        Register
                     </button>
-                </form>
+                </Form>
             </div>
         </div>
     );

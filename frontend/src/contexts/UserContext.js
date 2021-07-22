@@ -69,9 +69,19 @@ function UserProvider({ children }) {
             loadUser();
             setAlert(`Thanks for registering, ${username}!`, 'success');
         } catch (err) {
-            const error = err.response.data;
-            setAlert(error, 'danger');
-            authError(error);
+            const errors = err.response.data.errors;
+            setAlert(errors[0].msg, 'danger');
+            localStorage.removeItem('token');
+            setUser({
+                token: null,
+                isAuthenticated: false,
+                loading: false,
+                user: null,
+                profile: null
+            });
+            if (errors) {
+                console.error(errors);
+            }
         }
     }
 
@@ -92,7 +102,10 @@ function UserProvider({ children }) {
             loadUser();
             setAlert(`Welcome back, ${username}!`, 'success');
         } catch (err) {
-            setAlert('Incorrect username or password.', 'danger');
+            setAlert(
+                'Incorrect username or password. Please try logging in again.',
+                'danger'
+            );
             const error = err.response.data;
             authError(error);
         }

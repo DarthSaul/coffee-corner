@@ -20,7 +20,7 @@ const BrewList = () => {
     };
     return (
         <div className='row'>
-            <div className='col-10 mx-auto text-center my-5'>
+            <div className='col-10 mx-auto text-center mt-3 mb-5'>
                 <button className='btn btn-new'>
                     <Link to='/brews/new'>Post New Brew Method</Link>
                 </button>
@@ -34,19 +34,16 @@ const BrewList = () => {
                                     to={`/brew/${brew._id}`}
                                     className='text-decoration-none brew-title'
                                 >
-                                    <h5 className='card-header py-3'>
+                                    <h5 className='card-header p-4 fs-2'>
                                         {`${capitalize(brew.user.username)}'s`}{' '}
                                         {capitalize.words(brew.name)}
                                     </h5>
                                 </Link>
 
-                                <div className='card-body py-4'>
-                                    <h5 className='card-title'>
+                                <div className='card-body p-4'>
+                                    <p className='card-text fs-4 fw-light'>
                                         {brew.description}
-                                    </h5>
-                                    {/* <p className='card-text text-muted'>
-                                        From {brew.user.profile.firstName}
-                                    </p> */}
+                                    </p>
                                 </div>
                             </div>
                         </div>

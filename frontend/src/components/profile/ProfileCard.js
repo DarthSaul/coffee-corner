@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ProfileDataService from '../../services/profiles';
 
-const ProfileCard = ({ userId }) => {
+const ProfileCard = ({ userId, text }) => {
     const [profileData, setProfileData] = useState({
         profile: null,
         loading: true
@@ -33,11 +33,13 @@ const ProfileCard = ({ userId }) => {
 
     return (
         <div className='card'>
-            <div className='card-title mt-3 ms-3'>
-                <span className='fw-light fst-italic text-muted'>
-                    Coffee posted by
-                </span>
-            </div>
+            {text && (
+                <div className='card-title mt-3 mb-0 ms-3'>
+                    <span className='fw-light fst-italic text-muted'>
+                        {text}
+                    </span>
+                </div>
+            )}
             <div className='card-body'>
                 {!loading && (
                     <div className='row'>

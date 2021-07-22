@@ -31,7 +31,7 @@ import PrivateRoute from './PrivateRoute';
 
 const Routes = () => {
     return (
-        <div className='container px-3 px-sm-1 mt-4 '>
+        <div className='container px-3 px-sm-1 mt-5 '>
             <Alert />
             <Switch>
                 <Route exact path='/login'>

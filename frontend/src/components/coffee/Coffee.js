@@ -7,7 +7,6 @@ import ProfileCard from '../profile/ProfileCard';
 import Spinner from '../layout/Spinner';
 
 import CoffeeDataService from '../../services/coffees';
-import coffeePic from '../../img/coffee_beans_ground.jpg';
 
 import { UserContext } from '../../contexts/UserContext';
 import { AlertContext } from '../../contexts/AlertContext';
@@ -71,11 +70,11 @@ const Coffee = () => {
             {loading ? (
                 <Spinner />
             ) : (
-                <div className='row'>
+                <div className='row mb-5'>
                     <div className='col-xl-6'>
                         <div className='card'>
                             <img
-                                src={coffeePic}
+                                src='http://res.cloudinary.com/darthsaul/image/upload/w_1000/v1626973570/Coffee-Corner/coffee_beans_sack_hr01jo.jpg'
                                 className='card-img-top'
                                 alt='...'
                             />
@@ -118,7 +117,10 @@ const Coffee = () => {
                         <Reviews coffeeId={id} coffeeReviews={reviews} />
                         {user && (
                             <div className='mt-4'>
-                                <ProfileCard userId={user} />
+                                <ProfileCard
+                                    userId={user}
+                                    text='Coffee posted by'
+                                />
                             </div>
                         )}
                     </div>

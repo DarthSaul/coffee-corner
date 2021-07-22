@@ -22,6 +22,7 @@ body {
 }
 .btn-landing {
     background-color: var(--neutral-color);
+    opacity: 0.8;
     border-color: var(--medium-color);
     color: var(--dark-color);
 }
@@ -64,13 +65,15 @@ nav span:hover {
 }
 
 .reviews-btn {
+    background-color: var(--neutral-color);
+    color: var(--dark-color);
     border-radius: 18px;
-    transition: 500ms;
+    transition: 300ms;
 }
 
 .reviews-btn:hover {
-    background-color: var(--neutral-color);
-    color: var(--dark-color);
+    background-color: var(--medium-color);
+    color: var(--neutral-color);
     font-weight: 600;
 }
 
@@ -94,5 +97,5 @@ nav span:hover {
     color: var(--dark-color);
 }
 .post-title:hover {
-    color: var(--medium-color);
+    color: var(--neutral-color);
 }

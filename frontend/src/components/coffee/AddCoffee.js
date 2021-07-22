@@ -18,8 +18,8 @@ const AddCoffee = () => {
         roastType: '',
         tags: []
     });
-
     const [tagText, setTagText] = useState('');
+    const [warning, setWarning] = useState(null);
 
     const {
         userObj: { token, loading, profile }
@@ -62,11 +62,25 @@ const AddCoffee = () => {
     };
 
     const handleTagAdd = () => {
-        setFormData(prevState => ({
-            ...prevState,
-            tags: prevState.tags.concat(tagText)
-        }));
-        setTagText('');
+        if (tagText === '') {
+            const showWarning = () => {
+                setWarning({
+                    id: 1,
+                    show: true,
+                    text: `Can't add an empty item.`
+                });
+                setTimeout(() => {
+                    setWarning(null);
+                }, 3000);
+            };
+            showWarning();
+        } else {
+            setFormData(prevState => ({
+                ...prevState,
+                tags: prevState.tags.concat(tagText)
+            }));
+            setTagText('');
+        }
     };
 
     const handleTagRemove = el => {
@@ -79,7 +93,7 @@ const AddCoffee = () => {
     const { name, distributor, origin, roastType, tags } = formData;
 
     return (
-        <div className='card col-10 col-xl-8 m-auto p-4'>
+        <div className='card col-10 col-xl-8 mx-auto my-5 p-4'>
             <div className='card-body'>
                 {loading ? (
                     <Spinner color='black' margin='auto' />
@@ -99,7 +113,9 @@ const AddCoffee = () => {
                 ) : (
                     <form onSubmit={handleSubmit}>
                         <div className='mb-3'>
-                            <label className='form-label'>Coffee Name</label>
+                            <label className='form-label fs-4'>
+                                Coffee Name
+                            </label>
                             <input
                                 type='text'
                                 name='name'
@@ -109,7 +125,9 @@ const AddCoffee = () => {
                             />
                         </div>
                         <div className='mb-3'>
-                            <label className='form-label'>Distributor</label>
+                            <label className='form-label fs-4'>
+                                Distributor
+                            </label>
                             <input
                                 type='text'
                                 name='distributor'
@@ -119,7 +137,7 @@ const AddCoffee = () => {
                             />
                         </div>
                         <div className='mb-3'>
-                            <label className='form-label'>Origin</label>
+                            <label className='form-label fs-4'>Origin</label>
                             <input
                                 type='text'
                                 name='origin'
@@ -129,7 +147,9 @@ const AddCoffee = () => {
                             />
                         </div>
                         <div className='mb-3'>
-                            <label className='form-label'>Roast Type</label>
+                            <label className='form-label fs-4'>
+                                Roast Type
+                            </label>
                             <input
                                 type='text'
                                 name='roastType'
@@ -138,22 +158,30 @@ const AddCoffee = () => {
                                 className='form-control'
                             />
                         </div>
-                        <div className='mb-3'>
-                            <label className='form-label'>Tags</label>
-                            <div className='input-group'>
-                                <button
-                                    className='btn btn-outline-secondary'
-                                    type='button'
-                                    onClick={handleTagAdd}
+                        <div className='mb-4'>
+                            <label className='form-label fs-4'>Tags</label>
+                            {warning && (
+                                <div
+                                    key={warning.id}
+                                    className={`text-danger fw-light mb-4`}
                                 >
-                                    Add
-                                </button>
+                                    {warning.text}
+                                </div>
+                            )}
+                            <div className='input-group'>
                                 <input
                                     type='text'
                                     value={tagText}
                                     onChange={handleTagChange}
                                     className='form-control'
                                 />
+                                <button
+                                    className='btn btn-outline-secondary px-5'
+                                    type='button'
+                                    onClick={handleTagAdd}
+                                >
+                                    Add
+                                </button>
                             </div>
                             {tags.length > 0 ? (
                                 tags.map((el, ind) => {
@@ -174,12 +202,12 @@ const AddCoffee = () => {
                                     );
                                 })
                             ) : (
-                                <div className='form-text mb-3'>
+                                <div className='form-text'>
                                     Items added will appear here.
                                 </div>
                             )}
                         </div>
-                        <button type='submit' className='btn btn-success'>
+                        <button type='submit' className='btn btn-lg btn-theme'>
                             Submit
                         </button>
                     </form>

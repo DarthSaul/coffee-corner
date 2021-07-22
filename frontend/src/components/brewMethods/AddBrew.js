@@ -21,8 +21,8 @@ const AddBrew = () => {
         grindType: '',
         items: []
     });
-
     const [itemText, setItemText] = useState('');
+    const [warning, setWarning] = useState(null);
 
     const {
         userObj: { token, profile, loading },
@@ -79,11 +79,25 @@ const AddBrew = () => {
     };
 
     const handleItemAdd = () => {
-        setFormData(prevState => ({
-            ...prevState,
-            items: prevState.items.concat(itemText)
-        }));
-        setItemText('');
+        if (itemText === '') {
+            const showWarning = () => {
+                setWarning({
+                    id: 1,
+                    show: true,
+                    text: `Can't add an empty item.`
+                });
+                setTimeout(() => {
+                    setWarning(null);
+                }, 3000);
+            };
+            showWarning();
+        } else {
+            setFormData(prevState => ({
+                ...prevState,
+                items: prevState.items.concat(itemText)
+            }));
+            setItemText('');
+        }
     };
 
     const handleItemRemove = el => {
@@ -104,7 +118,7 @@ const AddBrew = () => {
     } = formData;
 
     return (
-        <div className='card col-10 col-xl-8 m-auto p-4'>
+        <div className='card col-10 col-xl-8 mx-auto my-5 p-4'>
             <div className='card-body'>
                 {loading ? (
                     <Spinner color='black' margin='auto' />
@@ -124,7 +138,7 @@ const AddBrew = () => {
                 ) : (
                     <form onSubmit={handleSubmit}>
                         <div className='mb-3'>
-                            <label className='form-label'>
+                            <label className='form-label fs-4'>
                                 Brew Method Name
                             </label>
                             <input
@@ -136,7 +150,9 @@ const AddBrew = () => {
                             />
                         </div>
                         <div className='mb-3'>
-                            <label className='form-label'>Description</label>
+                            <label className='form-label fs-4'>
+                                Description
+                            </label>
                             <input
                                 type='text'
                                 name='description'
@@ -146,7 +162,9 @@ const AddBrew = () => {
                             />
                         </div>
                         <div className='mb-3'>
-                            <label className='form-label'>Coffee Weight</label>
+                            <label className='form-label fs-4'>
+                                Coffee Weight
+                            </label>
                             <input
                                 type='text'
                                 name='coffeeWeight'
@@ -157,7 +175,9 @@ const AddBrew = () => {
                             <div className='form-text'>Ex: "20-40 grams"</div>
                         </div>
                         <div className='mb-3'>
-                            <label className='form-label'>Water Ratio</label>
+                            <label className='form-label fs-4'>
+                                Water Ratio
+                            </label>
                             <div className='row g-2 align-items-center'>
                                 <div className='col-4 col-md-2'>
                                     <input
@@ -190,7 +210,9 @@ const AddBrew = () => {
                         </div>
 
                         <div className='mb-3'>
-                            <label className='form-label'>Grind Type</label>
+                            <label className='form-label fs-4'>
+                                Grind Type
+                            </label>
                             <input
                                 type='text'
                                 name='grindType'
@@ -199,8 +221,16 @@ const AddBrew = () => {
                                 className='form-control'
                             />
                         </div>
-                        <div className='mb-3'>
-                            <label className='form-label'>Items</label>
+                        <div className='mb-4'>
+                            <label className='form-label fs-4'>Items</label>
+                            {warning && (
+                                <div
+                                    key={warning.id}
+                                    className={`text-danger fw-light mb-4`}
+                                >
+                                    {warning.text}
+                                </div>
+                            )}
                             <div className='input-group'>
                                 <button
                                     className='btn btn-outline-secondary'
@@ -241,7 +271,7 @@ const AddBrew = () => {
                             )}
                         </div>
 
-                        <button type='submit' className='btn btn-success'>
+                        <button type='submit' className='btn btn-lg btn-theme'>
                             Submit
                         </button>
                     </form>

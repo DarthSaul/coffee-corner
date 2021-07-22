@@ -28,7 +28,7 @@ const DashboardProfile = ({ profile }) => {
                         />
 
                         <Link to='/upload'>
-                            <button className='btn btn-outline-success btn-sm'>
+                            <button className='btn btn-outline-secondary btn-sm'>
                                 Edit Image
                             </button>
                         </Link>

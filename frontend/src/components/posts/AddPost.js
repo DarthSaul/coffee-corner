@@ -54,55 +54,60 @@ const AddPost = () => {
     const { title, text } = formData;
 
     return (
-        <div className='card col-lg-10 mx-auto mt-5'>
-            <div className='card-body'>
-                {loading ? (
-                    <Spinner margin='auto' />
-                ) : !loading && !profile ? (
-                    <div className='card-text text-center py-4'>
-                        <span className='fs-4'>
-                            To add a brew method, please first{' '}
-                            <Link
-                                to='/profile/create'
-                                className='fs-2 text-success text-decoration-none'
+        <>
+            <div className='card col-lg-10 mx-auto mt-5'>
+                <div className='card-body p-4'>
+                    {loading ? (
+                        <Spinner margin='auto' />
+                    ) : !loading && !profile ? (
+                        <div className='card-text text-center py-4'>
+                            <span className='fs-4'>
+                                To add a brew method, please first{' '}
+                                <Link
+                                    to='/profile/create'
+                                    className='fs-2 text-success text-decoration-none'
+                                >
+                                    create a profile
+                                </Link>
+                                .
+                            </span>
+                        </div>
+                    ) : (
+                        <form onSubmit={handleSubmit}>
+                            <div className='mb-3'>
+                                <label className='form-label fs-4'>Title</label>
+                                <input
+                                    type='text'
+                                    name='title'
+                                    value={title}
+                                    onChange={handleChange}
+                                    className='form-control'
+                                    required
+                                />
+                            </div>
+                            <div className='mb-4'>
+                                <label className='form-label fs-4'>Post</label>
+                                <textarea
+                                    name='text'
+                                    value={text}
+                                    onChange={handleChange}
+                                    placeholder='Write post here'
+                                    rows='6'
+                                    className='form-control'
+                                    required
+                                />
+                            </div>
+                            <button
+                                type='submit'
+                                className='btn btn-lg btn-theme'
                             >
-                                create a profile
-                            </Link>
-                            .
-                        </span>
-                    </div>
-                ) : (
-                    <form onSubmit={handleSubmit}>
-                        <div className='mb-3'>
-                            <label className='form-label fs-4'>Title</label>
-                            <input
-                                type='text'
-                                name='title'
-                                value={title}
-                                onChange={handleChange}
-                                className='form-control'
-                                required
-                            />
-                        </div>
-                        <div className='mb-3'>
-                            <label className='form-label fs-4'>Post</label>
-                            <textarea
-                                name='text'
-                                value={text}
-                                onChange={handleChange}
-                                placeholder='Write post here'
-                                rows='6'
-                                className='form-control'
-                                required
-                            />
-                        </div>
-                        <button type='submit' className='btn btn-success'>
-                            Submit
-                        </button>
-                    </form>
-                )}
+                                Submit
+                            </button>
+                        </form>
+                    )}
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 
