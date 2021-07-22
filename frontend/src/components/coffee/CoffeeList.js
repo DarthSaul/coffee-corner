@@ -116,8 +116,8 @@ const CoffeeList = () => {
 
     return (
         <div className='col-lg-10 m-auto'>
-            <div className='row pb-1'>
-                <div className='input-group col-lg-4 mb-4'>
+            <div className='row pb-1 mb-4'>
+                <div className='input-group col-lg-4 mb-4 mt-3'>
                     <input
                         type='text'
                         className='form-control'
@@ -178,53 +178,50 @@ const CoffeeList = () => {
                     </div>
                 </div>
             </div>
-            <div className='row'>
+            <div className='row mb-3'>
                 {!loading &&
                     coffees.map((coffee, ind) => {
                         return (
                             <div className='col-lg-4 col-md-6 pb-1' key={ind}>
-                                <div className='card my-2 coffee-list-card'>
-                                    <div className='card-header d-flex align-items-center fs-3 ps-4 py-2'>
+                                <div className='card my-2 coffee-list-card mb-3'>
+                                    <div className='card-header d-flex align-items-center p-4'>
                                         <Link
                                             to={`/coffee/${coffee._id}`}
                                             className='text-decoration-none text-reset'
                                         >
-                                            {capitalize.words(coffee.name)}
-                                        </Link>
-                                    </div>
-                                    <div className='card-body d-flex flex-column justify-content-around p-4'>
-                                        <div>
-                                            <p className='card-text'>
-                                                <strong>Origin: </strong>
-                                                {capitalize.words(
-                                                    coffee.origin
-                                                )}
-                                                <br />
-                                                <strong>Distributor: </strong>
+                                            <h2>
+                                                {capitalize.words(coffee.name)}
+                                            </h2>
+                                            <h5 className='fw-light'>
                                                 {capitalize.words(
                                                     coffee.distributor
                                                 )}
-                                            </p>
-                                        </div>
-                                        <div className='text-center'>
-                                            <Link
-                                                to={`/coffee/${coffee._id}`}
-                                                className='btn btn-theme reviews-btn'
-                                                onClick={e => {
-                                                    window.scrollTo(0, 0);
-                                                }}
-                                            >
-                                                See Reviews
-                                            </Link>
-                                        </div>
+                                            </h5>
+                                        </Link>
                                     </div>
+                                    <div className='card-body d-flex flex-column justify-content-center p-4'>
+                                        <p className='card-text fs-4'>
+                                            {capitalize.words(coffee.origin)}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className='text-center mb-5'>
+                                    <Link
+                                        to={`/coffee/${coffee._id}`}
+                                        className='btn btn-theme reviews-btn px-3'
+                                        onClick={e => {
+                                            window.scrollTo(0, 0);
+                                        }}
+                                    >
+                                        See Reviews
+                                    </Link>
                                 </div>
                             </div>
                         );
                     })}
             </div>
             {showPagination && (
-                <div className='text-center page-btns'>
+                <div className='text-center page-btns mb-5'>
                     <button
                         className={`btn btn-secondary mx-1 ${
                             pageNum === 0 ? 'disabled' : ''

@@ -24,14 +24,11 @@ const Login = () => {
     };
 
     const handleSubmit = async event => {
-        if (username !== '' && password !== '') {
-            event.preventDefault();
-            return await login(username, password);
-        }
+        event.preventDefault();
         const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
+        if (form.checkValidity()) {
+            setValidated(false);
+            return await login(username, password);
         }
         setValidated(true);
     };
@@ -66,7 +63,11 @@ const Login = () => {
                             onChange={handleChange}
                             className='form-control'
                             required
+                            minLength='3'
                         />
+                        <Form.Control.Feedback type='invalid'>
+                            Username must be at least 3 characters.
+                        </Form.Control.Feedback>
                     </div>
                     <div className='mb-5'>
                         <label className='form-label fs-4'>Password</label>
@@ -79,6 +80,9 @@ const Login = () => {
                             className='form-control'
                             required
                         />
+                        <Form.Control.Feedback type='invalid'>
+                            Please provide a password.
+                        </Form.Control.Feedback>
                     </div>
                     <button type='submit' className='btn btn-lg btn-theme'>
                         Login

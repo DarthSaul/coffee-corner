@@ -65,22 +65,16 @@ nav span:hover {
 }
 
 .reviews-btn {
-    min-width: 100%;
+    background-color: var(--neutral-color);
+    color: var(--dark-color);
     border-radius: 18px;
     transition: 300ms;
 }
 
 .reviews-btn:hover {
-    background-color: var(--neutral-color);
-    color: var(--dark-color);
+    background-color: var(--medium-color);
+    color: var(--neutral-color);
     font-weight: 600;
-}
-
-@media (min-width: 768px) {
-    .reviews-btn {
-        min-width: 200px;
-        max-width: 200px;
-    }
 }
 
 .brew-title .card-header {
@@ -103,5 +97,5 @@ nav span:hover {
     color: var(--dark-color);
 }
 .post-title:hover {
-    color: var(--medium-color);
+    color: var(--neutral-color);
 }
