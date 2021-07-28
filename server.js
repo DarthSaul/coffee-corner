@@ -1,6 +1,8 @@
 import express from 'express';
 const app = express();
 
+import connectDB from './db/db.js';
+
 import cors from 'cors';
 import session from 'express-session';
 import passport from 'passport';
@@ -18,6 +20,8 @@ import auth from './api/auth.route.js';
 import uploader from './api/upload.route.js';
 
 import User from './models/User.js';
+
+connectDB();
 
 app.use(cors());
 app.use(express.json());
@@ -62,4 +66,7 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 
-export default app;
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+
+// export default app;
