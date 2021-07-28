@@ -2,6 +2,7 @@ import express from 'express';
 const app = express();
 
 import connectDB from './db/db.js';
+connectDB();
 
 import cors from 'cors';
 import session from 'express-session';
@@ -20,8 +21,6 @@ import auth from './api/auth.route.js';
 import uploader from './api/upload.route.js';
 
 import User from './models/User.js';
-
-connectDB();
 
 app.use(cors());
 app.use(express.json());
