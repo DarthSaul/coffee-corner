@@ -1,3 +1,5 @@
 {
-    "dependencies": {}
+    "scripts": {
+        "start": "node backend/index.js"
+    }
 }
