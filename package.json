@@ -5,11 +5,21 @@
     "main": "index.js",
     "type": "module",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node index",
+        "index": "nodemon index",
+        "frontend": "npm start --prefix frontend",
+        "dev": "concurrently \"npm run index\" \"npm run frontend\"",
+        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/DarthSaul/coffee-corner.git"
     },
     "keywords": [],
-    "author": "",
+    "author": "Saul Graves",
     "license": "ISC",
+    "homepage": "https://github.com/DarthSaul/coffee-corner#readme",
     "dependencies": {
         "bcrypt": "^5.0.1",
         "body-parser": "^1.19.0",
@@ -31,5 +41,9 @@
         "passport": "^0.4.1",
         "passport-local": "^1.0.0",
         "passport-local-mongoose": "^6.1.0"
+    },
+    "devDependencies": {
+        "concurrently": "^6.2.0",
+        "nodemon": "^2.0.12"
     }
 }
