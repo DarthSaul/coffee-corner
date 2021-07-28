@@ -59,6 +59,12 @@ const Post = () => {
     };
 
     const likePost = async () => {
+        if (!userObj.profile) {
+            return setAlert(
+                'Please login and/or create a profile to like posts.',
+                'secondary'
+            );
+        }
         try {
             await PostDataService.likePost(
                 post_id,
@@ -73,6 +79,12 @@ const Post = () => {
         }
     };
     const unlikePost = async () => {
+        if (!userObj.profile) {
+            return setAlert(
+                'Please login and/or create a profile to like posts.',
+                'secondary'
+            );
+        }
         try {
             await PostDataService.unlikePost(
                 post_id,
