@@ -19,6 +19,9 @@ import uploader from './api/upload.route.js';
 
 import User from './models/User.js';
 
+import connectDB from './db/db.js';
+connectDB();
+
 app.use(cors());
 app.use(express.json());
 
@@ -54,12 +57,5 @@ app.use('*', (req, res) => {
     res.status(404).json({ error: 'not found' });
 });
 
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('client/build'));
-
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-    });
-}
-
-export default app;
+const port = process.env.PORT || 5000;
+app.listen(port, () => console.log(`Listening on port ${port}`));

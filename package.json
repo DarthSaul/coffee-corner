@@ -2,32 +2,22 @@
     "name": "coffee-corner",
     "version": "1.0.0",
     "description": "",
-    "engines": {
-        "node": "14.x"
-    },
-    "main": "index.js",
+    "main": "server.js",
     "type": "module",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node index",
-        "index": "nodemon index",
+        "start": "node server",
+        "server": "nodemon server",
         "client": "npm start --prefix client",
-        "dev": "concurrently \"npm run index\" \"npm run client\"",
-        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/DarthSaul/coffee-corner.git"
+        "dev": "concurrently \"npm run server\" \"npm run client\""
     },
     "keywords": [],
-    "author": "Saul Graves",
+    "author": "",
     "license": "ISC",
-    "homepage": "https://github.com/DarthSaul/coffee-corner#readme",
     "dependencies": {
         "bcrypt": "^5.0.1",
         "body-parser": "^1.19.0",
         "cloudinary": "^1.26.2",
-        "concurrently": "^6.2.0",
         "connect-flash": "^0.1.1",
         "connect-mongo": "^4.4.1",
         "cookie-parser": "^1.4.5",
@@ -46,7 +36,6 @@
         "passport-local-mongoose": "^6.1.0"
     },
     "devDependencies": {
-        "concurrently": "^6.2.0",
-        "nodemon": "^2.0.12"
+        "concurrently": "^6.2.0"
     }
 }
