@@ -2,10 +2,14 @@
     "name": "coffee-corner",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "server.js",
     "type": "module",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server",
+        "server": "nodemon server",
+        "client": "npm start --prefix client",
+        "dev": "concurrently \"npm run server\" \"npm run client\""
     },
     "keywords": [],
     "author": "",
@@ -30,5 +34,8 @@
         "passport": "^0.4.1",
         "passport-local": "^1.0.0",
         "passport-local-mongoose": "^6.1.0"
+    },
+    "devDependencies": {
+        "concurrently": "^6.2.0"
     }
 }
