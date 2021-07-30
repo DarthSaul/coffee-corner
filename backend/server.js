@@ -7,8 +7,6 @@ import passport from 'passport';
 import LocalStrategy from 'passport-local';
 import flash from 'connect-flash';
 import dotenv from 'dotenv';
-// import cookieParser from 'cookie-parser';
-// import MongoStore from 'connect-mongo';
 
 dotenv.config();
 
@@ -24,7 +22,6 @@ import User from './models/User.js';
 app.use(cors());
 app.use(express.json());
 
-// const dbUrl = process.env.MONGO_DB_URI;
 const secret = process.env.SECRET || 'devBackupSecret';
 const sessionConfig = {
     name: 'session',
@@ -37,17 +34,9 @@ const sessionConfig = {
         expires: Date.now() + 1000 * 60 * 60,
         maxAge: 1000 * 60 * 60
     }
-    // ,
-    // store: MongoStore.create({
-    //     mongoUrl: dbUrl,
-    //     touchAfter: 24 * 60 * 60,
-    //     secret
-    // })
 };
 app.use(session(sessionConfig));
 app.use(flash());
-
-// app.use(cookieParser('aBadSecret')); // change to env var
 
 app.use(passport.initialize());
 app.use(passport.session());
