@@ -4,8 +4,6 @@ dotenv.config();
 
 const db = process.env.MONGO_DB_URI;
 
-console.log(db);
-
 const connectDB = async () => {
     try {
         await mongoose.connect(db, {
