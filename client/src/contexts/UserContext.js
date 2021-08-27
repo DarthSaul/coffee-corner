@@ -28,7 +28,7 @@ function UserProvider({ children }) {
             if (localStorage.token) {
                 setAuthToken(localStorage.token);
             }
-            const user = await axios.get(`/api/v1/auth`);
+            const user = await axios.get('/api/v1/auth');
             const profile = await ProfileDataService.getUserProfile(
                 localStorage.token
             );
@@ -60,11 +60,7 @@ function UserProvider({ children }) {
         };
         const body = JSON.stringify({ email, username, password });
         try {
-            const res = await axios.post(
-                'http://localhost:5000/api/v1/auth/register',
-                body,
-                config
-            );
+            const res = await axios.post('/api/v1/auth/register', body, config);
             localStorage.setItem('token', res.data.token);
             loadUser();
             setAlert(`Thanks for registering, ${username}!`, 'success');
@@ -93,11 +89,7 @@ function UserProvider({ children }) {
         };
         const body = JSON.stringify({ username, password });
         try {
-            const res = await axios.post(
-                'http://localhost:5000/api/v1/auth/login',
-                body,
-                config
-            );
+            const res = await axios.post('/api/v1/auth/login', body, config);
             localStorage.setItem('token', res.data.token);
             loadUser();
             setAlert(`Welcome back, ${username}!`, 'success');
