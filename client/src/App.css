@@ -8,6 +8,10 @@
 body {
     background-color: var(--dark-color);
 }
+.mb-extra {
+    padding-bottom: 4em;
+}
+
 .landing-page {
     background: center/100%
         url('https://res.cloudinary.com/darthsaul/image/upload/v1625863643/Coffee-Corner/beans_fwb3li.jpg');
@@ -99,4 +103,27 @@ nav span:hover {
 }
 .post-title:hover {
     color: var(--neutral-color);
+}
+
+.card {
+    position: relative;
+}
+
+.card-img {
+    width: 5em;
+    height: 5em;
+    background: white;
+    position: absolute;
+    top: -2.5em;
+    right: -7%;
+    border-radius: 50%;
+    border: 5px solid #202528;
+}
+
+@media (min-width: 992px) {
+    .card-img {
+        width: 7.5em;
+        height: 7.5em;
+        /* right: 0; */
+    }
 }

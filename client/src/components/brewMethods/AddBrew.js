@@ -151,18 +151,6 @@ const AddBrew = () => {
                         </div>
                         <div className='mb-3'>
                             <label className='form-label fs-4'>
-                                Description
-                            </label>
-                            <input
-                                type='text'
-                                name='description'
-                                value={description}
-                                onChange={handleChange}
-                                className='form-control'
-                            />
-                        </div>
-                        <div className='mb-3'>
-                            <label className='form-label fs-4'>
                                 Coffee Weight
                             </label>
                             <input
@@ -270,7 +258,18 @@ const AddBrew = () => {
                                 </div>
                             )}
                         </div>
-
+                        <div className='mb-3'>
+                            <label className='form-label fs-4'>
+                                Description
+                            </label>
+                            <textarea
+                                name='description'
+                                value={description}
+                                onChange={handleChange}
+                                className='form-control'
+                                rows='3'
+                            />
+                        </div>
                         <button type='submit' className='btn btn-lg btn-theme'>
                             Submit
                         </button>

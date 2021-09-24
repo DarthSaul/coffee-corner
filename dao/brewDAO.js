@@ -5,7 +5,10 @@ import Profile from '../models/Profile.js';
 export default class BrewDAO {
     static async getBrewMethods() {
         try {
-            const brewMethods = await BrewMethod.find().populate('user');
+            const brewMethods = await BrewMethod.find().populate({
+                path: 'user',
+                populate: { path: 'profile' }
+            });
             return { brewMethods };
         } catch (err) {
             console.error(`Unable to retrieve brew methods, ${err}`);

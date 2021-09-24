@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import { UserContext } from '../../contexts/UserContext';
+import Spinner from '../layout/Spinner';
 
 const Landing = () => {
     const {
@@ -9,7 +10,9 @@ const Landing = () => {
     } = useContext(UserContext);
     return (
         <div className='landing-page d-flex justify-content-center align-items-center vh-100 pb-5'>
-            {!loading && isAuthenticated ? (
+            {loading ? (
+                <Spinner color='white' />
+            ) : !loading && isAuthenticated ? (
                 <Link to='/dashboard'>
                     <button
                         type='button'

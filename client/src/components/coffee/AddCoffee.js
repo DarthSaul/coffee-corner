@@ -45,10 +45,14 @@ const AddCoffee = () => {
                 formData,
                 token
             );
-            const { status } = res.data;
+            console.log(res.data);
+            const {
+                status,
+                coffee: { _id }
+            } = res.data;
             if (status === 'success') {
                 setAlert('Coffee added!', 'success');
-                history.push('/coffee');
+                history.push(`/coffee/${_id}`);
             }
         } catch (err) {
             setAlert('Whoops, something went wrong.', 'danger');
