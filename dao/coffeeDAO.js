@@ -24,6 +24,10 @@ export default class CoffeeDAO {
         try {
             const coffeesList = await Coffee.find(query)
                 .populate({ path: 'reviews', populate: { path: 'user' } })
+                .populate({
+                    path: 'user',
+                    populate: { path: 'profile' }
+                })
                 .limit(perPage)
                 .skip(perPage * page);
             const totalNumCoffees = await Coffee.countDocuments(query);

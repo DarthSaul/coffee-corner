@@ -25,7 +25,7 @@ const BrewList = () => {
 
     return (
         <div className='row'>
-            <div className='col-10 mx-auto text-center mt-3 mb-3'>
+            <div className='col-12 mx-auto text-center mt-3 mb-3'>
                 <button className='btn btn-new'>
                     <Link to='/brews/new'>Post New Brew Method</Link>
                 </button>
@@ -33,12 +33,19 @@ const BrewList = () => {
             {!loading &&
                 brewMethods.map((brew, ind) => {
                     if (brew.user.profile.avatar) {
-                        avatar = brew.user.profile.avatar.url;
+                        avatar = brew.user.profile.avatar.medium;
                     }
                     return (
-                        <div className='col-10 col-xl-8 mx-auto' key={ind}>
+                        <div
+                            className='col-12 col-lg-10 col-xl-9 mx-auto'
+                            key={ind}
+                        >
                             <div className='card my-5'>
-                                <img src={avatar} alt='' className='card-img' />
+                                <img
+                                    src={avatar}
+                                    alt=''
+                                    className='brew-card-img'
+                                />
                                 <Link
                                     to={`/brew/${brew._id}`}
                                     className='text-decoration-none brew-title'

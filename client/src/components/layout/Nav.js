@@ -65,9 +65,18 @@ const Navigation = () => {
                             </NavDropdown.Item>
                         </NavDropdown>
 
-                        <Link className='nav-link' to='/posts'>
-                            Community
-                        </Link>
+                        <NavDropdown
+                            title='Community'
+                            id='community-methods-dropdown'
+                        >
+                            <NavDropdown.Item href='/posts'>
+                                All Posts
+                            </NavDropdown.Item>
+
+                            <NavDropdown.Item href='/post/new'>
+                                Add New
+                            </NavDropdown.Item>
+                        </NavDropdown>
 
                         <div className='d-md-flex ms-md-auto'>
                             {!loading && !isAuthenticated ? (

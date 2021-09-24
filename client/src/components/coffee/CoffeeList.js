@@ -114,8 +114,11 @@ const CoffeeList = () => {
         setPageNum(pageNum + 1);
     };
 
+    let avatar =
+        'https://res.cloudinary.com/darthsaul/image/upload/v1626367195/Coffee-Corner/no_image_wkgy3c.png';
+
     return (
-        <div className='col-lg-10 m-auto'>
+        <div className='col-lg-11 m-auto'>
             <div className='row pb-1 mb-4'>
                 <div className='input-group col-lg-4 mb-4 mt-3'>
                     <input
@@ -181,8 +184,11 @@ const CoffeeList = () => {
             <div className='row mb-3'>
                 {!loading &&
                     coffees.map((coffee, ind) => {
+                        if (coffee.user.profile.avatar) {
+                            avatar = coffee.user.profile.avatar.medium;
+                        }
                         return (
-                            <div className='col-lg-4 col-md-6 pb-1' key={ind}>
+                            <div className='col-xl-4 col-md-6 pb-1' key={ind}>
                                 <div className='card my-2 coffee-list-card mb-3'>
                                     <div className='card-header d-flex align-items-center p-4'>
                                         <Link
@@ -192,16 +198,24 @@ const CoffeeList = () => {
                                             <h2>
                                                 {capitalize.words(coffee.name)}
                                             </h2>
-                                            <h5 className='fw-light'>
-                                                {capitalize.words(
-                                                    coffee.distributor
-                                                )}
-                                            </h5>
                                         </Link>
                                     </div>
                                     <div className='card-body d-flex flex-column justify-content-center p-4'>
-                                        <p className='card-text fs-4'>
+                                        <p className='card-text fs-3 fw-light text-muted'>
                                             {capitalize.words(coffee.origin)}
+                                        </p>
+                                        <p className='fs-5'>
+                                            {capitalize.words(
+                                                coffee.distributor
+                                            )}
+                                        </p>
+                                        <p className='fw-light fst-italic'>
+                                            Added by {coffee.user.username}{' '}
+                                            <img
+                                                src={avatar}
+                                                alt=''
+                                                className='coffee-card-img'
+                                            />
                                         </p>
                                     </div>
                                 </div>
