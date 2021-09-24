@@ -107,8 +107,8 @@ const Post = () => {
                 {!loading && (
                     <>
                         <div className='card-body p-5'>
-                            <h2 className='card-title mb-2'>{title}</h2>
-                            <h6 className='card-subtitle mb-4 text-muted'>
+                            <h2 className='card-title mb-2 fs-1'>{title}</h2>
+                            <h6 className='card-subtitle mb-4 text-muted fs-5'>
                                 By {profile.firstName}
                             </h6>
                             <div className='div mb-4'>
@@ -130,8 +130,8 @@ const Post = () => {
                                 </button>
                             </div>
 
-                            <div className='card-text'>
-                                <p>{text}</p>
+                            <div className='card-text mt-5'>
+                                <p className='fs-4'>{text}</p>
                             </div>
                         </div>
                         {userObj.profile &&

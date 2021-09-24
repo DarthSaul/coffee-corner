@@ -7,6 +7,7 @@ const coffeeSchema = new Schema({
     origin: String,
     roastType: String,
     tags: [String],
+    img: String,
     reviews: [
         {
             type: Schema.Types.ObjectId,

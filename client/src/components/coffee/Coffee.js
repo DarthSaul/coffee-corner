@@ -62,8 +62,20 @@ const Coffee = () => {
         }
     };
 
-    const { _id, name, origin, distributor, roastType, tags, reviews, user } =
-        coffeeState;
+    const {
+        _id,
+        name,
+        origin,
+        distributor,
+        roastType,
+        tags,
+        reviews,
+        user,
+        img
+    } = coffeeState;
+
+    const placeholderImg =
+        'http://res.cloudinary.com/darthsaul/image/upload/w_1000/v1626973570/Coffee-Corner/coffee_beans_sack_hr01jo.jpg';
 
     return (
         <>
@@ -74,7 +86,7 @@ const Coffee = () => {
                     <div className='col-xl-6'>
                         <div className='card'>
                             <img
-                                src='http://res.cloudinary.com/darthsaul/image/upload/w_1000/v1626973570/Coffee-Corner/coffee_beans_sack_hr01jo.jpg'
+                                src={img ? img : placeholderImg}
                                 className='card-img-top'
                                 alt='...'
                             />
@@ -103,6 +115,11 @@ const Coffee = () => {
                                             Edit
                                         </button>
                                     </Link>
+                                    <Link to={`/coffee/update_image/${_id}`}>
+                                        <button className='btn btn-secondary me-3'>
+                                            Update Image
+                                        </button>
+                                    </Link>
                                     <button
                                         className='btn btn-danger'
                                         onClick={deleteCoffee}
@@ -114,15 +131,15 @@ const Coffee = () => {
                         </div>
                     </div>
                     <div className='col-xl-6'>
-                        <Reviews coffeeId={id} coffeeReviews={reviews} />
                         {user && (
-                            <div className='mt-4'>
+                            <div className='mt-4 mt-xl-0 mb-4'>
                                 <ProfileCard
                                     userId={user}
                                     text='Coffee posted by'
                                 />
                             </div>
                         )}
+                        <Reviews coffeeId={id} coffeeReviews={reviews} />
                     </div>
                 </div>
             )}

@@ -20,56 +20,67 @@ const PostList = () => {
         setLoading(false);
     }, []);
 
+    let avatar =
+        'https://res.cloudinary.com/darthsaul/image/upload/v1626367195/Coffee-Corner/no_image_wkgy3c.png';
+
     return (
-        <div className='row'>
-            <div className='col-10 mx-auto text-center mt-3 mb-5'>
-                <Link to='/post/new'>
-                    <button className='btn btn-new'>Start New Post</button>
-                </Link>
+        <>
+            <div className='row'>
+                <div className='col-10 col-xl-12 mx-auto text-center mt-3 mb-5'>
+                    <Link to='/post/new'>
+                        <button className='btn btn-new w-100'>
+                            Start New Post
+                        </button>
+                    </Link>
+                </div>
             </div>
-            {!loading &&
-                posts.map((post, ind) => {
-                    const postImg =
-                        post.profile && post.profile.avatar
-                            ? post.profile.avatar.medium
-                            : 'https://res.cloudinary.com/darthsaul/image/upload/v1626367195/Coffee-Corner/no_image_wkgy3c.png';
-                    return (
-                        <div className='col-xl-10 mx-auto' key={ind}>
-                            <div className='card mb-4'>
-                                <div className='card-header p-4'>
-                                    <Link
-                                        to={`/post/${post._id}`}
-                                        className='text-decoration-none'
-                                    >
+            <div className='row justify-content-center justify-content-xl-start'>
+                {!loading &&
+                    posts.map((post, ind) => {
+                        if (post.profile && post.profile.avatar) {
+                            avatar = post.profile.avatar.medium;
+                        }
+
+                        return (
+                            <div
+                                className='col-10 col-xl-6 d-flex align-items-stretch'
+                                key={ind}
+                            >
+                                <div className='card mb-4 w-100'>
+                                    <div className='card-header p-4'>
                                         <h3 className='post-title'>
                                             {post.title}
                                         </h3>
-                                    </Link>
-                                </div>
-                                <div className='card-body p-4 my-3'>
-                                    <div className='row'>
-                                        <div className='col-sm-3 d-flex align-items-center'>
+                                    </div>
+                                    <div className='card-body p-4 my-3'>
+                                        <div className='row align-items-start ms-3'>
                                             <img
-                                                src={postImg}
+                                                src={avatar}
                                                 alt='Profile'
-                                                className='rounded-start mw-100'
+                                                className='post-card-img col-3'
                                             />
-                                        </div>
-                                        <div className='col-sm-8 ms-3 mt-4 mt-sm-0 d-flex flex-column justify-content-between'>
-                                            <p className='fs-3'>
-                                                By {post.profile.firstName}
-                                            </p>
-                                            <p className='fs-5 fw-normal'>
-                                                {post.text}
-                                            </p>
+                                            <div className='col-auto ms-4'>
+                                                <p className='fs-3'>
+                                                    Posted by{' '}
+                                                    {post.profile.firstName}
+                                                </p>
+                                                <Link
+                                                    to={`/post/${post._id}`}
+                                                    className='text-decoration-none'
+                                                >
+                                                    <button className='btn btn-lg btn-outline-success'>
+                                                        View Post
+                                                    </button>
+                                                </Link>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    );
-                })}
-        </div>
+                        );
+                    })}
+            </div>
+        </>
     );
 };
 

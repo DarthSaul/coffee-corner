@@ -16,6 +16,7 @@ import CoffeeList from '../coffee/CoffeeList';
 import Coffee from '../coffee/Coffee';
 import AddCoffee from '../coffee/AddCoffee';
 import EditCoffee from '../coffee/EditCoffee';
+import EditCoffeeImg from '../coffee/EditCoffeeImg';
 
 import BrewList from '../brewMethods/BrewList';
 import BrewMethod from '../brewMethods/BrewMethod';
@@ -49,6 +50,9 @@ const Routes = () => {
                 </PrivateRoute>
                 <PrivateRoute exact path='/coffee/edit/:id'>
                     <EditCoffee />
+                </PrivateRoute>
+                <PrivateRoute exact path='/coffee/update_image/:id'>
+                    <EditCoffeeImg />
                 </PrivateRoute>
                 <Route exact path='/coffee/:id'>
                     <Coffee />

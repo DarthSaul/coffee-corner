@@ -3,10 +3,15 @@
     --medium-color: #87431d;
     --light-color: #c87941;
     --neutral-color: #dbcbbd;
+    --mint-green: #3eb489;
 }
 body {
     background-color: var(--dark-color);
 }
+.mb-extra {
+    padding-bottom: 4em;
+}
+
 .landing-page {
     background: center/100%
         url('https://res.cloudinary.com/darthsaul/image/upload/v1625863643/Coffee-Corner/beans_fwb3li.jpg');
@@ -21,14 +26,14 @@ body {
     color: white;
 }
 .btn-landing {
-    background-color: var(--neutral-color);
-    opacity: 0.8;
-    border-color: var(--medium-color);
+    background-color: var(--mint-green);
+    border-color: white;
     color: var(--dark-color);
+    font-size: 1.5em;
+    width: 225px;
 }
 .btn-landing:hover {
-    background-color: var(--dark-color);
-    color: white;
+    background-color: #4bd8a4;
 }
 .btn-new {
     background-color: var(--neutral-color);
@@ -95,7 +100,48 @@ nav span:hover {
 
 .post-title {
     color: var(--dark-color);
+    margin: auto 0;
+    padding: 0.5em 0;
 }
-.post-title:hover {
-    color: var(--neutral-color);
+
+.card {
+    position: relative;
+}
+
+.brew-card-img {
+    width: 5em;
+    height: 5em;
+    background: white;
+    position: absolute;
+    top: -2.5em;
+    right: 0;
+    border-radius: 50%;
+    border: 5px solid #202528;
+}
+
+.coffee-card-img {
+    width: 3.5em;
+    height: 3.5em;
+    background: white;
+    border-radius: 50%;
+    border: 2px solid #202528;
+    margin-left: 1em;
+}
+
+.post-card-img {
+    margin: 0;
+    padding: 0;
+    width: 7.5em;
+    height: 7.5em;
+    background: white;
+    border-radius: 50%;
+    border: 2px solid #202528;
+}
+
+@media (min-width: 992px) {
+    .brew-card-img {
+        width: 7.5em;
+        height: 7.5em;
+        top: -3.5em;
+    }
 }

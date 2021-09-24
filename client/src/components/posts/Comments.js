@@ -51,7 +51,7 @@ const Comments = ({ comments, post_id, getPost }) => {
     return (
         <div className='mb-5'>
             <div className='card mb-5'>
-                <div className='card-body'>
+                <div className='card-body py-4 px-5'>
                     <p className='card-title fs-3 mb-3'>Leave a Comment:</p>
                     <form onSubmit={handleSubmit}>
                         <div className='mb-3'>
@@ -70,9 +70,9 @@ const Comments = ({ comments, post_id, getPost }) => {
                     </form>
                 </div>
             </div>
-            <div className='card'>
-                <p className='card-title fs-3 p-3'>Comments</p>
-                <ul className='list-group list-group-flush px-3 pt-1'>
+            <div className='card py-4 px-5'>
+                <p className='card-title fs-3 py-3'>Comments</p>
+                <ul className='list-group list-group-flush pt-1'>
                     {comments.length > 0 ? (
                         comments.map((comment, ind) => {
                             return (
@@ -104,7 +104,7 @@ const Comments = ({ comments, post_id, getPost }) => {
                             );
                         })
                     ) : (
-                        <p className='fs-3 p-3'>No reviews yet.</p>
+                        <p className='fs-5 py-3'>No comments yet.</p>
                     )}
                 </ul>
             </div>

@@ -24,6 +24,10 @@ export default class CoffeeDAO {
         try {
             const coffeesList = await Coffee.find(query)
                 .populate({ path: 'reviews', populate: { path: 'user' } })
+                .populate({
+                    path: 'user',
+                    populate: { path: 'profile' }
+                })
                 .limit(perPage)
                 .skip(perPage * page);
             const totalNumCoffees = await Coffee.countDocuments(query);
@@ -92,7 +96,20 @@ export default class CoffeeDAO {
             return { error: err };
         }
     }
-
+    static async updateCoffeeImg(coffee_id, coffee_img) {
+        try {
+            const coffee = await Coffee.findById(coffee_id);
+            if (!coffee) {
+                throw new Error('Unable to retrieve coffee for update');
+            }
+            coffee.img = coffee_img;
+            await coffee.save();
+            return { coffee };
+        } catch (error) {
+            console.error(`Unable to update coffee, ${err}`);
+            return { error: err };
+        }
+    }
     static async deleteCoffee(coffee_id, profile_id) {
         try {
             const deletedCoffee = await Coffee.findByIdAndDelete(coffee_id);
