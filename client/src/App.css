@@ -3,6 +3,7 @@
     --medium-color: #87431d;
     --light-color: #c87941;
     --neutral-color: #dbcbbd;
+    --mint-green: #3eb489;
 }
 body {
     background-color: var(--dark-color);
@@ -21,14 +22,14 @@ body {
     color: white;
 }
 .btn-landing {
-    background-color: var(--neutral-color);
-    opacity: 0.8;
-    border-color: var(--medium-color);
+    background-color: var(--mint-green);
+    border-color: white;
     color: var(--dark-color);
+    font-size: 1.5em;
+    width: 225px;
 }
 .btn-landing:hover {
-    background-color: var(--dark-color);
-    color: white;
+    background-color: #4bd8a4;
 }
 .btn-new {
     background-color: var(--neutral-color);

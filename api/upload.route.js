@@ -22,5 +22,11 @@ const uploadFile = (req, res, next) => {
 };
 
 router.post('/', uploadFile, auth, UploadCtrl.apiUploadAvatar);
+router.post(
+    '/coffee_image/:id',
+    uploadFile,
+    auth,
+    UploadCtrl.apiUploadCoffeeImg
+);
 
 export default router;

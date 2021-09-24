@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons';
 
 import CoffeeDataService from '../../services/coffees';
+
 import { UserContext } from '../../contexts/UserContext';
 import { AlertContext } from '../../contexts/AlertContext';
 
@@ -16,7 +17,6 @@ const EditCoffee = () => {
         roastType: '',
         tags: []
     });
-
     const [tagText, setTagText] = useState('');
 
     const {
