@@ -6,6 +6,7 @@ import './App.css';
 
 import Navigation from './components/layout/Nav';
 import Landing from './components/layout/Landing';
+import Footer from './components/layout/Footer';
 
 import Routes from './components/routing/Routes';
 
@@ -21,6 +22,7 @@ const App = () => (
                     <Routes />
                 </Route>
             </Switch>
+            <Footer />
         </>
     </Router>
 );
