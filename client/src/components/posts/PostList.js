@@ -60,7 +60,7 @@ const PostList = () => {
                                                 className='post-card-img col-3'
                                             />
                                             <div className='col-auto ms-4'>
-                                                <p className='fs-3'>
+                                                <p className='fs-3 text-muted'>
                                                     Posted by{' '}
                                                     {post.profile.firstName}
                                                 </p>

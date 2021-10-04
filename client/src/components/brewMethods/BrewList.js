@@ -25,45 +25,50 @@ const BrewList = () => {
 
     return (
         <div className='row'>
-            <div className='col-12 mx-auto text-center mt-3 mb-3'>
-                <button className='btn btn-new'>
+            <div className='col-10 col-xl-12 mx-auto text-center mt-3 mb-5'>
+                <button className='btn btn-new w-100'>
                     <Link to='/brews/new'>Post New Brew Method</Link>
                 </button>
             </div>
-            {!loading &&
-                brewMethods.map((brew, ind) => {
-                    if (brew.user.profile.avatar) {
-                        avatar = brew.user.profile.avatar.medium;
-                    }
-                    return (
-                        <div
-                            className='col-12 col-lg-10 col-xl-9 mx-auto'
-                            key={ind}
-                        >
-                            <div className='card my-5'>
-                                <img
-                                    src={avatar}
-                                    alt=''
-                                    className='brew-card-img'
-                                />
-                                <Link
-                                    to={`/brew/${brew._id}`}
-                                    className='text-decoration-none brew-title'
-                                >
-                                    <h5 className='card-header p-4 fs-2'>
-                                        {capitalize.words(brew.name)}
-                                    </h5>
-                                </Link>
+            <div className='row justify-content-center justify-content-xl-start'>
+                {!loading &&
+                    brewMethods.map((brew, ind) => {
+                        if (brew.user.profile.avatar) {
+                            avatar = brew.user.profile.avatar.medium;
+                        }
+                        return (
+                            <div
+                                className='col-10 col-xl-6 d-flex align-items-stretch'
+                                key={ind}
+                            >
+                                <div className='card w-100 my-5'>
+                                    <img
+                                        src={avatar}
+                                        alt=''
+                                        className='brew-card-img'
+                                    />
+                                    <Link
+                                        to={`/brew/${brew._id}`}
+                                        className='text-decoration-none brew-title'
+                                    >
+                                        <h5 className='card-header p-4 fs-2'>
+                                            {capitalize.words(brew.name)}{' '}
+                                            <span className='fw-lighter fs-4 brew-author'>
+                                                by {brew.user.profile.firstName}
+                                            </span>
+                                        </h5>
+                                    </Link>
 
-                                <div className='card-body p-4'>
-                                    <p className='card-text fs-4 fw-light'>
-                                        {brew.description}
-                                    </p>
+                                    <div className='card-body p-4'>
+                                        <p className='card-text fs-4 fw-light'>
+                                            {brew.description}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    );
-                })}
+                        );
+                    })}
+            </div>
         </div>
     );
 };

@@ -119,6 +119,15 @@ const CoffeeList = () => {
 
     return (
         <div className='col-lg-11 m-auto'>
+            <div className='row'>
+                <div className='col-10 col-xl-12 mx-auto text-center mt-3 mb-3'>
+                    <Link to='/coffee/new'>
+                        <button className='btn btn-new w-100'>
+                            Add a New Coffee
+                        </button>
+                    </Link>
+                </div>
+            </div>
             <div className='row pb-1 mb-4'>
                 <div className='input-group col-lg-4 mb-4 mt-3'>
                     <input
