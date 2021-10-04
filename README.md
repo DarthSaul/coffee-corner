@@ -1,6 +1,8 @@
 # coffee-corner
 
-Full-stack web application built for online community of coffee lovers.
+Full-stack web application built for online community of coffee lovers. Site users may create a profile, add coffees they've been drinking to database, post about brew methods, and muse about the world of coffee.
+
+Hosted on Heroku [here](https://ancient-cove-69346.herokuapp.com/)
 
 ## Technologies & Other Tools
 
